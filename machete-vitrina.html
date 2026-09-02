@@ -772,7 +772,7 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <li><a href="#a8" class="l-both"><span class="n">8</span><span>Las dos capas, lado a lado</span></a></li>
     <li><a href="#quiz" class="l-both"><span class="n">9</span><span>Autoevaluación</span></a></li>
   </ol>
-  <p class="nav-note">Azul = capa predictiva del plan. Rosa = capa ágil del MVP. La barra partida marca lo que aplica a los dos. La pastilla bicolor <span class="tvchip">transversal</span> señala las herramientas que se usan en los dos enfoques.</p>
+  <p class="nav-note"><b>Cómo leerlo:</b> primero va el concepto, después el caso Vitrina como ejemplo (en los bloques con barra gris a la izquierda). Azul = capa predictiva del plan. Rosa = capa ágil del MVP. La barra partida marca lo que aplica a los dos. La pastilla bicolor <span class="tvchip">transversal</span> señala las herramientas que se usan en los dos enfoques.</p>
 </nav>
 
 <main>
@@ -790,7 +790,22 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <p>El Canvas responde <b>cómo una empresa crea, entrega y captura valor</b>, todo en <b>una sola página</b>. Lo creó <span class="tap">Osterwalder</span> (con Pigneur) en <i>Business Model Generation</i>.</p>
   </div>
 
-  <p>No memorices los nueve bloques sueltos: se completan <b>del cliente hacia adentro</b>. A quién le sirvo, qué le doy, cómo se lo hago llegar, cómo cobro, qué necesito para producirlo, cuánto me cuesta.</p>
+  <p>No memorices los nueve bloques sueltos: cada uno responde una pregunta, y se completan <b>del cliente hacia adentro</b>.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:3rem">#</th><th style="width:12rem">Bloque</th><th>Pregunta que responde</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><th>Segmentos de clientes</th><td>¿A quién le servimos?</td></tr>
+      <tr><td class="n">2</td><th>Propuesta de valor</th><td>¿Qué problema le resolvemos?</td></tr>
+      <tr><td class="n">3</td><th>Canales</th><td>¿Cómo se lo hacemos llegar?</td></tr>
+      <tr><td class="n">4</td><th>Relación con clientes</th><td>¿Qué tipo de vínculo tenemos?</td></tr>
+      <tr><td class="n">5</td><th>Fuentes de ingreso</th><td>¿Cómo cobramos?</td></tr>
+      <tr><td class="n">6</td><th>Recursos clave</th><td>¿Qué tenemos que tener?</td></tr>
+      <tr><td class="n">7</td><th>Actividades clave</th><td>¿Qué tenemos que hacer?</td></tr>
+      <tr><td class="n">8</td><th>Socios clave</th><td>¿Con quién nos apoyamos?</td></tr>
+      <tr><td class="n">9</td><th>Estructura de costos</th><td>¿Cuánto nos cuesta todo eso?</td></tr>
+    </tbody>
+  </table></div>
+  <p>Así queda relleno para el caso:</p>
 
   <div class="bmc" role="table" aria-label="Business Model Canvas de Vitrina">
     <div class="b b-inf" style="grid-area:soc"><span class="bn">8</span><span class="bt">Socios clave</span><span class="bd">Pasarelas de pago (Mercado Pago), operadores logísticos (OCA, Andreani, Correo Argentino), Meta y Google, y estudios implementadores</span></div>
@@ -833,14 +848,14 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
   </div>
 
   <div class="tw"><table>
-    <thead><tr><th style="width:8.5rem">Factor</th><th>Qué le pasa a Vitrina</th></tr></thead>
+    <thead><tr><th style="width:7rem">Factor</th><th style="width:17rem">Qué cubre</th><th>Ejemplo en Vitrina</th></tr></thead>
     <tbody>
-      <tr><th>Político</th><td><b>Aranceles de importación sobre tecnología</b>, que en la Parte 2 suben 18% por mes</td></tr>
-      <tr><th>Económico</th><td>Inflación y presión salarial: en la Parte 2 llega un <b>aumento del 15% retroactivo</b> a los desarrolladores</td></tr>
-      <tr><th>Social</th><td>Baja digitalización de la PyME argentina, y competencia de marketplaces y de Shein y Temu</td></tr>
-      <tr><th>Tecnológico</th><td>Pasarelas de pago y logística ya integrables por API; expectativa de app móvil como estándar</td></tr>
-      <tr><th>Ecológico</th><td>Presión sobre packaging y logística de última milla en los comercios que venden por la plataforma</td></tr>
-      <tr><th>Legal</th><td><b>Nueva instancia de auditoría regulatoria</b> antes del lanzamiento, detectada por Legales</td></tr>
+      <tr><th>Político</th><td>Gobierno, regulación sectorial, comercio exterior, estabilidad institucional</td><td><b>Aranceles de importación sobre tecnología</b>, que en la Parte 2 suben 18% por mes</td></tr>
+      <tr><th>Económico</th><td>Inflación, tipo de cambio, tasas, poder adquisitivo, costo salarial</td><td><b>Aumento del 15% retroactivo</b> a los desarrolladores</td></tr>
+      <tr><th>Social</th><td>Demografía, hábitos de consumo, cultura, nivel educativo</td><td>Baja digitalización de la PyME y competencia de Shein y Temu</td></tr>
+      <tr><th>Tecnológico</th><td>Innovación, infraestructura disponible, obsolescencia, ritmo de adopción</td><td>Pasarelas y logística integrables por API; app móvil como estándar</td></tr>
+      <tr><th>Ecológico</th><td>Clima, sostenibilidad, presión ambiental, residuos</td><td>Packaging y logística de última milla de los comercios</td></tr>
+      <tr><th>Legal</th><td>Leyes, protección de datos, normativa laboral, propiedad intelectual</td><td><b>Nueva auditoría regulatoria</b> antes del lanzamiento</td></tr>
     </tbody>
   </table></div>
 
@@ -1109,8 +1124,17 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <p>En Vitrina: objetivo, «que el comercio chico venda online sin programar». Metas, los cuatro hitos: diseño aprobado, MVP en producción, piloto validado, lanzamiento comercial.</p>
   </div>
 
-  <h3 class="t">El equipo: nueve perfiles, y por qué cada uno</h3>
-  <p>El equipo no se armó por intuición: se dimensionó desde las <b>actividades clave del Canvas</b> y las fases del cronograma. Ésa es la cadena que hay que poder recitar en la defensa.</p>
+  <h3 class="t">Análisis de recursos humanos</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El equipo se dimensiona desde las <b>actividades clave del Canvas</b> y las <b>fases del cronograma</b>. Nunca por intuición ni por «los que están disponibles».</p>
+  </div>
+  <ul>
+    <li>Cada perfil se justifica por dos cosas: <b>qué valor aporta</b> y <b>en qué momento del proyecto es crítico</b>.</li>
+    <li>Cada uno carga una <b>tarifa estándar</b> y una <b>tarifa extraordinaria</b>, que es el doble y se aplica a las horas extra.</li>
+    <li>Los perfiles <b>escasos en el mercado</b> son, además, una fuente directa de riesgo de recursos humanos.</li>
+  </ul>
+  <p>Aplicado al caso:</p>
   <div class="tw tw--pred"><table>
     <thead><tr><th style="width:11rem">Perfil</th><th>Por qué está y cuándo es crítico</th><th style="width:5rem">USD/h</th></tr></thead>
     <tbody>
@@ -1192,6 +1216,12 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <p>«<b>Lo que no está en la EDT, no está en el proyecto.</b>» Es una descomposición <b>jerárquica y orientada a entregables</b>: se organiza por <b>qué</b> hay que entregar, no por fechas ni por acciones.</p>
   </div>
 
+  <ul>
+    <li>Los niveles bajan siempre igual: <b>proyecto → fases → entregables → paquetes de trabajo</b>.</li>
+    <li>El <b>nivel más bajo</b> es el paquete de trabajo, y es el que se estima y se controla.</li>
+    <li>Cada fase cierra con al menos un <b>hito</b>.</li>
+  </ul>
+  <p>Así queda para el caso, con tres de las cuatro fases abiertas:</p>
   <div class="edt">
     <div class="edt-l0"><span class="edt-c">1.0</span> Vitrina, plataforma SaaS</div>
     <div class="edt-l1">
@@ -1355,7 +1385,12 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <span class="lbl">Ancla</span>
     <p>Un <b>hito</b> es un evento <b>sin duración</b> que marca un momento clave. Es punto de control, no trabajo.</p>
   </div>
-  <p>Vitrina tiene cuatro, uno por fase, y ninguno consume horas: son banderas de control.</p>
+  <ul>
+    <li>No consume horas ni recursos: por eso en un cronograma se dibuja como un rombo, sin ancho.</li>
+    <li>Sirve para poder decir «llegamos» o «no llegamos» sin discutir.</li>
+    <li>Los típicos son: <b>fin de fase, aprobación formal, go-live y release</b>.</li>
+  </ul>
+  <p>En el caso son cuatro, uno por fase:</p>
   <div class="tw tw--pred"><table>
     <thead><tr><th style="width:14rem">Hito</th><th style="width:7rem">Previsto</th><th style="width:7rem">Plan final</th><th>Qué certifica</th></tr></thead>
     <tbody>
@@ -1447,11 +1482,17 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <p class="act-sub">Con el cronograma aprobado y el proyecto al 0%, se marcó la línea base. A partir de ahí, «¿cómo venimos?» tiene una respuesta numérica y no una opinión.</p>
   </div>
 
-  <h3 class="t">El techo de financiamiento</h3>
+  <h3 class="t">La restricción de financiamiento</h3>
   <div class="ancla">
     <span class="lbl">Ancla</span>
-    <p>El financiamiento de Vitrina es de <b>USD 10.000 por mes calendario</b> de duración, distribuible libremente pero <b>no superable</b>.</p>
+    <p>Un <b>techo</b> acota cuánta plata puede consumir el proyecto. Es un <b>dato de entrada</b>, no un resultado: la línea base tiene que caber adentro.</p>
   </div>
+  <ul>
+    <li>Puede expresarse como total del proyecto o <b>por período</b> (por mes, por trimestre).</li>
+    <li>La diferencia entre el techo y la línea base es el <b>margen real</b> para absorber desvíos sin pedir autorización.</li>
+    <li>Si el margen es chico, cualquier imprevisto obliga a un cambio formal.</li>
+  </ul>
+  <p>En el caso: <b>USD 10.000 por mes calendario</b> de duración, distribuible libremente pero no superable. Para diez meses, USD 100.000.</p>
   <div class="tw tw--pred"><table>
     <thead><tr><th>Fase</th><th style="width:8rem">Costo (USD)</th><th style="width:5rem">%</th></tr></thead>
     <tbody>
@@ -1560,8 +1601,19 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <p>Ése es el argumento de por qué se mide contra la línea base: no para castigar el desvío, sino para <b>verlo venir con siete meses de anticipación</b>.</p>
   </div>
 
-  <h3 class="t">Rebaselining: cuando la crisis obliga a mover la referencia</h3>
-  <p>La línea base es una <b>guía, no un contrato inamovible</b>. Cuando las circunstancias cambian de verdad, se actualiza formalmente.</p>
+  <h3 class="t">Gestión de cambios y rebaselining</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Un cambio <b>impuesto desde afuera</b> no es un desvío del equipo: es alcance o contexto nuevo. Se gestiona con un proceso, no con voluntarismo.</p>
+  </div>
+  <ol class="fun">
+    <li><b>Registrar</b> el cambio y de dónde viene.</li>
+    <li><b>Evaluar su impacto</b> en las tres restricciones: calidad, costo y duración.</li>
+    <li><b>Decidir y justificar.</b> Toda decisión implica sacrificar algo; hay que poder decir qué.</li>
+    <li><b>Pedir aprobación</b> a los interesados con poder para autorizarla.</li>
+    <li><b>Actualizar el plan</b> y, si corresponde, fijar una nueva línea base.</li>
+  </ol>
+  <p>La línea base es una <b>guía, no un contrato inamovible</b>. Pero el paso 4 no es opcional.</p>
   <div class="caso">
     <span class="who">Las siete restricciones de tu Parte 2</span>
     <p>Al 30% de avance llegaron a la vez: adelanto de dos meses no negociable, renuncia del desarrollador senior, veinte días extra de complejidad en la última fase, aumento salarial del 15% retroactivo, arancel de importación del 18% por mes, una auditoría de compliance nueva y un tope de desvío del +20%.</p>
@@ -1798,7 +1850,15 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <span class="lbl">Ancla</span>
     <p><b>Exposición = Probabilidad × Impacto.</b> <b>Inherente</b> es la exposición <b>sin</b> mitigación. <b>Residual</b> es la que queda <b>después</b> de aplicar los controles.</p>
   </div>
-  <p>El registro de riesgos de tu trabajo tiene exactamente esas tres columnas: valoración inherente, controles, valoración residual. Los seis riesgos arrancan en <b>rojo</b> y ninguno se queda ahí.</p>
+  <h4 class="t">Qué columnas tiene un registro de riesgos</h4>
+  <p>El registro es la tabla donde vive cada riesgo, y sus columnas son siempre las mismas:</p>
+  <ul>
+    <li><b>Identificador y categoría:</b> recursos humanos, cronograma, costos, legal, mercado, técnico.</li>
+    <li><b>Causa:</b> por qué podría pasar, no sólo qué pasaría. Sin causa no se puede diseñar un control.</li>
+    <li><b>Valoración inherente</b> → <b>controles o contingencias</b> → <b>valoración residual</b>.</li>
+    <li><b>Responsable:</b> alguien tiene que ser dueño del riesgo, o no lo mira nadie.</li>
+  </ul>
+  <p>Aplicado al caso, seis riesgos que arrancan todos en <b>rojo</b> y ninguno se queda ahí:</p>
 
   <div class="tw"><table>
     <thead><tr><th style="width:2.5rem">#</th><th>Riesgo y causa</th><th style="width:5rem">Inherente</th><th>Controles</th><th style="width:5rem">Residual</th></tr></thead>
@@ -1822,8 +1882,12 @@ ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem
     <p>Ése es el punto entero del análisis de riesgos: no adivinar el futuro, sino <b>tener la respuesta escrita antes de necesitarla</b>. C1 existía antes de que el senior renunciara, y por eso C5 duró veinte días y no dos meses.</p>
   </div>
 
-  <h3 class="t">Los controles no quedan en el papel</h3>
-  <p>Seis controles se convirtieron en <b>tareas del cronograma</b>, con días y costo reales. Eso es lo que separa un análisis de riesgos de una lista de buenas intenciones.</p>
+  <h3 class="t">Planes de respuesta: los controles son tareas</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Un control que <b>no se convierte en una tarea con días, recursos y costo</b> no existe: es una buena intención. Y como cubre riesgos conocidos, esa tarea entra <b>dentro</b> de la línea base.</p>
+  </div>
+  <p>Aplicado al caso, seis controles cargados en el cronograma:</p>
   <div class="tw tw--pred"><table>
     <thead><tr><th style="width:4.5rem">Tarea</th><th style="width:5rem">Fase</th><th style="width:4rem">Mitiga</th><th>Impacto en el cronograma</th></tr></thead>
     <tbody>
