@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="es-AR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitrina — machete de Gestión de Proyectos Digitales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+/* ─── tokens ─────────────────────────────────────────────── */
+/* Modo oscuro por defecto. El botón de la barra alterna a data-theme="light". */
+:root{
+  color-scheme:dark;
+  --paper:#12181D;
+  --panel:#1A232B;
+  --sunk:#232F38;
+  --ink:#E6EDF1;
+  --ink-2:#A6B6C0;
+  --ink-3:#7A8B95;
+  --rule:#33424D;
+  --rule-2:#27333C;
+
+  --pred:#63B8DA;          /* proyecto predictivo (cascada) */
+  --pred-tint:#162C38;
+  --pred-deep:#95D4EC;
+  --pred-2:#3C7C97;
+
+  --agil:#EE7BA6;          /* proyecto ágil (scrum) */
+  --agil-tint:#331725;
+  --agil-deep:#F6A9C5;
+
+  --marker:#F2ED4E;
+  --marker-ink:#17242C;
+  --ok:#5FC998;
+  --bad:#F08579;
+  --amber:#E0A53A;
+  --on-accent:#0E141A;
+
+  --warn-bg:#2A2916;
+  --warn-ink:#DFCB63;
+
+  --tint-a:#16242C;
+  --tint-b:#1B242B;
+  --tint-c:#252217;
+  --tint-th:#1E2830;
+  --tv-bg:#221E2C;
+
+  --ok-bg:#14301F;  --ok-bd:#3A7A57;  --ok-ink:#86DDB0;
+  --bad-bg:#331B18; --bad-bd:#7E4038; --bad-ink:#F5A99E;
+  --at-bg:#2E2A14;  --at-ink:#E2CE6B;
+
+  --ph2:#193039; --ph3:#1C333B; --ph4:#20363E; --ph5:#243940;
+  --jr2:#D9709F; --jr3:#B85C85; --jr4:#94496B; --jr5:#6F3851;
+
+  --bar-bg:rgba(18,24,29,.94);
+  --shadow:0 2px 12px rgba(0,0,0,.4);
+
+  --w-read:34rem;
+  --r:3px;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --paper:#F1F3F0;
+  --panel:#FBFCFA;
+  --sunk:#E4E9E4;
+  --ink:#17242C;
+  --ink-2:#42545E;
+  --ink-3:#6E7F87;
+  --rule:#C9D2CC;
+  --rule-2:#DDE3DD;
+
+  --pred:#1F6E8C;
+  --pred-tint:#E3EEF3;
+  --pred-deep:#124A60;
+  --pred-2:#5E9AB2;
+
+  --agil:#A82458;
+  --agil-tint:#F7E5EC;
+  --agil-deep:#7A1740;
+
+  --marker:#F2ED4E;
+  --marker-ink:#17242C;
+  --ok:#2C7A57;
+  --bad:#B3352A;
+  --amber:#D9A61B;
+  --on-accent:#FFFFFF;
+
+  --warn-bg:#FBF9D8;
+  --warn-ink:#8A6D0B;
+
+  --tint-a:#F4F9FB;
+  --tint-b:#FAFBFA;
+  --tint-c:#F6F4EE;
+  --tint-th:#F4F7F4;
+  --tv-bg:#F6F4F8;
+
+  --ok-bg:#DFEDE2;  --ok-bd:#7FB894;  --ok-ink:#1F5B39;
+  --bad-bg:#F6DFDB; --bad-bd:#D8A79E; --bad-ink:#8E2B20;
+  --at-bg:#FAF3D4;  --at-ink:#7D6410;
+
+  --ph2:#E9F1F5; --ph3:#EDF3F6; --ph4:#F1F5F7; --ph5:#F5F8F9;
+  --jr2:#B94B76; --jr3:#C86D90; --jr4:#D690AB; --jr5:#E4B3C5;
+
+  --bar-bg:rgba(241,243,240,.94);
+  --shadow:0 2px 10px rgba(23,36,44,.14);
+}
+
+/* ─── reset ──────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:17.5px;line-height:1.62;font-optical-sizing:auto;}
+img,svg{max-width:100%}
+:focus-visible{outline:2.5px solid var(--pred);outline-offset:2px}
+h1,h2,h3,h4,.sans{font-family:"Archivo","Helvetica Neue",Arial,sans-serif}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.02em;line-height:1.12}
+p{margin:0 0 .85em}
+a{color:var(--pred-deep)}
+b,strong{font-weight:600}
+hr{border:0;border-top:1px solid var(--rule);margin:2.2rem 0}
+
+/* ─── colores de los SVG estáticos ───────────────────────── */
+.mf-pred{fill:var(--pred)}
+.mf-agil{fill:var(--agil)}
+.ms-agil{stroke:var(--agil)}
+.mt-agil{fill:var(--agil-deep)}
+.cone .c-fill{fill:url(#cg)}
+.cone #cg stop{stop-color:var(--pred)}
+.cone .c-axis{stroke:var(--ink-2)}
+.cone .c-lab{fill:var(--ink-2)}
+.cone .c-grid{stroke:var(--rule)}
+
+/* ─── hero ───────────────────────────────────────────────── */
+.hero{padding:clamp(2.5rem,7vw,5.5rem) 1.25rem clamp(2rem,4vw,3rem);
+  max-width:1180px;margin:0 auto}
+.hero-kicker{font-family:"Archivo",sans-serif;font-size:.82rem;font-weight:500;
+  color:var(--ink-3);letter-spacing:.01em;margin:0 0 1.1rem}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.55rem);font-weight:700;letter-spacing:-.035em;
+  max-width:16ch;margin-bottom:1.1rem}
+.hero h1 .h-pred{color:var(--pred)}
+.hero h1 .h-agil{color:var(--agil)}
+.hero-lede{max-width:46ch;font-size:1.12rem;color:var(--ink-2);margin-bottom:2.4rem}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
+.pcard{background:var(--panel);border:1px solid var(--rule-2);border-top-width:4px;
+  padding:1.3rem 1.35rem 1.4rem;position:relative}
+.pcard.p-pred{border-top-color:var(--pred)}
+.pcard.p-agil{border-top-color:var(--agil)}
+.pcard .tag{font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase}
+.p-pred .tag{color:var(--pred)}
+.p-agil .tag{color:var(--agil)}
+.pcard h3{font-size:1.32rem;margin:.35rem 0 .5rem;letter-spacing:-.025em}
+.pcard p{font-size:.97rem;color:var(--ink-2);margin-bottom:.9rem}
+.pcard .why{font-family:"Archivo",sans-serif;font-size:.83rem;color:var(--ink-3);
+  border-top:1px solid var(--rule-2);padding-top:.7rem;margin:0}
+.mini{display:block;margin:.2rem 0 .95rem;width:100%;height:auto}
+
+/* animación de entrada, una sola vez */
+.mini .st{opacity:0;animation:pop .5s ease forwards}
+.mini .st:nth-child(1){animation-delay:.15s}
+.mini .st:nth-child(2){animation-delay:.28s}
+.mini .st:nth-child(3){animation-delay:.41s}
+.mini .st:nth-child(4){animation-delay:.54s}
+.mini .st:nth-child(5){animation-delay:.67s}
+.mini .loop{opacity:0;animation:pop .6s ease .3s forwards}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .mini .st,.mini .loop{animation:none;opacity:1}
+}
+
+/* ─── barra de herramientas ──────────────────────────────── */
+.tools{position:sticky;top:0;z-index:40;background:var(--bar-bg);
+  backdrop-filter:blur(8px);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tools-in{max-width:1180px;margin:0 auto;padding:.55rem 1.25rem;
+  display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.tbtn{font-family:"Archivo",sans-serif;font-size:.85rem;font-weight:500;
+  background:var(--panel);color:var(--ink);border:1px solid var(--rule);
+  padding:.4rem .8rem;border-radius:var(--r);cursor:pointer}
+.tbtn:hover{background:var(--sunk)}
+.tbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tools .hint{font-family:"Archivo",sans-serif;font-size:.8rem;color:var(--ink-3);margin-left:auto}
+#menuBtn{display:none}
+
+/* ─── layout principal ───────────────────────────────────── */
+.wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem 6rem;
+  display:grid;grid-template-columns:230px minmax(0,1fr);gap:3rem;align-items:start}
+nav.idx{position:sticky;top:4.2rem;padding-top:2.6rem;font-family:"Archivo",sans-serif}
+nav.idx ol{list-style:none;margin:0;padding:0}
+nav.idx li{margin:0 0 .1rem}
+nav.idx a{display:flex;gap:.6rem;text-decoration:none;color:var(--ink-2);
+  font-size:.87rem;line-height:1.3;padding:.34rem .5rem .34rem .55rem;
+  border-left:2px solid transparent}
+nav.idx a:hover{color:var(--ink);background:var(--sunk)}
+nav.idx a .n{color:var(--ink-3);font-variant-numeric:tabular-nums;min-width:1.1em}
+nav.idx a.on{color:var(--ink);font-weight:600;border-left-color:var(--ink)}
+nav.idx a.on.l-pred{border-left-color:var(--pred);color:var(--pred-deep)}
+nav.idx a.on.l-agil{border-left-color:var(--agil);color:var(--agil-deep)}
+nav.idx .nav-note{font-size:.76rem;color:var(--ink-3);margin:1.1rem .55rem 0;line-height:1.45}
+
+main{padding-top:2.6rem;min-width:0}
+
+/* ─── actos y carriles ───────────────────────────────────── */
+.act{scroll-margin-top:4.5rem;margin-bottom:4.2rem;padding-left:1.4rem;
+  border-left:3px solid var(--rule)}
+.act.l-pred{border-left-color:var(--pred)}
+.act.l-agil{border-left-color:var(--agil)}
+.act.l-both{border-left:0;padding-left:0;position:relative}
+.act.l-both::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(var(--pred) 50%,var(--agil) 50%)}
+.act.l-both{padding-left:1.4rem}
+
+.act-head{margin-bottom:1.6rem}
+.act-num{font-family:"Archivo",sans-serif;font-size:.78rem;font-weight:600;
+  color:var(--ink-3);letter-spacing:.04em;display:block;margin-bottom:.4rem}
+.act.l-pred .act-num{color:var(--pred)}
+.act.l-agil .act-num{color:var(--agil)}
+.act h2{font-size:clamp(1.55rem,3.4vw,2.15rem);letter-spacing:-.03em;max-width:20ch}
+.act-sub{margin-top:.6rem;color:var(--ink-2);max-width:var(--w-read);font-size:1.03rem}
+
+h3.t{font-size:1.24rem;margin:2.4rem 0 .65rem;letter-spacing:-.025em;
+  max-width:var(--w-read);scroll-margin-top:4.5rem}
+h4.t{font-size:1rem;margin:1.5rem 0 .4rem;color:var(--ink-2);font-weight:600}
+.act p,.act ul,.act ol{max-width:var(--w-read)}
+.act ul,.act ol{padding-left:1.15rem;margin:0 0 .9rem}
+.act li{margin-bottom:.3rem}
+
+/* ─── ancla ──────────────────────────────────────────────── */
+.ancla{border-top:2px solid var(--ink);background:var(--panel);
+  padding:.85rem 1rem .9rem;margin:1.1rem 0 1.2rem;max-width:var(--w-read)}
+.act.l-pred .ancla{border-top-color:var(--pred)}
+.act.l-agil .ancla{border-top-color:var(--agil)}
+.ancla .lbl{font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);
+  display:block;margin-bottom:.3rem}
+.ancla p{margin:0;font-family:"Archivo",sans-serif;font-size:1rem;line-height:1.45;
+  font-weight:500;max-width:none}
+.ancla p + p{margin-top:.5rem}
+
+/* ─── trampa (resaltador) ────────────────────────────────── */
+.trampa{background:var(--warn-bg);border-left:5px solid var(--marker);
+  padding:.75rem .95rem;margin:1.1rem 0;max-width:var(--w-read);
+  font-size:.98rem}
+.trampa p{margin:0;max-width:none}
+.trampa p+p{margin-top:.5rem}
+.trampa .lbl{font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--warn-ink);
+  display:block;margin-bottom:.25rem}
+.mk{background:linear-gradient(100deg,rgba(242,237,78,0) .4%,rgba(242,237,78,1) 3%,
+  rgba(242,237,78,.92) 96%,rgba(242,237,78,0) 99.5%);
+  padding:.06em .18em;border-radius:.2em;font-weight:600;color:var(--marker-ink)}
+
+/* ─── marcas de transversalidad ──────────────────────────── */
+.tvchip{display:inline-flex;align-items:center;gap:.32rem;font-family:"Archivo",sans-serif;
+  font-size:.7rem;font-weight:600;color:var(--ink-2);background:var(--panel);
+  border:1px solid var(--rule);border-radius:99px;padding:.1rem .5rem .1rem .32rem;
+  vertical-align:middle;white-space:nowrap;line-height:1.5}
+.tvchip::before{content:"";width:.5rem;height:.9rem;border-radius:2px;flex:0 0 auto;
+  background:linear-gradient(180deg,var(--pred) 0 50%,var(--agil) 50% 100%)}
+h3.t .tvchip,h4.t .tvchip{margin-left:.45rem}
+.tvbox{position:relative;background:var(--panel);border:1px solid var(--rule-2);
+  padding:.8rem .95rem .85rem 1.15rem;margin:1.2rem 0 1.4rem;max-width:var(--w-read)}
+.tvbox::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:linear-gradient(180deg,var(--pred) 0 50%,var(--agil) 50% 100%)}
+.tvbox .lbl{font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.3rem}
+.tvbox p{margin:0;max-width:none;font-size:.97rem}
+.tvbox p+p{margin-top:.5rem}
+.tvbox ul{margin:.45rem 0 0;max-width:none}
+tr.tvrow th,tr.tvrow td{background:var(--tv-bg)}
+tr.tvrow th{position:relative}
+
+/* ─── caso (la historia de Vitrina) ──────────────────────── */
+.caso{border-left:2px solid var(--rule);padding:.15rem 0 .15rem 1rem;
+  margin:1.1rem 0;max-width:var(--w-read);font-size:.99rem;color:var(--ink-2)}
+.act.l-pred .caso{border-left-color:var(--pred-tint)}
+.act.l-agil .caso{border-left-color:var(--agil-tint)}
+.caso p{max-width:none;margin-bottom:.55rem}
+.caso p:last-child{margin-bottom:0}
+.caso .who{font-family:"Archivo",sans-serif;font-size:.75rem;font-weight:600;
+  color:var(--ink-3);letter-spacing:.03em;display:block;margin-bottom:.3rem}
+
+/* ─── tablas ─────────────────────────────────────────────── */
+.tw{overflow-x:auto;margin:1.1rem 0 1.3rem;max-width:min(100%,42rem)}
+table{border-collapse:collapse;font-family:"Archivo",sans-serif;font-size:.88rem;
+  width:100%;min-width:440px;background:var(--panel)}
+th,td{text-align:left;padding:.52rem .7rem;border:1px solid var(--rule-2);vertical-align:top}
+thead th{background:var(--sunk);font-weight:600;font-size:.8rem;color:var(--ink)}
+tbody th{font-weight:600;background:var(--tint-th)}
+td .n,th .n,td.n,th.n{font-variant-numeric:tabular-nums}
+.tw--pred thead th{background:var(--pred-tint);color:var(--pred-deep)}
+.tw--agil thead th{background:var(--agil-tint);color:var(--agil-deep)}
+
+/* ─── contraste a dos columnas ───────────────────────────── */
+.contra{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:1.2rem 0 1.4rem;
+  border:1px solid var(--rule-2);background:var(--panel);max-width:var(--w-read)}
+.contra > div{padding:.85rem .95rem}
+.contra > div:first-child{border-right:1px solid var(--rule-2)}
+.contra h5{font-family:"Archivo",sans-serif;font-size:.85rem;font-weight:600;
+  margin:0 0 .4rem;letter-spacing:-.01em}
+.contra .c-pred h5{color:var(--pred-deep)}
+.contra .c-agil h5{color:var(--agil-deep)}
+.contra p{font-size:.93rem;margin:0;max-width:none;color:var(--ink-2)}
+
+/* ─── fichas / chips ─────────────────────────────────────── */
+.chip{display:inline-block;font-family:"Archivo",sans-serif;font-size:.78rem;
+  font-weight:500;background:var(--sunk);color:var(--ink-2);
+  padding:.16rem .5rem;border-radius:2px;margin:0 .25rem .3rem 0}
+.chip.c-pred{background:var(--pred-tint);color:var(--pred-deep)}
+.chip.c-agil{background:var(--agil-tint);color:var(--agil-deep)}
+.formula{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  font-size:.9rem;background:var(--sunk);padding:.1rem .4rem;border-radius:2px;
+  white-space:nowrap}
+
+/* ─── modo tapado ────────────────────────────────────────── */
+.tap{border-bottom:1px dotted var(--rule)}
+body.tapado .tap{background:var(--ink);color:transparent;border-radius:2px;
+  cursor:pointer;border-bottom:0;text-shadow:none;user-select:none}
+body.tapado .tap.shown{background:var(--marker);color:var(--marker-ink);user-select:auto}
+
+/* ─── panels interactivos ────────────────────────────────── */
+.lab{background:var(--panel);border:1px solid var(--rule);padding:1.1rem 1.15rem 1.25rem;
+  margin:1.4rem 0 1.6rem}
+.lab-h{font-family:"Archivo",sans-serif;font-size:.95rem;font-weight:600;
+  margin:0 0 .2rem;letter-spacing:-.01em}
+.lab-s{font-family:"Archivo",sans-serif;font-size:.83rem;color:var(--ink-3);
+  margin:0 0 1rem;max-width:52ch}
+.verdict{max-width:38rem}
+.lab p{max-width:none}
+
+.footer{max-width:1180px;margin:0 auto;padding:2rem 1.25rem 4rem;
+  border-top:1px solid var(--rule);font-family:"Archivo",sans-serif;
+  font-size:.83rem;color:var(--ink-3);max-width:1180px}
+
+/* ─── business model canvas ──────────────────────────────── */
+.bmc{display:grid;gap:2px;background:var(--rule-2);border:1px solid var(--rule-2);
+  margin:1.3rem 0 1.4rem;font-family:"Archivo",sans-serif;
+  grid-template-columns:repeat(5,1fr);
+  grid-template-rows:auto auto auto;
+  grid-template-areas:
+    "soc act pro rel seg"
+    "soc rec pro can seg"
+    "cos cos cos ing ing";}
+.bmc .b{background:var(--panel);padding:.6rem .65rem .7rem;display:flex;flex-direction:column}
+.bmc .b-mkt{background:var(--tint-a)}
+.bmc .b-inf{background:var(--tint-b)}
+.bmc .b-eco{background:var(--tint-c)}
+.bmc .bn{font-size:.7rem;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.bmc .bt{font-size:.83rem;font-weight:600;margin:.05rem 0 .28rem;line-height:1.2}
+.bmc .bd{font-size:.76rem;line-height:1.38;color:var(--ink-2)}
+@media (max-width:760px){
+  .bmc{grid-template-columns:1fr 1fr;
+    grid-template-areas:"seg pro" "can rel" "rec act" "soc soc" "ing cos";}
+}
+@media (max-width:430px){
+  .bmc{grid-template-columns:1fr;
+    grid-template-areas:"seg" "pro" "can" "rel" "rec" "act" "soc" "ing" "cos";}
+}
+
+/* ─── value proposition canvas ───────────────────────────── */
+.vpc{display:grid;grid-template-columns:1fr auto 1fr;gap:0;margin:1.3rem 0;
+  border:1px solid var(--rule-2);background:var(--panel);font-family:"Archivo",sans-serif}
+.vp-col{padding:.85rem .9rem}
+.vp-cli{background:var(--tint-b)}
+.vp-emp{background:var(--tint-a)}
+.vp-col h5{font-size:.85rem;font-weight:600;margin:0 0 .55rem}
+.vp-cli h5{color:var(--ink-2)}
+.vp-emp h5{color:var(--pred-deep)}
+.vp-row{margin-bottom:.6rem}
+.vp-row:last-child{margin-bottom:0}
+.vp-k{display:block;font-size:.71rem;font-weight:600;color:var(--ink-3);letter-spacing:.02em}
+.vp-v{display:block;font-size:.82rem;line-height:1.35;color:var(--ink)}
+.vp-arrows{display:flex;flex-direction:column;justify-content:space-around;
+  padding:1.9rem .35rem .85rem;color:var(--ink-3);font-size:1rem}
+@media (max-width:640px){
+  .vpc{grid-template-columns:1fr}
+  .vp-arrows{flex-direction:row;justify-content:center;gap:1.5rem;padding:.3rem;
+    border-top:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
+  .vp-arrows span{transform:rotate(90deg)}
+}
+
+/* ─── lista de funciones numerada ────────────────────────── */
+ol.fun{list-style:none;padding:0;counter-reset:f}
+ol.fun li{counter-increment:f;position:relative;padding-left:2rem;margin-bottom:.5rem}
+ol.fun li::before{content:counter(f);position:absolute;left:0;top:.28em;
+  font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:700;color:var(--panel);
+  background:var(--ink);width:1.35rem;height:1.35rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center}
+
+/* ─── matriz poder / interés ─────────────────────────────── */
+.pmatrix{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;
+  gap:.4rem;font-family:"Archivo",sans-serif;max-width:30rem}
+.pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--rule-2);
+  border:1px solid var(--rule-2)}
+.pm-cell{background:var(--paper);border:0;cursor:pointer;padding:1.15rem .6rem;
+  font-family:inherit;font-size:.85rem;font-weight:500;color:var(--ink-2);
+  min-height:4.4rem;line-height:1.25}
+.pm-cell:hover{background:var(--sunk);color:var(--ink)}
+.pm-cell.on{background:var(--pred);color:var(--on-accent)}
+.pm-cell.pm-hot{background:var(--pred-tint);color:var(--pred-deep)}
+.pm-cell.pm-hot.on{background:var(--pred);color:var(--on-accent)}
+.pm-axis{display:flex;font-size:.73rem;color:var(--ink-3)}
+.pm-axis-y{flex-direction:column;justify-content:space-around;align-items:flex-end;
+  text-align:right;padding:.2rem .5rem .2rem 0;line-height:1.15}
+.pm-axis-x{grid-column:2;justify-content:space-between;padding:0 .3rem}
+.pm-detail{margin-top:1rem;font-size:.94rem;color:var(--ink-2);min-height:4.2rem;max-width:38rem;
+  border-top:1px solid var(--rule-2);padding-top:.8rem}
+.pm-detail:empty::before{content:"Elegí un cuadrante.";color:var(--ink-3);
+  font-family:"Archivo",sans-serif;font-size:.85rem}
+.pm-detail b{color:var(--ink)}
+
+/* ─── fases de cascada ───────────────────────────────────── */
+.phases{display:grid;gap:2px;margin:1.2rem 0 1.1rem;font-family:"Archivo",sans-serif;
+  grid-template-columns:repeat(5,1fr)}
+.phases .ph{background:var(--pred-tint);padding:.6rem .55rem .65rem;
+  display:flex;flex-direction:column;gap:.15rem;border-top:3px solid var(--pred)}
+.phases .ph:nth-child(2){background:var(--ph2)}
+.phases .ph:nth-child(3){background:var(--ph3)}
+.phases .ph:nth-child(4){background:var(--ph4)}
+.phases .ph:nth-child(5){background:var(--ph5)}
+.ph-n{font-size:.7rem;font-weight:700;color:var(--pred)}
+.phases .ph b{font-size:.85rem;line-height:1.15;letter-spacing:-.01em}
+.phases .ph span:last-child{font-size:.73rem;line-height:1.32;color:var(--ink-2)}
+@media (max-width:700px){.phases{grid-template-columns:1fr 1fr}}
+@media (max-width:400px){.phases{grid-template-columns:1fr}}
+
+/* ─── EDT ────────────────────────────────────────────────── */
+.edt{font-family:"Archivo",sans-serif;margin:1.3rem 0 .4rem;font-size:.82rem}
+.edt-l0{background:var(--pred);color:var(--on-accent);padding:.5rem .7rem;font-weight:600;
+  border-radius:2px}
+.edt-l1{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.6rem}
+.edt-br{border-top:2px solid var(--pred);background:var(--panel);padding:.5rem .55rem .55rem;
+  position:relative}
+.edt-br::before{content:"";position:absolute;top:-.62rem;left:50%;width:1px;height:.62rem;
+  background:var(--rule)}
+.edt-n{font-weight:600;line-height:1.25;margin-bottom:.4rem}
+.edt-l2 .edt-n{font-weight:400;background:var(--sunk);padding:.32rem .42rem;
+  border-radius:2px;margin-bottom:.28rem;display:flex;flex-wrap:wrap;gap:.3rem;
+  align-items:baseline;font-size:.78rem}
+.edt-c{color:var(--ink-3);font-variant-numeric:tabular-nums;font-weight:600;font-size:.72rem}
+.edt-h{margin-left:auto;font-size:.72rem;color:var(--pred-deep);font-weight:600;
+  font-variant-numeric:tabular-nums}
+.edt-miss{outline:2px dashed var(--bad);outline-offset:1px;background:var(--bad-bg)!important}
+.edt-cap{font-family:"Archivo",sans-serif;font-size:.79rem;color:var(--ink-3);
+  margin:.4rem 0 1.2rem;max-width:var(--w-read)}
+@media (max-width:700px){.edt-l1{grid-template-columns:1fr}}
+
+/* ─── cadena de procesos ─────────────────────────────────── */
+.chain{display:grid;grid-template-columns:repeat(5,1fr);gap:.35rem;margin:1.2rem 0 1.1rem;
+  font-family:"Archivo",sans-serif}
+.chain .ch{background:var(--panel);border:1px solid var(--rule-2);padding:.55rem .55rem .6rem;
+  display:flex;flex-direction:column;gap:.18rem;position:relative}
+.chain .ch b{font-size:.82rem;line-height:1.15;letter-spacing:-.01em}
+.chain .ch span{font-size:.73rem;color:var(--ink-2);line-height:1.3}
+.chain .ch em{font-size:.71rem;color:var(--pred-deep);font-style:normal;font-weight:600;
+  margin-top:auto;padding-top:.35rem}
+.chain .ch-hot{border-color:var(--pred);background:var(--pred-tint)}
+.chain .ch:not(:last-child)::after{content:"";position:absolute;right:-.28rem;top:50%;
+  width:.35rem;height:.35rem;border-top:1.5px solid var(--rule);
+  border-right:1.5px solid var(--rule);transform:translateY(-50%) rotate(45deg);z-index:1}
+@media (max-width:760px){
+  .chain{grid-template-columns:1fr}
+  .chain .ch:not(:last-child)::after{right:auto;left:1.1rem;top:auto;bottom:-.3rem;
+    transform:rotate(135deg)}
+}
+
+/* ─── cono de incertidumbre ──────────────────────────────── */
+.cone{display:block;margin:1.2rem 0 1.1rem;max-width:var(--w-read);width:100%}
+
+/* ─── gantt ──────────────────────────────────────────────── */
+.gantt-wrap{overflow-x:auto;margin:1.3rem 0 .3rem;padding-bottom:.4rem}
+.gantt{min-width:600px;font-family:"Archivo",sans-serif;font-size:.78rem}
+.g-head,.g-row{display:grid;grid-template-columns:8.5rem 1fr;align-items:center}
+.g-lbl{color:var(--ink-2);padding-right:.6rem;font-size:.78rem}
+.g-weeks{display:grid;grid-template-columns:repeat(16,1fr);border-bottom:1px solid var(--rule)}
+.g-weeks i{font-style:normal;font-size:.63rem;color:var(--ink-3);text-align:center;
+  padding-bottom:.2rem;font-variant-numeric:tabular-nums}
+.g-row{margin-top:.28rem}
+.g-track{display:grid;grid-template-columns:repeat(16,1fr);height:1.35rem;
+  background:repeating-linear-gradient(to right,transparent 0,transparent calc(6.25% - 1px),var(--rule-2) calc(6.25% - 1px),var(--rule-2) 6.25%)}
+.bar{grid-column:var(--s) / var(--e);background:var(--pred);border-radius:2px;
+  align-self:center;height:.85rem}
+.bar-soft{background:var(--pred);opacity:.55}
+.bar-ext{background:repeating-linear-gradient(45deg,var(--pred),var(--pred) 4px,var(--pred-2) 4px,var(--pred-2) 8px)}
+.lagmark{grid-column:var(--s) / var(--e);border:1px dashed var(--ink-3);border-radius:2px;
+  align-self:center;height:.85rem;font-size:.6rem;color:var(--ink-3);
+  display:flex;align-items:center;justify-content:center;font-weight:600}
+.mile{grid-column:var(--s);align-self:center;width:.8rem;height:.8rem;background:var(--ink);
+  transform:rotate(45deg);justify-self:start;margin-left:-.4rem}
+
+/* ─── controles y tablero EVM ────────────────────────────── */
+.ctrls{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:1.1rem}
+.ctrl{display:block;font-family:"Archivo",sans-serif}
+.ctrl-l{display:block;font-size:.79rem;color:var(--ink-3);margin-bottom:.3rem}
+.ctrl-l b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.ctrl input[type=range]{width:100%;accent-color:var(--pred);height:1.4rem}
+@media (max-width:640px){.ctrls{grid-template-columns:1fr}}
+
+#scurve{display:block;width:100%;height:auto;margin:.3rem 0 .1rem}
+.chart-scroll{overflow-x:auto;margin:.2rem 0}
+@media (max-width:760px){.chart-scroll svg{min-width:540px}}
+.scroll-hint{display:none;font-family:"Archivo",sans-serif;font-size:.74rem;
+  color:var(--ink-3);margin:.1rem 0 .6rem}
+@media (max-width:760px){.scroll-hint{display:block}}
+.legend{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;font-family:"Archivo",sans-serif;
+  font-size:.76rem;color:var(--ink-2);margin:.1rem 0 1rem}
+.lg{display:inline-flex;align-items:center;gap:.35rem}
+.lg::before{content:"";width:14px;height:0;border-top:2.5px solid currentColor}
+.lg-pv{color:var(--ink-3)}
+.lg-pv::before{border-top-style:dashed}
+.lg-ev{color:var(--pred)}
+.lg-ac{color:var(--bad)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--rule-2);
+  border:1px solid var(--rule-2);font-family:"Archivo",sans-serif}
+.kpi{background:var(--paper);padding:.55rem .6rem .6rem}
+.kpi .k{display:block;font-size:.7rem;color:var(--ink-3);font-weight:600;letter-spacing:.02em}
+.kpi .v{display:block;font-size:1.02rem;font-weight:600;font-variant-numeric:tabular-nums;
+  letter-spacing:-.02em;margin-top:.1rem}
+.kpi .s{display:block;font-size:.68rem;color:var(--ink-3);margin-top:.05rem}
+.kpi.good .v{color:var(--ok)}
+.kpi.bad .v{color:var(--bad)}
+@media (max-width:640px){.kpis{grid-template-columns:1fr 1fr}}
+.verdict{font-family:"Archivo",sans-serif;font-size:.9rem;margin:.9rem 0 0;
+  padding-left:.7rem;border-left:3px solid var(--pred);line-height:1.45}
+
+/* ─── reservas ───────────────────────────────────────────── */
+.reserva{display:grid;grid-template-columns:5.5fr 2.2fr 2.3fr;gap:2px;
+  margin:1.2rem 0 1.1rem;font-family:"Archivo",sans-serif}
+.rv{padding:.55rem .6rem .6rem;display:flex;flex-direction:column;gap:.2rem}
+.rv b{font-size:.8rem;line-height:1.15}
+.rv span{font-size:.72rem;line-height:1.3;color:var(--ink-2)}
+.rv-1{background:var(--pred-tint)}
+.rv-2{background:var(--tint-b)}
+.rv-3{background:var(--tint-c)}
+.rv-brace{grid-row:2;font-size:.75rem;font-weight:600;color:var(--ink-2);
+  border-top:2px solid var(--ink-3);padding-top:.3rem;margin-top:.25rem}
+.rv-b1{grid-column:1 / 3}
+.rv-b2{grid-column:1 / 4;border-top-color:var(--ink);color:var(--ink)}
+.rv-b2{grid-row:3}
+@media (max-width:640px){
+  .reserva{grid-template-columns:1fr}
+  .rv-brace{grid-column:1;border-top:2px solid var(--ink-3)}
+  .rv-b1{grid-row:auto}.rv-b2{grid-row:auto}
+}
+
+/* ─── jerarquía JIRA ─────────────────────────────────────── */
+.jira{margin:1.2rem 0 1.1rem;font-family:"Archivo",sans-serif;max-width:var(--w-read)}
+.jr{background:var(--panel);border-left:3px solid var(--agil);padding:.42rem .6rem .48rem;
+  margin-bottom:.2rem;display:flex;gap:.7rem;align-items:baseline}
+.jr-2{margin-left:.9rem}.jr-3{margin-left:1.8rem}
+.jr-4{margin-left:2.7rem}.jr-5{margin-left:3.6rem}
+.jr-2{border-left-color:var(--jr2)}.jr-3{border-left-color:var(--jr3)}
+.jr-4{border-left-color:var(--jr4)}.jr-5{border-left-color:var(--jr5)}
+.jl{font-size:.68rem;font-weight:700;color:var(--agil-deep);letter-spacing:.03em;
+  min-width:4.1rem;flex:0 0 auto}
+.jr b{font-size:.83rem;font-weight:500;line-height:1.25}
+@media (max-width:560px){
+  .jr-2,.jr-3,.jr-4,.jr-5{margin-left:0}
+  .jr{flex-direction:column;gap:.1rem}
+}
+
+/* ─── línea del sprint ───────────────────────────────────── */
+.sprint-line{display:grid;grid-template-columns:1.6fr repeat(8,1fr) 1.6fr;gap:2px;
+  margin:1.2rem 0 1.3rem;font-family:"Archivo",sans-serif}
+.sl-day{background:var(--panel);border-top:3px solid var(--rule);
+  padding:.42rem .35rem .5rem;text-align:center;display:flex;flex-direction:column;gap:.1rem}
+.sl-day b{font-size:.75rem;font-variant-numeric:tabular-nums}
+.sl-day span{font-size:.65rem;color:var(--ink-3);line-height:1.2}
+.sl-ev{background:var(--agil-tint);border-top-color:var(--agil)}
+.sl-ev span{color:var(--agil-deep);font-weight:600}
+@media (max-width:640px){
+  .sprint-line{grid-template-columns:1fr 1fr}
+  .sl-day:not(.sl-ev){display:none}
+  .sl-day{text-align:left}
+}
+
+/* ─── botones segmentados ────────────────────────────────── */
+.seg{display:flex;gap:2px;margin-bottom:.9rem;flex-wrap:wrap}
+.sbtn{font-family:"Archivo",sans-serif;font-size:.82rem;font-weight:500;
+  background:var(--sunk);color:var(--ink-2);border:0;padding:.4rem .8rem;
+  border-radius:2px;cursor:pointer}
+.sbtn:hover{background:var(--rule-2);color:var(--ink)}
+.sbtn.on{background:var(--agil);color:var(--on-accent)}
+#burndown{display:block;width:100%;height:auto;margin:.2rem 0 .3rem}
+.verdict-agil{border-left-color:var(--agil)}
+.act.l-agil .ctrl input[type=range]{accent-color:var(--agil)}
+
+/* ─── matriz de riesgos ──────────────────────────────────── */
+.rmatrix{display:grid;grid-template-columns:5.2rem repeat(3,1fr);gap:2px;
+  font-family:"Archivo",sans-serif;max-width:32rem}
+.rm-h{font-size:.72rem;color:var(--ink-3);text-align:center;padding-bottom:.15rem}
+.rm-v{font-size:.72rem;color:var(--ink-3);display:flex;align-items:center;
+  justify-content:flex-end;padding-right:.5rem}
+.rm-c{border:0;cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:600;
+  padding:.95rem .3rem;color:var(--ink);line-height:1.15}
+.c-ac{background:var(--ok-bg);color:var(--ok-ink)}
+.c-at{background:var(--at-bg);color:var(--at-ink)}
+.c-in{background:var(--bad-bg);color:var(--bad-ink)}
+.rm-c:hover{filter:brightness(.95)}
+.rm-c.on{outline:3px solid var(--ink);outline-offset:-3px}
+.rm-detail{margin-top:1rem;font-size:.94rem;color:var(--ink-2);min-height:5rem;max-width:38rem;
+  border-top:1px solid var(--rule-2);padding-top:.8rem}
+.rm-detail:empty::before{content:"Elegí una celda.";color:var(--ink-3);
+  font-family:"Archivo",sans-serif;font-size:.85rem}
+.rm-detail b{color:var(--ink)}
+.rm-detail .rd-t{font-family:"Archivo",sans-serif;font-weight:600;font-size:.95rem;
+  color:var(--ink);display:block;margin-bottom:.25rem}
+.rm-detail .rd-s{display:inline-block;font-family:"Archivo",sans-serif;font-size:.76rem;
+  font-weight:600;background:var(--ink);color:var(--paper);padding:.12rem .45rem;
+  border-radius:2px;margin-bottom:.4rem}
+@media (max-width:560px){
+  .rmatrix{grid-template-columns:3.6rem repeat(3,1fr)}
+  .rm-h,.rm-v{font-size:.64rem}
+  .rm-c{font-size:.7rem;padding:.8rem .15rem}
+}
+
+/* ─── RCTF ───────────────────────────────────────────────── */
+.rctf{margin:1.2rem 0 1.1rem;max-width:var(--w-read);border:1px solid var(--rule-2);
+  background:var(--panel)}
+.rc{display:grid;grid-template-columns:5.5rem 1fr;gap:.7rem;padding:.6rem .75rem;
+  border-bottom:1px solid var(--rule-2)}
+.rc:last-child{border-bottom:0}
+.rc-k{font-family:"Archivo",sans-serif;font-size:.75rem;font-weight:700;
+  color:var(--ink-3);letter-spacing:.03em;padding-top:.12rem}
+.rc p{margin:0;font-size:.9rem;line-height:1.45;max-width:none;color:var(--ink-2)}
+@media (max-width:520px){.rc{grid-template-columns:1fr;gap:.15rem}}
+
+/* ─── mensajes DCD / CSAD ────────────────────────────────── */
+.msg{border:1px solid var(--rule-2);background:var(--panel);padding:.75rem .9rem .85rem;
+  margin:1.1rem 0;max-width:var(--w-read)}
+.msg-short{border-left:4px solid var(--ok)}
+.msg-long{border-left:4px solid var(--pred)}
+.msg-h{font-family:"Archivo",sans-serif;font-size:.73rem;font-weight:700;
+  letter-spacing:.04em;color:var(--ink-3);display:block;margin-bottom:.5rem}
+.msg p{font-size:.93rem;margin-bottom:.45rem;max-width:none}
+.msg p:last-child{margin-bottom:0}
+.msg-k{font-family:"Archivo",sans-serif;font-size:.78rem;font-weight:700;color:var(--ink)}
+
+/* ─── semáforos ──────────────────────────────────────────── */
+.sem{display:inline-flex;align-items:center;gap:.35rem;font-family:"Archivo",sans-serif;
+  font-size:.76rem;font-weight:500;margin-right:.6rem}
+.sem::before{content:"";width:.7rem;height:.7rem;border-radius:50%}
+.sem-g::before{background:var(--ok)}
+.sem-y::before{background:var(--amber)}
+.sem-r::before{background:var(--bad)}
+
+/* ─── lista de trampas ───────────────────────────────────── */
+ol.traps{counter-reset:tr;list-style:none;padding:0;max-width:var(--w-read)}
+ol.traps li{counter-increment:tr;position:relative;padding:.5rem .7rem .55rem 2.4rem;
+  background:var(--panel);border-left:4px solid var(--marker);margin-bottom:.3rem;
+  font-size:.96rem}
+ol.traps li::before{content:counter(tr);position:absolute;left:.75rem;top:.55rem;
+  font-family:"Archivo",sans-serif;font-size:.75rem;font-weight:700;color:var(--ink-3);
+  font-variant-numeric:tabular-nums}
+
+/* ─── quiz ───────────────────────────────────────────────── */
+.q{border:1px solid var(--rule-2);background:var(--panel);padding:.85rem .95rem 1rem;
+  margin-bottom:.65rem;max-width:var(--w-read)}
+.q-p{font-family:"Archivo",sans-serif;font-size:.95rem;font-weight:600;line-height:1.35;
+  margin:0 0 .6rem;display:flex;gap:.6rem}
+.q-p .q-n{color:var(--ink-3);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.q-opts{display:grid;gap:.25rem}
+.q-o{text-align:left;font-family:"Archivo",sans-serif;font-size:.87rem;line-height:1.3;
+  background:var(--paper);border:1px solid var(--rule-2);border-radius:2px;
+  padding:.45rem .6rem;cursor:pointer;color:var(--ink-2)}
+.q-o:hover:not(:disabled){border-color:var(--ink-3);color:var(--ink)}
+.q-o:disabled{cursor:default}
+.q-o.ok{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok-ink);font-weight:600}
+.q-o.no{background:var(--bad-bg);border-color:var(--bad-bd);color:var(--bad-ink)}
+.q-fb{margin:.6rem 0 0;font-size:.9rem;color:var(--ink-2);border-left:3px solid var(--rule);
+  padding-left:.65rem}
+.q-fb.good{border-left-color:var(--ok)}
+.q-fb.bad{border-left-color:var(--bad)}
+.quiz-foot{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem;
+  max-width:var(--w-read)}
+.score{font-family:"Archivo",sans-serif;font-size:.95rem;font-weight:600;margin:0}
+
+/* ─── responsive ─────────────────────────────────────────── */
+@media (max-width:1000px){
+  .wrap{grid-template-columns:1fr;gap:0}
+  nav.idx{position:static;padding-top:1.5rem;display:none;
+    border-bottom:1px solid var(--rule);padding-bottom:1.2rem}
+  nav.idx.open{display:block}
+  main{padding-top:1.8rem}
+  #menuBtn{display:inline-block}
+}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .duo{grid-template-columns:1fr}
+  .contra{grid-template-columns:1fr}
+  .contra > div:first-child{border-right:0;border-bottom:1px solid var(--rule-2)}
+  .act{padding-left:1rem}
+  .act.l-both{padding-left:1rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-kicker">Machete de Gestión de Proyectos Digitales, contado sobre el trabajo integrador</p>
+  <h1>Un proyecto, <span class="h-pred">dos capas</span> de <span class="h-agil">gestión</span></h1>
+  <p class="hero-lede">Rumbo Digital construye <b>Vitrina</b>, una plataforma SaaS que le permite a un comercio chico vender online sin programar. Tu trabajo integrador lo planificó a 10 meses y USD 98.438. El envoltorio del proyecto es predictivo; adentro, el MVP se construye en sprints. Cada concepto de la materia aparece en el momento en que Vitrina lo necesita.</p>
+
+  <div class="duo">
+    <article class="pcard p-pred">
+      <span class="tag">Capa 1, predictiva</span>
+      <h3>El plan del proyecto</h3>
+      <svg class="mini" viewBox="0 0 260 76" role="img" aria-label="Cinco fases escalonadas, una después de la otra">
+        <g class="mf-pred">
+          <rect class="st" x="0"   y="8"  width="48" height="13" rx="1"/>
+          <rect class="st" x="52"  y="21" width="48" height="13" rx="1" opacity=".88"/>
+          <rect class="st" x="104" y="34" width="48" height="13" rx="1" opacity=".76"/>
+          <rect class="st" x="156" y="47" width="48" height="13" rx="1" opacity=".64"/>
+          <rect class="st" x="208" y="60" width="48" height="13" rx="1" opacity=".52"/>
+        </g>
+      </svg>
+      <p>Cuatro fases, EDT, camino crítico y línea base en MS Project. Techo de financiamiento de USD 10.000 por mes y fecha comprometida con los sponsors.</p>
+      <p class="why">Alcance acordado + techo de plata = predictivo</p>
+    </article>
+
+    <article class="pcard p-agil">
+      <span class="tag">Capa 2, ágil</span>
+      <h3>La Fase 2: el MVP</h3>
+      <svg class="mini" viewBox="0 0 260 76" role="img" aria-label="Sprints iguales que se repiten con feedback entre uno y otro">
+        <g class="mf-agil">
+          <rect class="st" x="0"   y="30" width="54" height="24" rx="1"/>
+          <rect class="st" x="66"  y="30" width="54" height="24" rx="1" opacity=".85"/>
+          <rect class="st" x="132" y="30" width="54" height="24" rx="1" opacity=".7"/>
+          <rect class="st" x="198" y="30" width="54" height="24" rx="1" opacity=".55"/>
+        </g>
+        <g class="loop ms-agil" fill="none" stroke-width="1.8" stroke-linecap="round">
+          <path d="M50 26 q10 -14 20 0"/><path d="M116 26 q10 -14 20 0"/><path d="M182 26 q10 -14 20 0"/>
+          <path d="M70 26 l-4 -4 M70 26 l4 -4" opacity=".9"/>
+          <path d="M136 26 l-4 -4 M136 26 l4 -4" opacity=".9"/>
+          <path d="M202 26 l-4 -4 M202 26 l4 -4" opacity=".9"/>
+        </g>
+        <g class="mt-agil" font-family="Archivo,sans-serif" font-size="10">
+          <text class="loop" x="8" y="70">sprint 1</text><text class="loop" x="74" y="70">sprint 2</text>
+          <text class="loop" x="140" y="70">sprint 3</text><text class="loop" x="206" y="70">sprint 4</text>
+        </g>
+      </svg>
+      <p>Tienda, pagos, envíos, marketing y app móvil. Qué entra en el MVP se descubre con el piloto, así que el equipo trabaja en sprints de dos semanas.</p>
+      <p class="why">Requisitos que se descubren = Scrum</p>
+    </article>
+  </div>
+</header>
+
+<div class="tools">
+  <div class="tools-in">
+    <button class="tbtn" id="menuBtn" aria-expanded="false">Índice</button>
+    <button class="tbtn" id="tapBtn" aria-pressed="false">Modo tapado</button>
+    <a class="tbtn" href="#quiz" style="text-decoration:none">Autoevaluación</a>
+    <button class="tbtn" id="themeBtn">Modo claro</button>
+    <span class="hint" id="tapHint">Tapa los datos clave y los revelás tocándolos</span>
+  </div>
+</div>
+
+<div class="wrap">
+<nav class="idx" id="idx" aria-label="Índice">
+  <ol>
+    <li><a href="#a0" class="l-both"><span class="n">0</span><span>El negocio antes que el proyecto</span></a></li>
+    <li><a href="#a1" class="l-both"><span class="n">1</span><span>De la idea al proyecto: PMBOK</span></a></li>
+    <li><a href="#a2" class="l-both"><span class="n">2</span><span>Quién es quién</span></a></li>
+    <li><a href="#a3" class="l-pred"><span class="n">3</span><span>Planificar Vitrina: alcance y cronograma</span></a></li>
+    <li><a href="#a4" class="l-pred"><span class="n">4</span><span>La plata: línea base y valor ganado</span></a></li>
+    <li><a href="#a5" class="l-agil"><span class="n">5</span><span>La Fase 2 en sprints</span></a></li>
+    <li><a href="#a6" class="l-both"><span class="n">6</span><span>Los seis riesgos de Vitrina</span></a></li>
+    <li><a href="#a7" class="l-both"><span class="n">7</span><span>Contar lo que pasa</span></a></li>
+    <li><a href="#a8" class="l-both"><span class="n">8</span><span>Las dos capas, lado a lado</span></a></li>
+    <li><a href="#quiz" class="l-both"><span class="n">9</span><span>Autoevaluación</span></a></li>
+  </ol>
+  <p class="nav-note">Azul = capa predictiva del plan. Rosa = capa ágil del MVP. La barra partida marca lo que aplica a los dos. La pastilla bicolor <span class="tvchip">transversal</span> señala las herramientas que se usan en los dos enfoques.</p>
+</nav>
+
+<main>
+<!-- ═══════════════ ACTO 0 ═══════════════ -->
+<section class="act l-both" id="a0">
+  <div class="act-head">
+    <span class="act-num">Acto 0</span>
+    <h2>El negocio antes que el proyecto</h2>
+    <p class="act-sub">Vitrina no nace de una idea suelta: nace del modelo de negocio de Rumbo Digital y de un entorno que aprieta. Todo el proyecto se deduce de acá, y en el examen te van a pedir justamente esa cadena.</p>
+  </div>
+
+  <h3 class="t">Business Model Canvas: Vitrina en una hoja</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El Canvas responde <b>cómo una empresa crea, entrega y captura valor</b>, todo en <b>una sola página</b>. Lo creó <span class="tap">Osterwalder</span> (con Pigneur) en <i>Business Model Generation</i>.</p>
+  </div>
+
+  <p>No memorices los nueve bloques sueltos: se completan <b>del cliente hacia adentro</b>. A quién le sirvo, qué le doy, cómo se lo hago llegar, cómo cobro, qué necesito para producirlo, cuánto me cuesta.</p>
+
+  <div class="bmc" role="table" aria-label="Business Model Canvas de Vitrina">
+    <div class="b b-inf" style="grid-area:soc"><span class="bn">8</span><span class="bt">Socios clave</span><span class="bd">Pasarelas de pago (Mercado Pago), operadores logísticos (OCA, Andreani, Correo Argentino), Meta y Google, y estudios implementadores</span></div>
+    <div class="b b-inf" style="grid-area:act"><span class="bn">7</span><span class="bt">Actividades clave</span><span class="bd">Desarrollo y mantenimiento, onboarding y soporte, adquisición de clientes, gestión de integraciones</span></div>
+    <div class="b b-inf" style="grid-area:rec"><span class="bn">6</span><span class="bt">Recursos clave</span><span class="bd">La plataforma SaaS y su infraestructura, el equipo de producto y soporte, la marca, y los datos de uso y ventas</span></div>
+    <div class="b b-mkt" style="grid-area:pro"><span class="bn">2</span><span class="bt">Propuesta de valor</span><span class="bd">Tienda + pagos + envíos + marketing en un solo lugar, <b>sin programar</b>, con soporte local en español y precio accesible y predecible</span></div>
+    <div class="b b-mkt" style="grid-area:rel"><span class="bn">4</span><span class="bt">Relación con clientes</span><span class="bd">Autoservicio asistido, soporte humano local, comunidad y contenido, éxito del cliente en planes altos y fidelización por suscripción</span></div>
+    <div class="b b-mkt" style="grid-area:can"><span class="bn">3</span><span class="bt">Canales</span><span class="bd">Web propia con prueba gratuita self-service, marketing digital (SEO, Ads, redes), alianzas con estudios, referidos y app móvil</span></div>
+    <div class="b b-mkt" style="grid-area:seg"><span class="bn">1</span><span class="bt">Segmentos de clientes</span><span class="bd">Comercio chico con local físico que suma canal digital (<b>foco</b>), emprendedores que arrancan, PyMEs que migran de IG y WhatsApp, y nichos con recompra</span></div>
+    <div class="b b-eco" style="grid-area:cos"><span class="bn">9</span><span class="bt">Estructura de costos</span><span class="bd">Infraestructura y licencias, salarios del equipo, costo de adquisición (CAC) y comisiones a partners</span></div>
+    <div class="b b-eco" style="grid-area:ing"><span class="bn">5</span><span class="bt">Fuentes de ingreso</span><span class="bd">Suscripción mensual por planes (Básico, Pro, Full), comisiones por servicios integrados, add-ons premium y planes anuales</span></div>
+  </div>
+
+  <ul>
+    <li><b>Lado derecho, bloques 1 a 5:</b> el mercado. A quién le vendo, qué le prometo, por dónde llego, cómo lo trato, cuánto entra.</li>
+    <li><b>Lado izquierdo, bloques 6 a 8:</b> la infraestructura. Qué tengo, qué hago, con quién me apoyo.</li>
+    <li><b>Abajo, bloques 5 y 9:</b> ingresos contra costos. Juntos definen la <b>viabilidad</b>.</li>
+  </ul>
+  <div class="trampa">
+    <span class="lbl">Cómo se defiende en la mesa</span>
+    <p>Si te preguntan «¿por qué el bloque 8 tiene a Mercado Pago?», la respuesta sale de la cadena: la <b>propuesta de valor</b> promete pagos preconfigurados, eso obliga a una <b>actividad clave</b> de integraciones, y esa actividad <span class="mk">no la podés hacer solo</span>: necesitás al socio.</p>
+  </div>
+
+  <h3 class="t">Pareto: no todos los segmentos pesan igual</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El <b>80% de los resultados</b> sale del <b>20% de las causas</b> (Vilfredo Pareto). En el Canvas sirve para <b>priorizar segmentos</b>.</p>
+  </div>
+  <p>Por eso Vitrina tiene un <b>segmento foco</b> declarado y no cuatro segmentos tratados por igual: el comercio chico con local físico es el que justifica la propuesta de valor completa. Los otros tres se atienden, pero no mandan en las decisiones de producto.</p>
+  <div class="caso">
+    <span class="who">Cómo se aplica en la práctica</span>
+    <p>La tabla de segmentos lleva la columna <b>% de utilidad esperada</b>, no sólo el volumen de cuentas. Un segmento chico que compra el plan Full y se queda dos años pesa más que uno grande que rota en el plan Básico.</p>
+    <p>Mismo criterio dentro del proyecto: la <b>Fase 2</b> es el 36% del presupuesto y concentra el riesgo técnico. Si vas a poner atención desproporcionada en algún lado, es ahí.</p>
+  </div>
+
+  <h3 class="t">PESTEL: lo de afuera que no controlás</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>PESTEL analiza el <b>macroentorno</b>: lo externo que la empresa <b>no controla</b> pero la afecta igual. Seis factores: Político, Económico, Social, Tecnológico, Ecológico y Legal.</p>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:8.5rem">Factor</th><th>Qué le pasa a Vitrina</th></tr></thead>
+    <tbody>
+      <tr><th>Político</th><td><b>Aranceles de importación sobre tecnología</b>, que en la Parte 2 suben 18% por mes</td></tr>
+      <tr><th>Económico</th><td>Inflación y presión salarial: en la Parte 2 llega un <b>aumento del 15% retroactivo</b> a los desarrolladores</td></tr>
+      <tr><th>Social</th><td>Baja digitalización de la PyME argentina, y competencia de marketplaces y de Shein y Temu</td></tr>
+      <tr><th>Tecnológico</th><td>Pasarelas de pago y logística ya integrables por API; expectativa de app móvil como estándar</td></tr>
+      <tr><th>Ecológico</th><td>Presión sobre packaging y logística de última milla en los comercios que venden por la plataforma</td></tr>
+      <tr><th>Legal</th><td><b>Nueva instancia de auditoría regulatoria</b> antes del lanzamiento, detectada por Legales</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="trampa">
+    <span class="lbl">El puente entre la Parte 1 y la Parte 2</span>
+    <p>Fijate qué pasó: <b>cuatro de las siete restricciones</b> del escenario de crisis son factores PESTEL que se materializaron. El arancel es <b>político</b>, el aumento salarial es <b>económico</b>, la auditoría es <b>legal</b>. <span class="mk">La crisis no fue mala suerte: fue el macroentorno haciendo lo que el macroentorno hace.</span></p>
+    <p>Esa frase, dicha en la defensa, vale más que enumerar las seis letras.</p>
+  </div>
+
+  <p>No confundas los planos: <b>PESTEL es macro y no controlable</b>. El <b>microentorno</b> son los actores cercanos sobre los que <b>sí</b> podés influir o negociar: Mercado Pago, OCA, Andreani, los comercios del piloto, el proveedor de cloud y los competidores directos como Tiendanube o Shopify. Que Mercado Pago te cambie una comisión es microentorno; que suban los aranceles es PESTEL.</p>
+
+  <h3 class="t">Value Proposition Canvas: el encaje</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Dos mitades que tienen que <b>encajar</b>. Cada componente de un lado responde a uno del otro, uno a uno.</p>
+  </div>
+
+  <div class="vpc">
+    <div class="vp-col vp-cli">
+      <h5>Perfil del cliente</h5>
+      <div class="vp-row"><span class="vp-k">Trabajos (jobs)</span><span class="vp-v">Vender también por internet, cobrar y enviar simple, no duplicar tareas de stock, y verse profesional</span></div>
+      <div class="vp-row"><span class="vp-k">Frustraciones (pains)</span><span class="vp-v">Cree que necesita programar o pagar agencia; herramientas sueltas que no se hablan; cuesta atraer tráfico</span></div>
+      <div class="vp-row"><span class="vp-k">Beneficios (gains)</span><span class="vp-v">Empezar a vender rápido, soporte en español, costo accesible, vender más fidelizando</span></div>
+    </div>
+    <div class="vp-arrows" aria-hidden="true"><span>⇄</span><span>⇄</span><span>⇄</span></div>
+    <div class="vp-col vp-emp">
+      <h5>Mapa de valor de Vitrina</h5>
+      <div class="vp-row"><span class="vp-k">Productos y servicios</span><span class="vp-v">Tienda, pagos, envíos y marketing en un solo panel, con app móvil</span></div>
+      <div class="vp-row"><span class="vp-k">Aliviadores de frustraciones</span><span class="vp-v">Se lanza en menos de un día sin programar; todo integrado; marketing incluido; pagos y envíos preconfigurados</span></div>
+      <div class="vp-row"><span class="vp-k">Creadores de beneficio</span><span class="vp-v">Plantillas profesionales, suscripciones y omnicanalidad</span></div>
+    </div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">El encaje se demuestra fila por fila</span>
+    <p>«Cuesta atraer tráfico» es el <b>dolor número uno del sector</b> y le responde un aliviador puntual: <b>marketing integrado incluido</b>. Ese emparejamiento uno a uno es lo que se llama <span class="mk">fit</span>. Y <b>no es permanente</b>: se revalida con entrevistas, prototipos y, en Vitrina, con el feedback del piloto de la Fase 3.</p>
+  </div>
+
+  <h3 class="t">Las cinco funciones de un canal</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Un canal acompaña <b>todo el ciclo de compra</b>, de antes a después. Es un embudo temporal, por eso salen solas en orden.</p>
+  </div>
+  <p>Aplicadas al canal principal de Vitrina, la web propia con prueba gratuita:</p>
+  <ol class="fun">
+    <li><b>Dar a conocer.</b> SEO, campañas en Meta y Google, y los estudios implementadores que la recomiendan.</li>
+    <li><b>Ayudar a evaluar.</b> La prueba gratuita self-service y las plantillas que se ven antes de pagar.</li>
+    <li><b>Permitir comprar.</b> Alta del plan Básico, Pro o Full con pago mensual desde el mismo panel.</li>
+    <li><b>Entregar valor.</b> La tienda publicada en menos de un día, con pagos y envíos ya conectados.</li>
+    <li><b>Postventa.</b> Onboarding asistido, soporte local en español y el equipo de Customer Success en los planes altos.</li>
+  </ol>
+
+  <h3 class="t">Upselling y cross-selling</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Los dos exprimen al <b>cliente que ya tenés</b>. La diferencia es <b>vertical contra horizontal</b>.</p>
+  </div>
+  <div class="contra">
+    <div class="c-pred"><h5>Upselling, hacia arriba</h5><p>Versión mejor del <b>mismo</b> producto. En Vitrina: pasar del plan <b>Básico al Pro</b>, o del Pro al Full. Mismo servicio, más capacidad.</p></div>
+    <div class="c-agil"><h5>Cross-selling, al costado</h5><p>Productos <b>complementarios</b>. En Vitrina: los <b>add-ons premium</b> y las comisiones por servicios integrados. Se suman al costado del plan.</p></div>
+  </div>
+  <p>Los dos aparecen en el bloque 5 del Canvas, y son los que hacen que el modelo de suscripción cierre: el costo de adquisición se paga una vez, pero el ingreso por cuenta puede seguir creciendo sin sumar clientes nuevos.</p>
+</section>
+
+<!-- ═══════════════ ACTO 1 ═══════════════ -->
+<section class="act l-both" id="a1">
+  <div class="act-head">
+    <span class="act-num">Acto 1</span>
+    <h2>De la idea al proyecto, y por qué se gestiona en dos capas</h2>
+    <p class="act-sub">Rumbo Digital tiene una oportunidad de negocio y un techo de plata. La pregunta es con qué marco la gestiona, y la respuesta del PMBOK 7 es que no hay una respuesta única.</p>
+  </div>
+
+  <h3 class="t">PMI y PMBOK, en una línea cada uno</h3>
+  <ul>
+    <li><b>PMI</b> (Project Management Institute) es la <b>organización</b> global que publica la guía.</li>
+    <li><b>PMBOK</b> (Project Management Body of Knowledge) es un <b>marco de referencia flexible</b>, reconocido en más de 200 países. No es una metodología rígida ni un manual de pasos.</li>
+  </ul>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p>La <b>7ª edición se publicó en <span class="tap">2021</span></b>. No 2018, no 2019, no 2023.</p>
+  </div>
+
+  <h3 class="t">PMBOK 6 contra PMBOK 7: del control al valor</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El cambio de paradigma es <b>«del control al valor»</b>: se pasa de preguntar <i>¿seguiste el proceso?</i> a preguntar <i>¿generaste valor?</i></p>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th></th><th>PMBOK 6, prescriptivo</th><th>PMBOK 7, adaptable</th></tr></thead>
+    <tbody>
+      <tr><th>Estructura</th><td><span class="tap">49 procesos, 10 áreas de conocimiento</span></td><td><span class="tap">12 principios + 8 dominios</span></td></tr>
+      <tr><th>El éxito se mide en</th><td>Alcance, tiempo y costo</td><td><b>Valor entregado</b></td></tr>
+      <tr><th>Foco</th><td>Control</td><td>Adaptación (tailoring)</td></tr>
+      <tr><th>El PM es</th><td>Controlador</td><td>Líder e integrador</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="trampa">
+    <span class="lbl">La trampa clásica, aplicada a Vitrina</span>
+    <p>Supongamos que Vitrina se lanza el 04/09 como exige el sponsor y cierra en USD 111.474, dentro del tope. Pero en el piloto <b>ninguno de los comercios publica su tienda</b> porque el onboarding es confuso. Para PMBOK 7 eso es un <span class="mk">fracaso</span>: cumplir el triángulo de hierro no alcanza si el negocio no se beneficia.</p>
+    <p>Por eso el proyecto tiene una <b>Fase 3 de piloto</b> entera antes del lanzamiento comercial: existe para verificar el valor, no para verificar el cronograma.</p>
+  </div>
+
+  <h3 class="t">Los tres pilares del PMBOK 7</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Cómo pensar, qué gestionar, cómo hacerlo.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th style="width:11rem">Pilar</th><th>Para qué</th><th>En Vitrina</th></tr></thead>
+    <tbody>
+      <tr><th>Principios (12)</th><td>Cómo pensar y decidir</td><td>«Entregá valor» es lo que justifica la Fase 3 de piloto antes de escalar</td></tr>
+      <tr><th>Dominios (8)</th><td>Qué gestionar</td><td>Interesados, equipo, entrega, incertidumbre… todos vivos a la vez</td></tr>
+      <tr><th>Modelos y métodos</th><td>Cómo hacerlo</td><td>EDT, camino crítico, MS Project y valor ganado en la capa del plan; Scrum en la Fase 2</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">No confundir</span>
+    <p>Los tres pilares <b>no</b> son «Iniciación / Ejecución / Cierre», ni «Alcance / Tiempo / Costo», ni «Predictivo / Ágil / Híbrido». Son <span class="mk">Principios, Dominios, y Modelos y métodos</span>.</p>
+  </div>
+
+  <h3 class="t">Los 8 dominios de desempeño</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Operan <b>en paralelo y son interdependientes</b>: tocás uno y se mueven los demás. No son etapas en secuencia.</p>
+  </div>
+  <p>Se leen como capas de un proyecto: <b>Interesados → Equipo → Enfoque y ciclo de vida → Planificación → Trabajo del proyecto → Entrega → Medición → Incertidumbre</b>.</p>
+  <div class="caso">
+    <span class="who">Un solo hecho de tu Parte 2 mueve cinco dominios</span>
+    <p>Renuncia el <b>desarrollador senior</b> (riesgo R1). <b>Equipo</b> se desarma; hay que rehacer la <b>Planificación</b> y meter la tarea C5 de onboarding del reemplazo, veinte días; se corre la <b>Entrega</b>; la <b>Medición</b> muestra el desvío contra la línea base; y la <b>Incertidumbre</b> sube porque el perfil senior era el que conocía la arquitectura de pagos.</p>
+    <p>Un evento, cinco dominios. Ése es exactamente el argumento de por qué son interdependientes y no secuenciales.</p>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Dónde viven los costos</span>
+    <p>En PMBOK 7 los costos se gestionan desde el <b>Dominio de Financiamiento</b>, <span class="mk">no</span> desde un «área de costos». Eso último era PMBOK 6.</p>
+  </div>
+
+  <h3 class="t">Los 12 principios, agrupados por tema</h3>
+  <p>No hace falta recitarlos. Alcanza con reconocerlos por familia:</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:10rem">Familia</th><th>Principios</th></tr></thead>
+    <tbody>
+      <tr><th>Personas</th><td>Stewardship (ética y cuidado), Equipo, Interesados, Liderazgo</td></tr>
+      <tr><th>Valor y contexto</th><td>Valor, Pensamiento sistémico, Tailoring, Calidad</td></tr>
+      <tr><th>Frente a lo incierto</th><td>Complejidad, Riesgo, Adaptabilidad, Cambio</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Tailoring: por qué Vitrina se gestiona en dos capas</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>Adaptar</b> el enfoque al contexto: tamaño, complejidad, industria, cultura. No existe receta única. No es «hago lo que quiero», es <b>personalizar con criterio</b>.</p>
+  </div>
+  <p>Acá se parte el machete en dos carriles, y conviene entender <i>por qué</i>, porque de esa decisión se deduce todo lo demás.</p>
+
+  <div class="contra">
+    <div class="c-pred">
+      <h5>El plan va predictivo</h5>
+      <p>Hay un <b>techo de financiamiento</b> de USD 10.000 por mes que no se puede superar, una fecha comprometida con los sponsors y un entregable acordado. Para controlar plata contra un tope necesitás <b>línea base</b>, y para tener línea base necesitás plan completo.</p>
+    </div>
+    <div class="c-agil">
+      <h5>La Fase 2 va ágil</h5>
+      <p>Qué funciones entran realmente en el MVP se descubre construyendo y mirando el piloto. Cerrar hoy las 40 pantallas de la tienda sería inventar. El equipo prioriza un backlog y entrega incrementos cada dos semanas.</p>
+    </div>
+  </div>
+  <div class="tvbox">
+    <span class="lbl">Esto tiene nombre: enfoque híbrido</span>
+    <p>Un envoltorio predictivo con ejecución ágil adentro es un <b>híbrido</b>, y es el resultado directo de aplicar tailoring. No es una inconsistencia del trabajo: es la respuesta correcta cuando <b>la plata y la fecha están acotadas pero el alcance de detalle no</b>.</p>
+    <p>Regla práctica para el examen: si los requisitos son estables y la fecha es dura, <b>predictivo</b>; si los requisitos se descubren y el feedback manda, <b>ágil</b>; si conviven las dos cosas, <b>híbrido</b>.</p>
+  </div>
+
+  <h3 class="t">Qué cambia con el enfoque y qué no</h3>
+  <p>El tailoring no reemplaza todo: cambia <b>cómo planificás, cómo entregás y cómo medís</b>. Hay un núcleo que queda igual en las dos capas, y conviene tenerlo separado en la cabeza porque es lo que más se confunde.</p>
+  <div class="tvbox">
+    <span class="lbl">Transversal: se usa igual en las dos capas</span>
+    <ul>
+      <li>Todo el <b>marco PMBOK 7</b>: los 12 principios, los 8 dominios, el tailoring mismo</li>
+      <li>El <b>triángulo de hierro</b> y el <b>triángulo del talento</b></li>
+      <li>La <b>matriz poder / interés</b>, los objetivos <b>SMART</b> y la distinción objetivo / meta</li>
+      <li>Toda la <b>gestión de riesgos</b>: exposición, matriz de probabilidad e impacto, matriz de decisión, human-in-the-loop, RCTF</li>
+      <li>Los formatos de comunicación <b>DCD</b> y <b>CSAD</b></li>
+      <li><b>Kanban</b>, el <b>roadmap</b>, los <b>hitos</b>, el <b>cono de incertidumbre</b> y la lógica <b>rolling wave</b></li>
+      <li>Todo el bloque de negocio: Canvas, PESTEL, Pareto, propuesta de valor, canales</li>
+    </ul>
+  </div>
+  <div class="contra">
+    <div class="c-pred"><h5>Sólo en la capa predictiva</h5><p>EDT y regla 8/80, diagrama de red, relaciones FS/SS/FF/SF, lead y lag, Gantt, camino crítico, MS Project, línea base, curva S, EVM y sus fórmulas, reservas, rebaselining, crashing y fast-tracking, status report con semáforos.</p></div>
+    <div class="c-agil"><h5>Sólo en la capa ágil</h5><p>Manifiesto ágil, sprint e incremento, los 3 roles, los 3 artefactos, las 4 ceremonias, historia de usuario, jerarquía JIRA, planning poker y story points, burndown, velocity, demo en el Sprint Review.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTO 2 ═══════════════ -->
+<section class="act l-both" id="a2">
+  <div class="act-head">
+    <span class="act-num">Acto 2</span>
+    <h2>Quién es quién, y con qué restricciones juega</h2>
+    <p class="act-sub">Antes de tocar el cronograma hay que saber quién decide, quién puede frenar el lanzamiento, quién paga y qué se puede sacrificar cuando los sponsors adelantan la fecha. <span class="tvchip">transversal</span> Todo este acto aplica igual a las dos capas.</p>
+  </div>
+
+  <h3 class="t">Las tres competencias del PM (triángulo del talento)</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Saber, hacer, guiar. <b>Conocimiento</b> (saber de gestión) → <b>Desempeño</b> (aplicarlo y lograr resultados) → <b>Liderazgo</b> (motivar e influir).</p>
+  </div>
+  <p>En Vitrina es el <b>Líder de Proyecto</b>, a USD 30 la hora y presente durante los diez meses: planifica, coordina y controla alcance, tiempo y costo, y es el interlocutor con los sponsors. Las tres competencias se le exigen a la vez, no por etapas.</p>
+  <div class="trampa">
+    <span class="lbl">No confundir</span>
+    <p>No es «planificación / ejecución / control» ni «comunicación / negociación / motivación». Es <span class="mk">Conocimiento, Desempeño y Liderazgo</span>.</p>
+  </div>
+
+  <h3 class="t">Triángulo de hierro: el trade-off consciente</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Tres restricciones <b>contrapuestas</b>: <b>Calidad, Costo y Duración</b>. Tocás una punta y afectás las otras dos.</p>
+  </div>
+  <div class="caso">
+    <span class="who">El corazón de tu Parte 2</span>
+    <p>Los sponsors exigen <b>adelantar la entrega dos meses</b> y avisan que no es negociable. Se movió la <b>Duración</b>: de 10 meses a 8. Ahí no hay magia, hay dos salidas y las dos duelen.</p>
+    <p><b>Subir el costo:</b> es lo que se eligió. Se sumó un segundo desarrollador en Tienda/Catálogo y App móvil, y el proyecto pasó de USD 98.438 a <b>USD 111.474, un +13,2%</b>.</p>
+    <p><b>Aceptar riesgo de calidad:</b> el fast-tracking solapa la preparación del lanzamiento con el cierre del piloto. Ganás calendario, pero empezás a preparar el lanzamiento antes de tener todo el feedback del piloto.</p>
+    <p>Lo que <b>no</b> se puede es fingir que las tres puntas quedaron intactas. La defensa del trabajo es exactamente eso: mostrar qué punta se movió, qué se pagó a cambio y por qué era la decisión correcta.</p>
+  </div>
+  <div class="trampa">
+    <span class="lbl">No confundir</span>
+    <p>No es «personas / procesos / tecnología» ni «alcance / comunicación / riesgos».</p>
+  </div>
+
+  <h3 class="t">Matriz poder e interés: el mapa político</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El <b>poder</b> define cuánto esfuerzo le ponés. El <b>interés</b> define cuánta comunicación le mandás. Los cuatro cuadrantes salen de cruzar eso.</p>
+  </div>
+  <p class="lab-s" style="margin-bottom:.6rem">Tocá un cuadrante para ver la estrategia y quiénes caen ahí en Vitrina. Son los siete interesados de tu matriz.</p>
+
+  <div class="lab">
+    <div class="pmatrix" id="pmatrix">
+      <div class="pm-axis pm-axis-y"><span>Poder alto</span><span>Poder bajo</span></div>
+      <div class="pm-grid">
+        <button class="pm-cell" data-k="ha">Mantener satisfechos</button>
+        <button class="pm-cell pm-hot" data-k="hh">Gestionar de cerca</button>
+        <button class="pm-cell" data-k="la">Monitorear</button>
+        <button class="pm-cell" data-k="lh">Mantener informados</button>
+      </div>
+      <div class="pm-axis pm-axis-x"><span>Interés bajo</span><span>Interés alto</span></div>
+    </div>
+    <div class="pm-detail" id="pmDetail" role="status" aria-live="polite"></div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">El interesado que más se subestima</span>
+    <p><b>Legales interna</b> tiene poder alto e interés sólo medio, pero <span class="mk">puede frenar el lanzamiento</span>. Ése es el que se ignora hasta que aparece con una auditoría de compliance obligatoria a último momento. Por eso se valida en cada hito y no al final.</p>
+  </div>
+  <p>La matriz <b>no es estática</b>: los comercios del piloto tienen poder bajo en la Fase 1, pero cuando llega la Fase 3 su feedback decide si el piloto valida o no.</p>
+
+  <h3 class="t">Objetivos SMART, y la diferencia con las metas</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>SMART es el <b>antídoto contra objetivos mal definidos</b>: eSpecífico, Medible, Alcanzable, Relevante y Temporal.</p>
+  </div>
+  <div class="contra">
+    <div><h5>Mal escrito</h5><p>«Lanzar una plataforma de e-commerce para PyMEs.»<br>No se sabe qué incluye, ni con qué presupuesto, ni para cuándo.</p></div>
+    <div><h5>SMART</h5><p>«Lanzar comercialmente Vitrina con tienda, pagos, envíos, marketing y app móvil, validada por un piloto de comercios, antes del 04/11/2026 y por debajo de USD 100.000.»</p></div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Objetivo y meta no son lo mismo</span>
+    <p><b>Objetivo = el QUÉ</b>: el fin último, abstracto, de largo plazo. <b>Meta = el CÓMO</b>: los pasos intermedios, concretos y medibles. <span class="mk">No los inviertas</span>: el objetivo nunca es el «cómo».</p>
+    <p>En Vitrina: objetivo, «que el comercio chico venda online sin programar». Metas, los cuatro hitos: diseño aprobado, MVP en producción, piloto validado, lanzamiento comercial.</p>
+  </div>
+
+  <h3 class="t">El equipo: nueve perfiles, y por qué cada uno</h3>
+  <p>El equipo no se armó por intuición: se dimensionó desde las <b>actividades clave del Canvas</b> y las fases del cronograma. Ésa es la cadena que hay que poder recitar en la defensa.</p>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:11rem">Perfil</th><th>Por qué está y cuándo es crítico</th><th style="width:5rem">USD/h</th></tr></thead>
+    <tbody>
+      <tr><th>Líder de Proyecto</th><td>Planifica, coordina y controla; interlocutor con sponsors. Todo el proyecto.</td><td class="n">30</td></tr>
+      <tr><th>Product Owner / Analista</th><td>Traduce la visión en requisitos y prioridades; define el alcance del MVP. Clave en Fase 1.</td><td class="n">26</td></tr>
+      <tr><th>Diseñador UX-UI</th><td>Experiencia y plantillas profesionales, que son diferencial de producto.</td><td class="n">22</td></tr>
+      <tr><th>Desarrollador Senior</th><td>Arquitectura, pagos y escalado. Perfil escaso: es el origen del riesgo R1.</td><td class="n">35</td></tr>
+      <tr><th>Desarrollador Semi-Senior</th><td>Features de tienda, envíos, marketing y app móvil.</td><td class="n">24</td></tr>
+      <tr><th>QA / Tester</th><td>Pruebas funcionales, de seguridad y de carga.</td><td class="n">20</td></tr>
+      <tr><th>Especialista de Marketing</th><td>Adquisición de comercios y campañas. Clave en piloto y lanzamiento.</td><td class="n">22</td></tr>
+      <tr><th>Customer Success</th><td>Onboarding, soporte local y retención.</td><td class="n">18</td></tr>
+      <tr><th>Asesor Legal-Compliance</th><td>Auditoría regulatoria previa al lanzamiento. Entra en la Parte 2.</td><td class="n">40</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">Detalle que se pregunta</span>
+    <p>La <b>tarifa extraordinaria es el doble</b> de la estándar y se usa para horas extra. Cuando comprimís el cronograma con crashing, ése es el multiplicador que hace que el costo suba tan rápido.</p>
+  </div>
+
+  <h3 class="t">Roles según la capa</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>Predictivo es jerárquico</b>: hay un jefe que asigna. <b>Scrum reparte el poder</b>: no hay jefe interno.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Capa predictiva, el plan</th><th>Capa ágil, la Fase 2</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Sponsors / Comité de Inversión:</b> financian y autorizan. Son los que exigen el adelanto de dos meses.</td>
+        <td><b>Product Owner:</b> el Product Owner / Analista. Prioriza el backlog y decide <b>qué</b> entra en el MVP.</td>
+      </tr>
+      <tr>
+        <td><b>Líder de Proyecto:</b> autoridad central, <b>asigna</b> tareas y responde por el plan.</td>
+        <td><b>Scrum Master:</b> facilita, quita impedimentos. <b>No es jefe</b> y no asigna tareas.</td>
+      </tr>
+      <tr>
+        <td><b>Equipo:</b> ejecuta lo asignado según el cronograma.</td>
+        <td><b>Development Team:</b> dev senior, semi-senior, QA y UX. <b>Autoorganizado</b>.</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">Trampa de roles</span>
+    <p><b>Product Owner y Scrum Master existen sólo en ágil.</b> Tu proyecto tiene un <b>Product Owner / Analista</b> en la planilla de recursos, pero en la capa predictiva ese perfil funciona como <span class="mk">analista de negocio</span>: levanta requisitos y no manda sobre el cronograma.</p>
+  </div>
+  <p>Dos roles que se confunden seguido: el <b>analista de negocio</b> mira la <b>organización</b> y levanta requisitos de alto nivel; el <b>analista funcional o UX</b> mira el <b>sistema</b>, el aplicativo concreto y cómo se usa. En Vitrina el primero es el Product Owner / Analista y el segundo es el Diseñador UX-UI.</p>
+</section>
+
+<!-- ═══════════════ ACTO 3 ═══════════════ -->
+<section class="act l-pred" id="a3">
+  <div class="act-head">
+    <span class="act-num">Acto 3, capa predictiva</span>
+    <h2>Planificar Vitrina: alcance y cronograma</h2>
+    <p class="act-sub">Alcance primero, cronograma después. En un plan predictivo ese orden no es una preferencia: es la única forma de que la línea base signifique algo.</p>
+  </div>
+
+  <h3 class="t">Las cinco fases del modelo cascada, y las cuatro de tu EDT</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El modelo es <b>lineal y secuencial</b>: cada etapa depende de que la anterior termine y <b>no se solapan</b>. Sólo funciona con requisitos estables desde el inicio.</p>
+  </div>
+  <div class="phases">
+    <div class="ph"><span class="ph-n">1</span><b>Análisis</b><span>Requisitos, alcance, investigación</span></div>
+    <div class="ph"><span class="ph-n">2</span><b>Diseño</b><span>UX-UI, prototipo, arquitectura</span></div>
+    <div class="ph"><span class="ph-n">3</span><b>Implementación</b><span>Construcción de los módulos</span></div>
+    <div class="ph"><span class="ph-n">4</span><b>Pruebas</b><span>QA, seguridad, carga, piloto</span></div>
+    <div class="ph"><span class="ph-n">5</span><b>Despliegue y mantenimiento</b><span>Lanzamiento y soporte</span></div>
+  </div>
+  <p>Truco para el orden: entender <b>qué</b> → planear <b>cómo</b> → <b>construir</b> → <b>chequear</b> → <b>entregar</b> y sostener.</p>
+  <div class="trampa">
+    <span class="lbl">Dato de examen, y cómo se relaciona con tu trabajo</span>
+    <p>El modelo teórico tiene <b><span class="tap">cinco</span> fases</b>, no tres, cuatro ni seis. Tu EDT las agrupó en <b>cuatro fases de negocio</b>, y eso no es un error: es la misma secuencia empaquetada distinto.</p>
+    <p>Análisis y Diseño viven juntos en la <b>Fase 1 (Discovery y Diseño)</b>. Implementación es la <b>Fase 2 (MVP)</b>. Pruebas está repartida entre el QA de la Fase 2 y la <b>Fase 3 (Piloto)</b>. Despliegue y mantenimiento es la <b>Fase 4 (Lanzamiento y Escala)</b>.</p>
+  </div>
+
+  <h3 class="t">EDT: lo que no está acá, no existe</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla y frase de examen</span>
+    <p>«<b>Lo que no está en la EDT, no está en el proyecto.</b>» Es una descomposición <b>jerárquica y orientada a entregables</b>: se organiza por <b>qué</b> hay que entregar, no por fechas ni por acciones.</p>
+  </div>
+
+  <div class="edt">
+    <div class="edt-l0"><span class="edt-c">1.0</span> Vitrina, plataforma SaaS</div>
+    <div class="edt-l1">
+      <div class="edt-br">
+        <div class="edt-n"><span class="edt-c">1.1</span> Discovery y Diseño</div>
+        <div class="edt-l2">
+          <div class="edt-n edt-wp"><span class="edt-c">1.1.1</span> Alcance y requisitos</div>
+          <div class="edt-n edt-wp"><span class="edt-c">1.1.2</span> Diseño UX-UI y prototipo</div>
+          <div class="edt-n edt-wp"><span class="edt-c">1.1.3</span> Arquitectura técnica</div>
+        </div>
+      </div>
+      <div class="edt-br">
+        <div class="edt-n"><span class="edt-c">1.2</span> Desarrollo del MVP</div>
+        <div class="edt-l2">
+          <div class="edt-n edt-wp"><span class="edt-c">1.2.1</span> Tienda y catálogo</div>
+          <div class="edt-n edt-wp"><span class="edt-c">1.2.2</span> Pagos y envíos</div>
+          <div class="edt-n edt-wp"><span class="edt-c">1.2.3</span> Marketing y app móvil</div>
+          <div class="edt-n edt-wp"><span class="edt-c">1.2.4</span> QA del MVP</div>
+        </div>
+      </div>
+      <div class="edt-br">
+        <div class="edt-n"><span class="edt-c">1.4</span> Lanzamiento y Escala</div>
+        <div class="edt-l2">
+          <div class="edt-n edt-wp"><span class="edt-c">1.4.1</span> Escalado de infraestructura</div>
+          <div class="edt-n edt-wp"><span class="edt-c">1.4.2</span> Campañas de adquisición</div>
+          <div class="edt-n edt-wp edt-miss"><span class="edt-c">1.4.5</span> Auditoría de compliance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="edt-cap">El nivel más bajo es el <b>paquete de trabajo</b>. El paquete marcado en rojo es el que <b>no estaba</b> en la EDT original.</p>
+
+  <div class="caso">
+    <span class="who">El ejemplo lo puso tu propio proyecto</span>
+    <p>La <b>auditoría de compliance</b> no figuraba en la EDT de la Parte 1. Como no estaba en la EDT, no estaba en el cronograma; como no estaba en el cronograma, no tenía al asesor legal asignado; y como no tenía recurso asignado, no estaba en los USD 98.438 de la línea base.</p>
+    <p>Apareció en la Parte 2 como restricción impuesta, y hubo que agregarla como <b>T4.5, ocho días, predecesora obligatoria del lanzamiento</b>. Ocho días sobre la ruta crítica justo cuando había que adelantar dos meses. Eso es «lo que no está en la EDT no está en el proyecto», con factura.</p>
+  </div>
+  <div class="trampa">
+    <span class="lbl">No confundir</span>
+    <p>La EDT <b>no</b> es «una lista cronológica de tareas» (eso es el cronograma) ni «un diagrama de dependencias» (eso es el diagrama de red).</p>
+  </div>
+
+  <h3 class="t">Regla 8/80</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Un paquete de trabajo bien dimensionado tiene entre <b>8 y 80 horas</b> de trabajo.</p>
+  </div>
+  <p>Es el control de granularidad de la EDT. Si un paquete tiene menos de 8 horas estás microgestionando; si tiene más de 80, no lo podés estimar ni controlar y hay que partirlo. «Desarrollo del MVP» entero son cientos de horas: por eso se abre en tienda, pagos, envíos, marketing, app y QA.</p>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p>Son <b><span class="tap">horas</span></b> de trabajo. No días, no personas, no cantidad de actividades.</p>
+  </div>
+
+  <h3 class="t">Paquete de trabajo contra actividad</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Entregable contra acción.</p>
+  </div>
+  <div class="contra">
+    <div class="c-pred"><h5>Paquete de trabajo</h5><p>Vive en la <b>EDT</b>. Es un componente o entregable y <b>no tiene duración propia</b>. Ejemplo: «1.2.2 Pagos y envíos».</p></div>
+    <div><h5>Actividad</h5><p>Vive en el <b>cronograma</b>. Es una <b>acción con duración</b> y sale de descomponer el paquete. Ejemplo: «C3, auditoría de seguridad de pagos, 6 días».</p></div>
+  </div>
+
+  <h3 class="t">La cadena de procesos del cronograma</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Cada proceso contesta una pregunta, y la respuesta alimenta al siguiente.</p>
+  </div>
+  <div class="chain">
+    <div class="ch"><b>Definir actividades</b><span>¿Qué hay que hacer?</span><em>Lista de actividades</em></div>
+    <div class="ch ch-hot"><b>Secuenciar</b><span>¿En qué orden?</span><em>Diagrama de red</em></div>
+    <div class="ch"><b>Estimar recursos</b><span>¿Con qué y con quiénes?</span><em>Los 9 perfiles</em></div>
+    <div class="ch"><b>Estimar duración</b><span>¿Cuánto tarda?</span><em>Duraciones</em></div>
+    <div class="ch"><b>Desarrollar cronograma</b><span>¿Cuándo empieza y termina?</span><em>Línea base</em></div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p>La salida de <b>«Secuenciar actividades»</b> es el <span class="mk">diagrama de red del cronograma</span>. No son las estimaciones ni la lista de hitos. Es de ahí que sale el <b>camino crítico</b>.</p>
+  </div>
+  <p>Y es <b>iterativo</b>: al estimar duraciones descubrís que la secuencia no cierra y volvés atrás. Ese ida y vuelta es rasgo típico de PMBOK 7.</p>
+
+  <h3 class="t">El camino crítico de Vitrina</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Es la <b>cadena más larga</b> de actividades dependientes. Si se atrasa cualquier tarea de esa cadena, <b>se mueve la fecha de fin del proyecto</b>. Las tareas que no están en él tienen holgura.</p>
+  </div>
+  <p>En tu proyecto atraviesa el <b>desarrollo del MVP (tienda → QA)</b>, el <b>monitoreo del piloto</b> y la <b>optimización final de la Fase 4</b>. Ésa es la respuesta a «¿por qué reforzaron Tienda/Catálogo y no Marketing?»: porque acortar algo que no está en el camino crítico no adelanta un solo día.</p>
+  <div class="trampa">
+    <span class="lbl">La pregunta que te van a hacer</span>
+    <p>«¿Qué pasa si se atrasa la app móvil?» Si la app <b>no</b> está en el camino crítico, se come su holgura y la fecha de fin no se mueve. Si está, <span class="mk">se mueve todo el proyecto</span>. Por eso lo primero que se mira ante un atraso es si la tarea es crítica o no.</p>
+  </div>
+
+  <h3 class="t">Relaciones lógicas entre actividades</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Leelas literal. «Fin a Inicio» significa: hasta que el primero no <b>termina</b>, el segundo no <b>empieza</b>. <b>La primera letra siempre es la del predecesor.</b></p>
+  </div>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:5.5rem">Tipo</th><th style="width:13rem">Significado</th><th>En Vitrina</th></tr></thead>
+    <tbody>
+      <tr><th>FS<br><span style="font-weight:400;color:var(--ink-3)">Fin → Inicio</span></th><td>B no empieza hasta que A termina. El más común, cerca del 90%.</td><td>No se recluta comercios para el piloto hasta que el MVP esté en producción.</td></tr>
+      <tr><th>SS<br><span style="font-weight:400;color:var(--ink-3)">Inicio → Inicio</span></th><td>B no empieza hasta que A empieza. Arranque en paralelo.</td><td>El fast-tracking de la Parte 2: la preparación del lanzamiento arranca cuando arranca el cierre del piloto.</td></tr>
+      <tr><th>FF<br><span style="font-weight:400;color:var(--ink-3)">Fin → Fin</span></th><td>B no termina hasta que A termina. Fin sincronizado.</td><td>Los ajustes por feedback no cierran hasta que no cierra el monitoreo del piloto.</td></tr>
+      <tr><th>SF<br><span style="font-weight:400;color:var(--ink-3)">Inicio → Fin</span></th><td>B no termina hasta que A empieza. El más raro.</td><td>El soporte del piloto no se da de baja hasta que arranca el soporte del lanzamiento comercial.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Lead y lag</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>Negativo aprieta, positivo espera.</b></p>
+  </div>
+  <div class="contra">
+    <div class="c-pred"><h5>Lead, adelanto, valor negativo</h5><p><b>Solapa</b> actividades y <b>comprime</b> el cronograma. Es el mecanismo del <b>fast-tracking</b>. Ejemplo: <span class="formula">FS − 10 días</span>, el escalado de infraestructura arranca antes de que cierre el piloto.</p></div>
+    <div><h5>Lag, retraso, valor positivo</h5><p>Introduce una <b>espera obligatoria</b>. Ejemplo: <span class="formula">FS + 5 días</span> entre pedir la homologación a la pasarela de pagos y recibir la respuesta.</p></div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p><b>Lead = <span class="tap">negativo</span></b> (comprime). <b>Lag = <span class="tap">positivo</span></b> (espera).</p>
+  </div>
+
+  <h3 class="t">Dependencias según de dónde vienen</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:9rem">Tipo</th><th>De dónde sale</th><th>En Vitrina</th></tr></thead>
+    <tbody>
+      <tr><th>Obligatoria (dura)</th><td>La exige la naturaleza del trabajo o la ley. <b>No es modificable.</b></td><td><b>T4.5</b>, la auditoría de compliance, es predecesora obligatoria del lanzamiento. Lo exige Legales.</td></tr>
+      <tr><th>Discrecional (blanda)</th><td>La elegís por conveniencia o experiencia. <b>Es modificable.</b></td><td>Construir la tienda antes que la app móvil. Podría ser al revés, se eligió así porque facilita las pruebas.</td></tr>
+      <tr><th>Externa</th><td>Depende de terceros. Se cubre con <b>buffers</b>.</td><td>Los tiempos de homologación de la pasarela de pagos y de los operadores logísticos.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">El ejemplo que ya te tomaron</span>
+    <p>«Implemento el login primero porque facilita las pruebas, aunque podría ir en otro orden» es una dependencia <span class="mk">discrecional</span>. Su riesgo típico: <b>alargar el cronograma innecesariamente</b>, porque estás imponiendo una secuencia que la naturaleza del trabajo no exige.</p>
+  </div>
+
+  <h3 class="t">El cono de incertidumbre <span class="tvchip">transversal</span></h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Al inicio sabés poco, así que el error es máximo. A medida que avanzás, el error se cierra solo.</p>
+  </div>
+  <svg class="cone" viewBox="0 0 620 210" role="img" aria-label="El margen de error se angosta a medida que avanza el proyecto">
+    <defs><linearGradient id="cg" x1="0" x2="1"><stop offset="0" stop-opacity=".28"/><stop offset="1" stop-opacity=".06"/></linearGradient></defs>
+    <path class="c-fill" d="M40 18 L580 96 L580 114 L40 192 Z"/>
+    <line class="c-axis" x1="40" y1="105" x2="590" y2="105" stroke-width="1.4"/>
+    <g class="c-lab" font-family="Archivo,sans-serif" font-size="11.5">
+      <text x="40" y="12">±4x</text>
+      <text x="185" y="46">±50%</text><text x="185" y="196" >conceptual</text>
+      <text x="315" y="66">±20 a 30%</text><text x="315" y="196">planificación</text>
+      <text x="440" y="82">±10%</text><text x="440" y="196">en marcha</text>
+      <text x="536" y="92">±5%</text><text x="524" y="196">con datos reales</text>
+    </g>
+    <g class="c-grid" stroke-dasharray="3 3">
+      <line x1="180" y1="18" x2="180" y2="185"/><line x1="310" y1="30" x2="310" y2="185"/>
+      <line x1="435" y1="55" x2="435" y2="185"/><line x1="530" y1="80" x2="530" y2="185"/>
+    </g>
+  </svg>
+  <p>Es la justificación teórica de dos cosas de tu trabajo: por qué la Fase 4 se estimó con trazo grueso al principio (y después necesitó veinte días más de complejidad), y por qué la Fase 2 se ejecuta en sprints planificando en detalle sólo el próximo.</p>
+
+  <h3 class="t">Hitos <span class="tvchip">transversal</span></h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Un <b>hito</b> es un evento <b>sin duración</b> que marca un momento clave. Es punto de control, no trabajo.</p>
+  </div>
+  <p>Vitrina tiene cuatro, uno por fase, y ninguno consume horas: son banderas de control.</p>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:14rem">Hito</th><th style="width:7rem">Previsto</th><th style="width:7rem">Plan final</th><th>Qué certifica</th></tr></thead>
+    <tbody>
+      <tr><th>Diseño aprobado</th><td class="n">25/02/2026</td><td class="n">25/02/2026</td><td>Cierra la Fase 1</td></tr>
+      <tr><th>MVP en producción</th><td class="n">17/06/2026</td><td class="n">20/05/2026</td><td>Habilita el piloto</td></tr>
+      <tr><th>Piloto validado</th><td class="n">14/09/2026</td><td class="n">22/07/2026</td><td>Habilita el lanzamiento</td></tr>
+      <tr><th>Lanzamiento comercial</th><td class="n">04/11/2026</td><td class="n">04/09/2026</td><td>Cierra el proyecto</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="gantt-wrap">
+    <div class="gantt" aria-label="Cronograma resumido de Vitrina, 10 meses previstos">
+      <div class="g-head"><span class="g-lbl"></span><span class="g-weeks"><i>ene</i><i>feb</i><i>mar</i><i>abr</i><i>may</i><i>jun</i><i>jul</i><i>ago</i><i>sep</i><i>oct</i><i>nov</i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="g-row"><span class="g-lbl">F1 Discovery</span><span class="g-track"><b class="bar" style="--s:1;--e:3"></b></span></div>
+      <div class="g-row"><span class="g-lbl">F2 MVP</span><span class="g-track"><b class="bar" style="--s:3;--e:7"></b></span></div>
+      <div class="g-row"><span class="g-lbl">C3 Seguridad pagos</span><span class="g-track"><b class="bar bar-soft" style="--s:5;--e:6"></b></span></div>
+      <div class="g-row"><span class="g-lbl">F3 Piloto</span><span class="g-track"><b class="bar" style="--s:7;--e:10"></b></span></div>
+      <div class="g-row"><span class="g-lbl">F4 Lanzamiento</span><span class="g-track"><b class="bar" style="--s:10;--e:12"></b></span></div>
+      <div class="g-row"><span class="g-lbl">T4.5 Compliance</span><span class="g-track"><b class="bar bar-ext" style="--s:10;--e:11"></b></span></div>
+      <div class="g-row"><span class="g-lbl">Lanzamiento</span><span class="g-track"><b class="mile" style="--s:12"></b></span></div>
+    </div>
+  </div>
+  <p class="edt-cap">El bloque rayado es <b>T4.5</b>, la dependencia externa impuesta por Legales. El rombo es el <b>hito</b>: no ocupa ancho porque no tiene duración.</p>
+
+  <h3 class="t">Herramientas de cronograma</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:8rem">Herramienta</th><th>Para qué sirve</th></tr></thead>
+    <tbody>
+      <tr><th>Gantt</th><td>Barras temporales con alcance definido: muestra plazos y solapamientos. El clásico del predictivo.</td></tr>
+      <tr class="tvrow"><th>Roadmap <span class="tvchip">transversal</span></th><td>Visión estratégica de largo plazo, sin el detalle de tareas. Se usa en las dos capas, por encima del Gantt o de los sprints.</td></tr>
+      <tr><th>Sprints</th><td>Ágil, entrega incremental. Es la herramienta de cronograma de la Fase 2.</td></tr>
+      <tr class="tvrow"><th>Kanban <span class="tvchip">transversal</span></th><td>Flujo continuo: visualiza el trabajo en curso (WIP) y los cuellos de botella. Nació en ágil, pero también se usa para operar el día a día de un proyecto predictivo.</td></tr>
+      <tr><th>MS Project</th><td><b>La herramienta de tu trabajo.</b> Calcula el camino crítico, nivela recursos y fija la línea base.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p>MS Project guarda hasta <b><span class="tap">11 líneas base</span></b> (Baseline 0 a 10). En tu archivo, los campos de línea base conservan la planificación prevista y la programación vigente refleja el plan final: <span class="mk">las dos conviven en el mismo archivo</span>, y por eso se puede medir el desvío.</p>
+    <p>Y el factor <b>más determinante de la duración</b> de una actividad es <b>la capacidad del equipo</b>. La misma tarea con dos equipos distintos no dura lo mismo.</p>
+  </div>
+
+  <h3 class="t">Los tres tipos de recurso</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>Trabajo</b> es gente que consume horas. <b>Material</b> es algo que se consume por unidad. <b>Costo</b> es una suma fija que no depende de la duración.</p>
+  </div>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:7rem">Tipo</th><th>En Vitrina</th><th style="width:11rem">Acumulación</th></tr></thead>
+    <tbody>
+      <tr><th>Trabajo</th><td>Los nueve perfiles del equipo. Cargan tarifa estándar y extraordinaria (el doble) para horas extra.</td><td><b>Prorrateada</b>: se devenga a medida que se trabaja</td></tr>
+      <tr><th>Material</th><td>Infraestructura cloud (consumo mensual), licencias de software, equipamiento y hardware importado.</td><td>Cloud <b>prorrateado</b>; el hardware <b>al comienzo</b>, cuando se adquiere</td></tr>
+      <tr><th>Costo</th><td>Campañas de Ads en Meta y Google, setup de la pasarela de pagos, servicios legales externos.</td><td><b>Costo fijo</b> imputado a la tarea correspondiente</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">Por qué importa la acumulación</span>
+    <p>El hardware acumula <b>al comienzo</b>, y de ahí sale la decisión de la tarea <b>C2</b>: comprar el equipamiento en el mes 1. Si acumulara prorrateado no habría ninguna ventaja en adelantar la compra. <span class="mk">La regla de acumulación es la que hace que esquivar el arancel funcione.</span></p>
+  </div>
+
+  <h3 class="t">Comprimir el cronograma: crashing y fast-tracking</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Las dos técnicas <b>acortan la fecha de fin</b>, pero pagan con monedas distintas: una paga con <b>plata</b>, la otra paga con <b>riesgo</b>.</p>
+  </div>
+  <div class="contra">
+    <div class="c-pred">
+      <h5>Crashing, agregar recursos</h5>
+      <p>Sumás gente a tareas del <b>camino crítico</b> para acortarlas. En Vitrina: un segundo desarrollador en Tienda/Catálogo y App móvil.</p>
+      <p style="margin-top:.5rem"><b>Cuesta plata.</b> Y no escala infinito: dos personas no hacen una tarea en la mitad del tiempo.</p>
+    </div>
+    <div class="c-pred">
+      <h5>Fast-tracking, paralelizar</h5>
+      <p>Ejecutás en paralelo lo que estaba planificado en secuencia. En Vitrina: preparación del lanzamiento y escalado solapados con el cierre del piloto.</p>
+      <p style="margin-top:.5rem"><b>Cuesta riesgo.</b> Empezás algo sin tener cerrado lo anterior, y si lo anterior cambia hay retrabajo.</p>
+    </div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">La pregunta de defensa</span>
+    <p>«¿Por qué usaron las dos y no una sola?» Porque cada una tiene techo. El crashing solo habría hecho explotar el presupuesto por encima del +20%; el fast-tracking solo no alcanzaba para dos meses. <span class="mk">La combinación reparte el costo entre plata y riesgo</span>, y deja el desvío en +13,2%.</p>
+    <p>Y ojo con el detalle: sólo sirve comprimir tareas <b>del camino crítico</b>. Reforzar una tarea con holgura gasta plata y no adelanta nada.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTO 4 ═══════════════ -->
+<section class="act l-pred" id="a4">
+  <div class="act-head">
+    <span class="act-num">Acto 4, capa predictiva</span>
+    <h2>La plata: línea base, curva S y valor ganado</h2>
+    <p class="act-sub">Con el cronograma aprobado y el proyecto al 0%, se marcó la línea base. A partir de ahí, «¿cómo venimos?» tiene una respuesta numérica y no una opinión.</p>
+  </div>
+
+  <h3 class="t">El techo de financiamiento</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El financiamiento de Vitrina es de <b>USD 10.000 por mes calendario</b> de duración, distribuible libremente pero <b>no superable</b>.</p>
+  </div>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th>Fase</th><th style="width:8rem">Costo (USD)</th><th style="width:5rem">%</th></tr></thead>
+    <tbody>
+      <tr><th>Fase 1 — Discovery y Diseño</th><td class="n">19.320</td><td class="n">20%</td></tr>
+      <tr><th>Fase 2 — Desarrollo del MVP</th><td class="n">35.760</td><td class="n">36%</td></tr>
+      <tr><th>Fase 3 — Piloto con Comercios</th><td class="n">15.106</td><td class="n">15%</td></tr>
+      <tr><th>Fase 4 — Lanzamiento y Escala</th><td class="n">28.252</td><td class="n">29%</td></tr>
+      <tr><th>Línea base (BAC)</th><td class="n"><b>98.438</b></td><td class="n"><b>100%</b></td></tr>
+      <tr><th>Techo de financiamiento</th><td class="n">100.000</td><td class="n">—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">El número que hay que saber de memoria</span>
+    <p>La línea base es el <b>98% del techo</b>. Eso quiere decir que quedaban apenas <span class="mk">USD 1.562 de margen</span> antes de tocar el tope, y es exactamente por eso que la crisis de la Parte 2 obligó a pedir autorización de desvío a los sponsors.</p>
+  </div>
+
+  <h3 class="t">Las tres visiones temporales</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Plan, realidad, pronóstico. Todo el EVM se cuelga de estas tres.</p>
+  </div>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:7.5rem">Visión</th><th>Qué es en Vitrina</th><th style="width:5rem">Métrica</th></tr></thead>
+    <tbody>
+      <tr><th>Previsto</th><td>Los USD 98.438 y las fechas congeladas al 0% de avance. Es la <b>línea base</b>.</td><td><b>PV</b><br><span style="font-weight:400;color:var(--ink-3)">Planned Value</span></td></tr>
+      <tr><th>Actual</th><td>Lo que realmente se gastó y se avanzó hasta hoy.</td><td><b>AC</b><br><span style="font-weight:400;color:var(--ink-3)">Actual Cost</span></td></tr>
+      <tr><th>Final</th><td>Lo que se estima que va a costar al terminar. En tu caso terminó en USD 111.474.</td><td><b>EAC</b><br><span style="font-weight:400;color:var(--ink-3)">Estimate at Completion</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="trampa">
+    <span class="lbl">Por qué mirar sólo el «actual» te engaña</span>
+    <p>Mes 3 de 10. Se gastaron unos USD 32.800 de un presupuesto de USD 98.438: apenas un tercio. Parece que vas bárbaro.</p>
+    <p>Pero el trabajo <b>realmente completado</b> es el 30%, o sea USD 29.531. Estás <span class="mk">gastando más de lo que producís</span>. Sólo la comparación con el <b>previsto</b> revela la verdad; la visión <b>final</b> anticipa cuánto va a doler.</p>
+  </div>
+
+  <h3 class="t">Curva S y línea base de costo</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>La <b>línea base de costo</b> es el plan de costo distribuido en el tiempo, y dibujada es la <b>curva S</b>: de $0 el día cero al 100% en el cierre. El desempeño se mide <b>contra la línea base, no contra el BAC</b>.</p>
+  </div>
+  <p>Las tres fases de la curva salen solas: <b>inicio lento</b> mientras se hace discovery, <b>tramo empinado</b> durante el desarrollo del MVP, que es el 36% del presupuesto, y un <b>final que vuelve a empinarse</b> en la Fase 4 por las campañas de adquisición y el escalado.</p>
+
+  <h3 class="t">EVM: el glosario mínimo</h3>
+  <ul>
+    <li><b>BAC</b>, presupuesto total aprobado. En Vitrina, <b>USD 98.438</b>. Es un número fijo: el destino.</li>
+    <li><b>EV</b> (Earned Value), el valor del trabajo <b>realmente completado</b> = % de avance × BAC. Es el protagonista.</li>
+    <li><b>PV</b>, el valor que <b>debería</b> estar completado a hoy según el plan.</li>
+    <li><b>AC</b>, lo que realmente se gastó a hoy.</li>
+  </ul>
+
+  <div class="ancla">
+    <span class="lbl">Ancla de las fórmulas</span>
+    <p><b>EV va siempre primero.</b> <b>Resta</b> = variación, en dólares. <b>División</b> = índice de eficiencia, donde mayor a 1 es bueno.</p>
+    <p>Costo se compara con <b>AC</b>; cronograma se compara con <b>PV</b>. Truco: <b>C</b>osto va con <b>A</b>C, las dos son plata gastada; crono<b>M</b>a va con <b>P</b>V, lo planificado.</p>
+  </div>
+
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:9rem">Métrica</th><th style="width:7rem">Fórmula</th><th>Cómo se lee</th></tr></thead>
+    <tbody>
+      <tr><th>CV, variación de costo</th><td><span class="formula">EV − AC</span></td><td>Positivo = por debajo del presupuesto</td></tr>
+      <tr><th>CPI, índice de costo</th><td><span class="formula">EV / AC</span></td><td>Mayor a 1 = eficiente. De acá sale <span class="formula">EAC = BAC / CPI</span></td></tr>
+      <tr><th>SV, variación de cronograma</th><td><span class="formula">EV − PV</span></td><td>Positivo = adelantado</td></tr>
+      <tr><th>SPI, índice de cronograma</th><td><span class="formula">EV / PV</span></td><td>Mayor a 1 = adelantado</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">El error que más se repite</span>
+    <p>Es <b>CV = <span class="tap">EV − AC</span></b>, nunca AC − EV. Si te sale al revés, el signo se te da vuelta y vas a decir que estás bien cuando estás mal.</p>
+  </div>
+
+  <div class="lab">
+    <p class="lab-h">Tablero de valor ganado de Vitrina</p>
+    <p class="lab-s">BAC aprobado: USD 98.438 a 10 meses. Movés el mes, el avance real y el gasto real, y el tablero recalcula todo. Arranca en la foto del mes 3, cuando el proyecto llevaba el 30% de avance y llegó la crisis.</p>
+
+    <div class="ctrls">
+      <label class="ctrl">
+        <span class="ctrl-l">Mes <b id="wkOut">3</b> de 10</span>
+        <input type="range" id="wk" min="1" max="10" step="1" value="3">
+      </label>
+      <label class="ctrl">
+        <span class="ctrl-l">Avance real <b id="pcOut">30%</b></span>
+        <input type="range" id="pc" min="0" max="100" step="1" value="30">
+      </label>
+      <label class="ctrl">
+        <span class="ctrl-l">Costo real acumulado <b id="acOut">USD 32.813</b></span>
+        <input type="range" id="ac" min="0" max="125000" step="1" value="32813">
+      </label>
+    </div>
+
+    <div class="chart-scroll"><svg id="scurve" viewBox="0 0 620 260" role="img" aria-label="Curva S con valor planificado, valor ganado y costo real"></svg></div>
+    <p class="scroll-hint">Deslizá el gráfico hacia el costado para verlo completo.</p>
+    <p class="legend">
+      <span class="lg lg-pv">Valor planificado (PV), la línea base</span>
+      <span class="lg lg-ev">Valor ganado (EV)</span>
+      <span class="lg lg-ac">Costo real (AC)</span>
+    </p>
+
+    <div class="kpis" id="kpis"></div>
+    <p class="verdict" id="verdict"></p>
+  </div>
+
+  <div class="caso">
+    <span class="who">Lo que el tablero anticipaba</span>
+    <p>Con CPI 0,90 en el mes 3, el <b>EAC proyectaba USD 109.377</b>. El plan final ajustado terminó cerrando en <b>USD 111.474</b>. El pronóstico del valor ganado, calculado con tres números, quedó a menos del 2% del resultado real.</p>
+    <p>Ése es el argumento de por qué se mide contra la línea base: no para castigar el desvío, sino para <b>verlo venir con siete meses de anticipación</b>.</p>
+  </div>
+
+  <h3 class="t">Rebaselining: cuando la crisis obliga a mover la referencia</h3>
+  <p>La línea base es una <b>guía, no un contrato inamovible</b>. Cuando las circunstancias cambian de verdad, se actualiza formalmente.</p>
+  <div class="caso">
+    <span class="who">Las siete restricciones de tu Parte 2</span>
+    <p>Al 30% de avance llegaron a la vez: adelanto de dos meses no negociable, renuncia del desarrollador senior, veinte días extra de complejidad en la última fase, aumento salarial del 15% retroactivo, arancel de importación del 18% por mes, una auditoría de compliance nueva y un tope de desvío del +20%.</p>
+    <p>Nada de eso es «el equipo trabajó mal». Es <b>alcance y contexto nuevos</b>, así que se aprueba el cambio, se recalculan cronograma y costo, y se fija una <b>nueva referencia</b>. La línea base original se conserva en el archivo para poder medir contra ella.</p>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Regla de oro</span>
+    <p>El rebaselining <b>requiere aprobación de los interesados</b>. <span class="mk">No la cambia el PM porque le quedó fea la curva.</span> En Vitrina la autorización es explícita: los sponsors fijaron el tope del +20%.</p>
+  </div>
+
+  <h3 class="t">Línea base contra plan final</h3>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:11rem">Métrica</th><th style="width:8rem">Línea base</th><th style="width:8rem">Plan final</th><th>Variación</th></tr></thead>
+    <tbody>
+      <tr><th>Inicio</th><td class="n">05/01/2026</td><td class="n">05/01/2026</td><td>igual</td></tr>
+      <tr><th>Fin del proyecto</th><td class="n">04/11/2026</td><td class="n">04/09/2026</td><td><b>−2 meses</b></td></tr>
+      <tr><th>Duración</th><td class="n">10 meses</td><td class="n">8 meses</td><td><b>−2 meses</b></td></tr>
+      <tr><th>MVP en producción</th><td class="n">17/06/2026</td><td class="n">20/05/2026</td><td>adelantado</td></tr>
+      <tr><th>Piloto validado</th><td class="n">14/09/2026</td><td class="n">22/07/2026</td><td>adelantado</td></tr>
+      <tr><th>Costo total</th><td class="n">USD 98.438</td><td class="n">USD 111.474</td><td><b>+13,2%</b></td></tr>
+      <tr><th>Tope autorizado (+20%)</th><td class="n">—</td><td class="n">USD 118.126</td><td>dentro del tope</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Reservas</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Lo <b>conocido va adentro</b>, lo <b>desconocido va afuera</b>.</p>
+  </div>
+  <div class="reserva">
+    <div class="rv rv-1"><b>Costo de las actividades</b><span>Las tareas de las cuatro fases, estimadas por perfil y horas</span></div>
+    <div class="rv rv-2"><b>+ Reserva de contingencia</b><span>Riesgos <b>conocidos</b>: en Vitrina son las tareas <b>C1 a C5 y T4.5</b>, que están costeadas dentro del plan</span></div>
+    <div class="rv rv-3"><b>+ Reserva de gestión</b><span>Riesgos <b>desconocidos</b>. Acá es el margen hasta el tope del +20% que liberan los sponsors</span></div>
+    <div class="rv-brace rv-b1">Línea base de costo · USD 98.438</div>
+    <div class="rv-brace rv-b2">Tope autorizado · USD 118.126</div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Cómo se defiende esto</span>
+    <p>Los controles de riesgo de tu trabajo <b>no quedaron en el papel</b>: se convirtieron en seis tareas del cronograma con días y costo. Eso <span class="mk">es</span> la reserva de contingencia, materializada. Y como los riesgos eran conocidos, va <b>dentro</b> de la línea base.</p>
+    <p>La reserva de <b>gestión</b> es la que liberan los sponsors cuando aparece lo que nadie previó, y por eso queda <b>fuera</b> de la línea base.</p>
+  </div>
+
+  <h3 class="t">Cómo se estima el costo</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:9rem">Enfoque</th><th>Cómo funciona</th><th style="width:11rem">Ventaja y costo</th></tr></thead>
+    <tbody>
+      <tr><th>Análoga</th><td>Por comparación con proyectos similares pasados: «un SaaS de este porte se hace en un año».</td><td><b>Rápida pero imprecisa.</b> Es la que dio la referencia de los ~10 meses.</td></tr>
+      <tr><th>Ascendente (bottom-up)</th><td>Tarea por tarea, horas × tarifa de cada perfil, y se suma todo.</td><td><b>La más precisa, pero lenta y cara.</b> Es la que produjo los USD 98.438.</td></tr>
+      <tr class="tvrow"><th>Rolling wave <span class="tvchip">transversal</span></th><td>Detalle fino para lo próximo, trazo grueso para lo lejano; se refina a medida que se conoce el alcance.</td><td>Hermana directa del <b>cono de incertidumbre</b>. Es lo mismo que hace ágil al planificar sólo el próximo sprint.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Costos directos e indirectos</h3>
+  <div class="contra">
+    <div class="c-pred"><h5>Directos</h5><p>Atribuibles a <b>un solo</b> proyecto: las horas de los nueve perfiles, las licencias, el hardware, las campañas de Ads. <b>Los controla el PM</b> y van en la línea base.</p></div>
+    <div><h5>Indirectos</h5><p>Benefician a <b>varios</b> proyectos: la administración de Rumbo Digital, los seguros, los impuestos, la parte compartida de la infraestructura. Se asignan como un <b>% sobre los directos</b>.</p></div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p>El PM controla principalmente los costos <span class="mk">directos</span>. Sobre los indirectos no decide. Cuando llegó el aumento salarial del 15%, el PM no podía negociarlo: sólo podía <b>trasladarlo al presupuesto y controlarlo contra el tope</b>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTO 5 ═══════════════ -->
+<section class="act l-agil" id="a5">
+  <div class="act-head">
+    <span class="act-num">Acto 5, capa ágil</span>
+    <h2>La Fase 2 en sprints: construir el MVP</h2>
+    <p class="act-sub">El plan general es predictivo, pero adentro de la Fase 2 nadie sabe todavía qué funciones van a usar los comercios. Ahí el equipo trabaja con Scrum, y todo lo que sigue es consecuencia de esa diferencia.</p>
+  </div>
+
+  <h3 class="t">El manifiesto ágil</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Se valora <b>la izquierda por sobre la derecha</b>, pero las dos cosas valen. No dice «no documentes»: dice qué gana cuando hay que elegir.</p>
+  </div>
+  <div class="tw tw--agil"><table>
+    <thead><tr><th style="width:16rem">Se valora más</th><th>Que</th></tr></thead>
+    <tbody>
+      <tr><td><b>Individuos e interacciones</b></td><td>procesos y herramientas</td></tr>
+      <tr><td><b>Software funcionando</b></td><td>documentación extensiva</td></tr>
+      <tr><td><b>Colaboración con el cliente</b></td><td>negociación contractual</td></tr>
+      <tr><td><b>Respuesta al cambio</b></td><td>seguir un plan</td></tr>
+    </tbody>
+  </table></div>
+  <div class="caso">
+    <span class="who">Dónde se ve en Vitrina</span>
+    <p>«Respuesta al cambio por sobre seguir un plan» explica por qué el alcance de detalle del MVP no se cerró en la Fase 1. Se fijaron los <b>módulos</b> (tienda, pagos, envíos, marketing, app) pero no las cuarenta pantallas: eso se descubre construyendo y mirando cómo lo usan los comercios del piloto.</p>
+    <p>Y «software funcionando por sobre documentación extensiva» tiene un límite claro en este proyecto: la tarea <b>C1</b> obliga a documentar el conocimiento del perfil clave. Cuando el senior renunció, esa documentación fue lo que evitó que el impacto fuera mayor. <b>El manifiesto prioriza, no prohíbe.</b></p>
+  </div>
+
+  <h3 class="t">El sprint</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Ciclo de <b>2 a 4 semanas</b> que produce un <b>incremento potencialmente entregable</b>: una versión funcional del producto. Es iterativo e incremental, y el equipo <b>se autoorganiza</b>.</p>
+  </div>
+  <p>En Vitrina el sprint dura <b>dos semanas</b>. La Fase 2 va del 26/02 al 17/06, así que entran unos <b>ocho sprints</b> antes del hito de MVP en producción. Al sprint 4 la plataforma ya publica una tienda y cobra, aunque todavía no tenga marketing ni app móvil: sirve, es usable, se le puede mostrar a un comercio.</p>
+
+  <h3 class="t">Los tres roles</h3>
+  <div class="tw tw--agil"><table>
+    <thead><tr><th style="width:9.5rem">Rol</th><th>Qué hace en Vitrina</th><th style="width:8.5rem">Qué NO hace</th></tr></thead>
+    <tbody>
+      <tr><th>Product Owner</th><td>Es el <b>Product Owner / Analista</b> del equipo. Prioriza el backlog y decide <b>qué</b> entra en el MVP. Acepta o rechaza en la review.</td><td>No decide cómo se construye ni reparte tareas.</td></tr>
+      <tr><th>Scrum Master</th><td>Facilita las ceremonias y quita impedimentos. Es el <b>único que puede cancelar un sprint</b>.</td><td><b>No es jefe.</b> No asigna tareas ni recibe reportes.</td></tr>
+      <tr><th>Development Team</th><td>Dev senior, dev semi-senior, QA y UX. <b>Autoorganizado</b>. Típicamente <b>5 a 9 personas</b>, full-time y multidisciplinar.</td><td>No cambia de integrantes en medio de un sprint: sólo entre sprints.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">Dato de examen, con anclaje en tu Parte 2</span>
+    <p>Scrum define <b><span class="tap">tres</span> roles</b>. No dos, no cuatro. Y los cambios de integrantes son <b>sólo entre sprints</b>: cuando renunció el desarrollador senior, el reemplazo no se enchufó a mitad de sprint, se hizo la tarea <b>C5 de onboarding, veinte días</b>. <span class="mk">La regla ágil y el cronograma predictivo dicen exactamente lo mismo.</span></p>
+  </div>
+
+  <h3 class="t">Artefactos y jerarquía del backlog</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Todo, contra este sprint, contra lo ya hecho.</p>
+  </div>
+  <ul>
+    <li><b>Product Backlog:</b> lista priorizada de <b>todos</b> los requisitos de Vitrina. Lo gestiona el PO y es la fuente única de requisitos.</li>
+    <li><b>Sprint Backlog:</b> solamente las tareas <b>del sprint actual</b>.</li>
+    <li><b>Incremento:</b> el producto funcionando acumulado hasta hoy.</li>
+  </ul>
+  <div class="trampa">
+    <span class="lbl">Se confunden siempre</span>
+    <p><b>Product Backlog = todo el producto.</b> <b>Sprint Backlog = sólo lo comprometido para este sprint.</b></p>
+  </div>
+
+  <p>Y para bajar de lo estratégico a lo concreto, la jerarquía que usa JIRA. Se lee de arriba hacia abajo, cada nivel es un pedazo del de arriba:</p>
+  <div class="jira">
+    <div class="jr jr-1"><span class="jl">Tema</span><b>Que el comercio chico venda online sin programar</b></div>
+    <div class="jr jr-2"><span class="jl">Iniciativa</span><b>MVP de Vitrina</b></div>
+    <div class="jr jr-3"><span class="jl">Épica</span><b>Pagos y envíos</b></div>
+    <div class="jr jr-4"><span class="jl">Historia</span><b>Como dueña de un local quiero cobrar con Mercado Pago para no perder la venta</b></div>
+    <div class="jr jr-5"><span class="jl">Tarea</span><b>Integrar el SDK de la pasarela de pago</b></div>
+  </div>
+  <p>La <b>historia de usuario</b> tiene siempre la misma forma y es <b>exclusiva de ágil</b>: «Como <i>[usuario]</i>, quiero <i>[funcionalidad]</i>, para <i>[beneficio]</i>». El «para» es la parte que más se olvida y la única que dice por qué vale la pena. Fijate que sale directo del <b>perfil del cliente</b> del Acto 0: el «para no perder la venta» es el dolor, no un invento.</p>
+
+  <h3 class="t">Las ceremonias, en orden</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Planeo, sincronizo a diario, muestro, mejoro.</p>
+  </div>
+
+  <div class="sprint-line" aria-label="Los diez días hábiles de un sprint">
+    <div class="sl-day sl-ev"><b>Día 1</b><span>Sprint Planning</span></div>
+    <div class="sl-day"><b>2</b><span>daily</span></div>
+    <div class="sl-day"><b>3</b><span>daily</span></div>
+    <div class="sl-day"><b>4</b><span>daily</span></div>
+    <div class="sl-day"><b>5</b><span>daily</span></div>
+    <div class="sl-day"><b>6</b><span>daily</span></div>
+    <div class="sl-day"><b>7</b><span>daily</span></div>
+    <div class="sl-day"><b>8</b><span>daily</span></div>
+    <div class="sl-day"><b>9</b><span>daily</span></div>
+    <div class="sl-day sl-ev"><b>Día 10</b><span>Review + Retro</span></div>
+  </div>
+
+  <div class="tw tw--agil"><table>
+    <thead><tr><th style="width:9rem">Evento</th><th style="width:6rem">Duración</th><th>Qué produce</th></tr></thead>
+    <tbody>
+      <tr><th>Sprint Planning<br><span style="font-weight:400;color:var(--ink-3)">dos partes</span></th><td>4 h cada parte</td><td><b>1ª parte, con el PO:</b> el <b>Objetivo del Sprint</b>. <b>2ª parte, el equipo solo:</b> el <b>Sprint Backlog</b>.</td></tr>
+      <tr><th>Daily Scrum</th><td><b>15 min</b></td><td>Sincronización entre pares. Tres preguntas: qué hice, qué voy a hacer, qué me bloquea.</td></tr>
+      <tr><th>Sprint Review</th><td>hasta 4 h</td><td><b>Demo</b> del incremento. El PO acepta o rechaza, y el cliente reprioriza el backlog.</td></tr>
+      <tr><th>Sprint Retrospective</th><td>30 a 90 min</td><td>Qué hicimos bien y qué mejorar, con una lista concreta de mejoras para el próximo sprint.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="trampa">
+    <span class="lbl">Las cuatro trampas de las ceremonias</span>
+    <p><b>La daily es un compromiso entre pares.</b> No se resuelven problemas ahí y <span class="mk">no es un reporte al Scrum Master</span>.</p>
+    <p><b>En la Sprint Review lo no terminado no se presenta.</b> Nunca, aunque el avance sea «significativo».</p>
+    <p><b>En el Planning</b>, la distribución del trabajo la decide <b>el equipo</b>, no el SM ni el PO.</p>
+    <p><b>Los cinco inputs del Planning:</b> capacidad del equipo, Product Backlog, condiciones del negocio, producto actual y tecnología disponible.</p>
+  </div>
+  <p>Detalle fino que se toma: las tareas del Sprint Backlog se dimensionan entre <b>4 y 16 horas</b>. Es la regla 8/80 bajada a escala de sprint.</p>
+
+  <h3 class="t">Planning poker</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Técnica <b>del equipo</b> para estimar el <b>esfuerzo</b> de cada historia en <b>story points</b>, con una escala tipo Fibonacci. No estima horas ni la usa el PM para presionar.</p>
+  </div>
+  <div class="caso">
+    <span class="who">Estimando «cobrar con Mercado Pago»</span>
+    <p>Cartas dadas vuelta: 5, 5, 13, 8, 5. El que puso 13 explica que la integración exige una auditoría de seguridad y certificación; el que puso 5 no lo sabía. Se vuelve a votar y sale <b>8</b>.</p>
+    <p>El valor de la técnica no es el número: es la conversación que obliga a tener. Esa conversación es, literalmente, el origen de la tarea <b>C3, auditoría de seguridad de pagos, 6 días</b>, que después mitiga el riesgo R6.</p>
+  </div>
+
+  <h3 class="t">Burndown y velocity</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>El <b>burndown</b> muestra el trabajo <b>que falta</b> contra el tiempo del sprint. La línea ideal baja parejo; la real es lo que pasó.</p>
+  </div>
+
+  <div class="lab">
+    <p class="lab-h">Burndown de un sprint de la Fase 2</p>
+    <p class="lab-s">34 story points comprometidos en 10 días. Cambiá el escenario y mirá dónde queda la línea real respecto de la ideal.</p>
+    <div class="seg" role="group" aria-label="Escenarios del sprint">
+      <button class="sbtn on" data-bd="atrasado">Atrasado</button>
+      <button class="sbtn" data-bd="en-linea">En línea</button>
+      <button class="sbtn" data-bd="adelantado">Adelantado</button>
+    </div>
+    <div class="chart-scroll"><svg id="burndown" viewBox="0 0 620 250" role="img" aria-label="Gráfico de trabajo restante por día"></svg></div>
+    <p class="scroll-hint">Deslizá el gráfico hacia el costado para verlo completo.</p>
+    <p class="verdict verdict-agil" id="bdVerdict"></p>
+  </div>
+
+  <div class="trampa">
+    <span class="lbl">Cómo se lee</span>
+    <p>Si la línea <b>real queda por ENCIMA de la ideal</b>, <span class="mk">hay retraso</span>: queda más trabajo pendiente del que debería. Por debajo, vas adelantado.</p>
+  </div>
+
+  <p>La <b>velocity</b> son los story points completados por sprint. Si los tres primeros sprints de la Fase 2 cerraron 28, 31 y 26, el promedio es <b>28,3</b>, y con eso el PO sabe cuánto entra en el sprint que viene. Es el equivalente ágil de estimar por rendimiento histórico.</p>
+  <div class="trampa">
+    <span class="lbl">Para qué NO sirve</span>
+    <p>La velocity es una <b>comparación interna del propio equipo</b> a lo largo del tiempo. <span class="mk">No compara equipos distintos</span>, porque cada equipo calibra sus puntos con su propia vara.</p>
+  </div>
+
+  <div class="tvbox">
+    <span class="lbl">Cómo se conectan las dos capas</span>
+    <p>La velocity del equipo alimenta la <b>estimación de duración</b> de la Fase 2 en el cronograma. Y al revés: el <b>hito de MVP en producción</b> del plan predictivo es la fecha límite que le fija el techo al backlog. Ninguna capa manda sola.</p>
+    <p>Cuando los sponsors adelantaron dos meses, eso se tradujo en menos sprints disponibles, y por eso hubo que <b>sumar un segundo desarrollador</b>: para que la velocity subiera lo suficiente como para meter el mismo backlog en menos tiempo. Eso es <b>crashing</b> visto desde la capa ágil.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTO 6 ═══════════════ -->
+<section class="act l-both" id="a6">
+  <div class="act-head">
+    <span class="act-num">Acto 6</span>
+    <h2>Los seis riesgos de Vitrina</h2>
+    <p class="act-sub">Los riesgos no distinguen metodología. Lo que cambia es cuándo los mirás: en el plan, al planificar; en la Fase 2, sprint a sprint. <span class="tvchip">transversal</span> Las herramientas de este acto son idénticas en las dos capas.</p>
+  </div>
+
+  <h3 class="t">Exposición: inherente y residual</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>Exposición = Probabilidad × Impacto.</b> <b>Inherente</b> es la exposición <b>sin</b> mitigación. <b>Residual</b> es la que queda <b>después</b> de aplicar los controles.</p>
+  </div>
+  <p>El registro de riesgos de tu trabajo tiene exactamente esas tres columnas: valoración inherente, controles, valoración residual. Los seis riesgos arrancan en <b>rojo</b> y ninguno se queda ahí.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:2.5rem">#</th><th>Riesgo y causa</th><th style="width:5rem">Inherente</th><th>Controles</th><th style="width:5rem">Residual</th></tr></thead>
+    <tbody>
+      <tr><th>R1</th><td><b>Renuncia de desarrollador clave</b> (RR.HH.). Mercado laboral competitivo.</td><td><b>Rojo</b></td><td>C1 documentación y backup, C5 onboarding de reemplazo, plan de contratación</td><td>Amarillo</td></tr>
+      <tr><th>R2</th><td><b>Retraso en el desarrollo</b> (Cronograma). Complejidad y dependencias.</td><td><b>Rojo</b></td><td>QA temprano, buffers, refuerzo de equipo y compresión</td><td>Amarillo</td></tr>
+      <tr><th>R3</th><td><b>Desvío presupuestario</b> (Costos). Aumentos salariales y aranceles.</td><td><b>Rojo</b></td><td>C2 compra anticipada de hardware, control del tope +20%, repriorización</td><td>Amarillo</td></tr>
+      <tr><th>R4</th><td><b>Problema regulatorio</b> (Legal). Cambio normativo pre-lanzamiento.</td><td><b>Rojo</b></td><td>T4.5 auditoría de compliance antes del lanzamiento</td><td><b>Verde</b></td></tr>
+      <tr><th>R5</th><td><b>Baja adopción, el piloto no valida</b> (Mercado). Baja digitalización PyME.</td><td><b>Rojo</b></td><td>Onboarding asistido, plantillas listas, soporte local, ajustes por feedback</td><td>Amarillo</td></tr>
+      <tr><th>R6</th><td><b>Falla de seguridad en pagos</b> (Técnico). Integración compleja.</td><td><b>Rojo</b></td><td>C3 auditoría de seguridad, C4 pruebas de carga</td><td>Amarillo</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="trampa">
+    <span class="lbl">La que más se falla</span>
+    <p>La <b>clasificación final</b> del riesgo usa la exposición <span class="mk">residual</span>. Nunca la inherente, nunca el promedio de las dos. Si te preguntan «¿qué tan grave es R4?», la respuesta es <b>verde</b>, porque T4.5 lo controla, no rojo.</p>
+  </div>
+  <div class="caso">
+    <span class="who">El argumento fuerte para la defensa</span>
+    <p><b>Dos de los seis riesgos se materializaron</b> en la Parte 2: R1, la renuncia del desarrollador, y R4, el cambio regulatorio. Los dos estaban identificados y los dos tenían control asignado desde la Parte 1.</p>
+    <p>Ése es el punto entero del análisis de riesgos: no adivinar el futuro, sino <b>tener la respuesta escrita antes de necesitarla</b>. C1 existía antes de que el senior renunciara, y por eso C5 duró veinte días y no dos meses.</p>
+  </div>
+
+  <h3 class="t">Los controles no quedan en el papel</h3>
+  <p>Seis controles se convirtieron en <b>tareas del cronograma</b>, con días y costo reales. Eso es lo que separa un análisis de riesgos de una lista de buenas intenciones.</p>
+  <div class="tw tw--pred"><table>
+    <thead><tr><th style="width:4.5rem">Tarea</th><th style="width:5rem">Fase</th><th style="width:4rem">Mitiga</th><th>Impacto en el cronograma</th></tr></thead>
+    <tbody>
+      <tr><th>C1</th><td>Fase 1</td><td>R1</td><td><b>5 días.</b> Documentación y plan de backup del perfil clave; reduce el impacto de una renuncia.</td></tr>
+      <tr><th>C2</th><td>Fase 1</td><td>R3</td><td><b>2 días.</b> Compra anticipada de equipamiento; limita el arancel a un solo mes (+18%).</td></tr>
+      <tr><th>C3</th><td>Fase 2</td><td>R6</td><td><b>6 días.</b> Auditoría de seguridad de pagos; condiciona el QA del MVP.</td></tr>
+      <tr><th>C4</th><td>Fase 2</td><td>R2 y R6</td><td><b>6 días.</b> Pruebas de carga y performance; antecede al hito de MVP.</td></tr>
+      <tr><th>C5</th><td>Fase 2</td><td>R1</td><td><b>20 días.</b> Onboarding del reemplazo; absorbe la renuncia de la Parte 2.</td></tr>
+      <tr><th>T4.5</th><td>Fase 4</td><td>R4</td><td><b>8 días.</b> Auditoría de compliance; predecesora obligatoria del lanzamiento.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Primero clasifico, después decido</h3>
+  <p>Son <b>dos matrices distintas y consecutivas</b>. La primera dice qué tan grave es; la segunda dice qué hago con eso.</p>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p>Cuanto más arriba y más a la derecha, peor: más probable y más grave.</p>
+  </div>
+
+  <div class="lab">
+    <p class="lab-h">Matriz de probabilidad e impacto</p>
+    <p class="lab-s">Tocá una celda para ver la clasificación, la estrategia recomendada y qué riesgo de Vitrina cae ahí.</p>
+    <div class="rmatrix" id="rmatrix">
+      <span class="rm-corner"></span>
+      <span class="rm-h">Impacto bajo</span><span class="rm-h">Impacto medio</span><span class="rm-h">Impacto alto</span>
+      <span class="rm-v">Prob. alta</span>
+      <button class="rm-c c-at" data-r="a-b">Atención</button>
+      <button class="rm-c c-in" data-r="a-m">Inaceptable</button>
+      <button class="rm-c c-in" data-r="a-a">Inaceptable</button>
+      <span class="rm-v">Prob. media</span>
+      <button class="rm-c c-ac" data-r="m-b">Aceptable</button>
+      <button class="rm-c c-at" data-r="m-m">Atención</button>
+      <button class="rm-c c-in" data-r="m-a">Inaceptable</button>
+      <span class="rm-v">Prob. baja</span>
+      <button class="rm-c c-ac" data-r="b-b">Aceptable</button>
+      <button class="rm-c c-ac" data-r="b-m">Aceptable</button>
+      <button class="rm-c c-at" data-r="b-a">Atención</button>
+    </div>
+    <div class="rm-detail" id="rmDetail" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="trampa">
+    <span class="lbl">La celda que te tomaron</span>
+    <p><b>Probabilidad alta + impacto medio = <span class="tap">Inaceptable</span>.</b> No «atención»: inaceptable.</p>
+  </div>
+
+  <p>Las cuatro esquinas de la <b>matriz de decisión</b> son las que hay que tener automatizadas:</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:12rem">Combinación</th><th style="width:9rem">Estrategia</th><th>En Vitrina</th></tr></thead>
+    <tbody>
+      <tr><th>Alta + impacto alto</th><td><b>Evitar o mitigar</b></td><td>R2, retraso del desarrollo: QA temprano, buffers y compresión</td></tr>
+      <tr><th>Alta + impacto bajo</th><td><b>Mitigar</b></td><td>Bugs menores en el piloto: se resuelven con los ajustes por feedback</td></tr>
+      <tr><th>Baja + impacto alto</th><td><b>Transferir</b></td><td>Falla de seguridad en pagos: la auditoría y el SLA con la pasarela pasan parte del riesgo al partner</td></tr>
+      <tr><th>Baja + impacto bajo</th><td><b>Aceptar</b> con contingencia y monitorear</td><td>Variaciones menores del SLA de cloud: se monitorean, no se gestionan</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Human-in-the-loop</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>IA 80%, PM 20%.</b> La IA hace el grueso del análisis; el PM aporta el 20% crítico: <b>contexto político, relaciones interpersonales y restricciones no documentadas</b>.</p>
+  </div>
+  <div class="caso">
+    <span class="who">Ese 20% que la IA no puede tener</span>
+    <p>La IA puede armar los seis riesgos de Vitrina con su matriz en dos minutos. Lo que no sabe: que <b>Legales interna</b> viene demorando validaciones porque está desbordada con otro producto, y que por eso conviene meterlos en el hito de la Fase 1 y no esperar a la Fase 4.</p>
+    <p>Ese riesgo no está en ningún documento y define la ruta crítica real. Es exactamente lo que se te va a preguntar si te dicen «¿esto lo hizo una IA?».</p>
+  </div>
+
+  <h3 class="t">Framework RCTF para pedirle cosas a la IA</h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>R</b>ol → <b>C</b>ontexto → <b>T</b>area → <b>F</b>ormato. Quién es la IA, cuál es la situación, qué tiene que producir, cómo lo entrega.</p>
+  </div>
+  <div class="rctf">
+    <div class="rc"><span class="rc-k">Rol</span><p>Actuá como PM senior especializado en el lanzamiento de plataformas SaaS B2B para PyMEs.</p></div>
+    <div class="rc"><span class="rc-k">Contexto</span><p>Proyecto Vitrina, 10 meses, equipo de 9 perfiles, línea base USD 98.438 con techo de USD 10.000 por mes, cuatro fases y un piloto con comercios antes del lanzamiento.</p></div>
+    <div class="rc"><span class="rc-k">Tarea</span><p>Identificá los riesgos más probables, estimá probabilidad e impacto, proponé un control por riesgo y decí en qué fase del cronograma debería vivir ese control.</p></div>
+    <div class="rc"><span class="rc-k">Formato</span><p>Tabla con columnas: riesgo, categoría, inherente, control, fase, residual y responsable. Ordenada por exposición descendente.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTO 7 ═══════════════ -->
+<section class="act l-both" id="a7">
+  <div class="act-head">
+    <span class="act-num">Acto 7</span>
+    <h2>Contar lo que pasa</h2>
+    <p class="act-sub">Un CPI de 0,90 no sirve de nada guardado en MS Project. La misma información se comunica distinto según cuánto espacio tenés y quién la lee.</p>
+  </div>
+
+  <h3 class="t">DCD y CSAD <span class="tvchip">transversal</span></h3>
+  <div class="ancla">
+    <span class="lbl">Ancla</span>
+    <p><b>DCD es corto</b>, para un mensaje. <b>CSAD es largo</b>, para un informe.</p>
+  </div>
+  <p>Los dos formatos sirven igual en la capa predictiva y en la ágil: son estructuras de mensaje, no artefactos de una metodología. Lo que sí cambia es el <b>vehículo</b>: en el plan viajan en un status report, en la Fase 2 salen en la review o en el canal del equipo.</p>
+
+  <div class="msg msg-short">
+    <span class="msg-h">DCD, mensaje al comité de inversión</span>
+    <p><b class="msg-k">Dato.</b> Con el 30% de avance, el CPI está en 0,90 y el EAC proyecta USD 109.377.</p>
+    <p><b class="msg-k">Contexto.</b> El aumento salarial del 15% ya impactó y la línea base es de USD 98.438, con techo de USD 100.000.</p>
+    <p><b class="msg-k">Decisión.</b> Necesito que autoricen el desvío contra la línea base esta semana para no frenar la Fase 2.</p>
+  </div>
+
+  <div class="msg msg-long">
+    <span class="msg-h">CSAD, informe de cambio de alcance</span>
+    <p><b class="msg-k">Contexto.</b> ¿Dónde estábamos y qué esperábamos? Plan aprobado a 10 meses, cierre el 04/11/2026, línea base de USD 98.438 dentro de un techo de USD 100.000.</p>
+    <p><b class="msg-k">Situación.</b> ¿Qué pasó, hay desvíos? Al 30% de avance llegaron siete restricciones simultáneas: adelanto de dos meses no negociable, renuncia del desarrollador senior, veinte días extra en la Fase 4, aumento salarial del 15%, arancel del 18% mensual, auditoría de compliance nueva y tope de desvío del +20%.</p>
+    <p><b class="msg-k">Análisis.</b> ¿Por qué y qué impacto tiene? Cuatro de las siete son factores del macroentorno que ya estaban en el PESTEL. Dos riesgos identificados se materializaron y sus controles ya estaban previstos. Sin acción, el proyecto no llega a la fecha; con crashing y fast-tracking llega, a un costo estimado de +13,2%.</p>
+    <p><b class="msg-k">Decisión.</b> ¿Qué hacemos y qué pedimos? Comprimir el camino crítico con un segundo desarrollador, solapar lanzamiento y cierre de piloto, anticipar la compra de hardware al mes 1, y autorizar la nueva línea base en USD 111.474.</p>
+  </div>
+  <div class="trampa">
+    <span class="lbl">El paso que se confunde</span>
+    <p>En CSAD, <b>Análisis</b> es el <span class="mk">por qué y con qué impacto</span>, no «qué pasó» (eso es Situación) ni «qué hago» (eso es Decisión).</p>
+  </div>
+
+  <h3 class="t">Cómo informa cada capa</h3>
+  <div class="contra">
+    <div class="c-pred">
+      <h5>Capa predictiva</h5>
+      <p><b>Status report</b> semanal o quincenal, más un <b>resumen ejecutivo de una página con semáforos</b> para los sponsors.</p>
+      <p style="margin-top:.5rem">
+        <span class="sem sem-g">Alcance</span>
+        <span class="sem sem-y">Cronograma</span>
+        <span class="sem sem-r">Costo</span>
+      </p>
+    </div>
+    <div class="c-agil">
+      <h5>Capa ágil</h5>
+      <p>El «informe» es la <b>demo en el Sprint Review</b>. No hay documento formal: hay producto funcionando que se muestra al PO y a los comercios del piloto.</p>
+    </div>
+  </div>
+  <div class="trampa">
+    <span class="lbl">Dato de examen</span>
+    <p>El equivalente al informe de avance en Scrum es <span class="mk">la demo del Sprint Review</span>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTO 8 ═══════════════ -->
+<section class="act l-both" id="a8">
+  <div class="act-head">
+    <span class="act-num">Acto 8</span>
+    <h2>Las dos capas, lado a lado</h2>
+    <p class="act-sub">Si te acordás de esta tabla podés reconstruir casi todo lo anterior: cada fila es una consecuencia de la primera.</p>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Capa predictiva, el plan</th><th>Capa ágil, la Fase 2</th></tr></thead>
+    <tbody>
+      <tr><th>Requisitos</th><td>Módulos y fases acordados al inicio</td><td>El detalle del MVP se descubre</td></tr>
+      <tr><th>Entrega</th><td>Por hitos: cuatro, uno por fase</td><td>Incremental, cada dos semanas</td></tr>
+      <tr><th>Feedback</th><td>En cada hito de control</td><td>Continuo, una demo por sprint</td></tr>
+      <tr><th>Estructura</th><td>Jerárquica: el Líder de Proyecto manda</td><td>Autoorganizada</td></tr>
+      <tr><th>Comunicación de avance</th><td>Status report con semáforos</td><td>Demo en el Sprint Review</td></tr>
+      <tr><th>Cronograma</th><td>Gantt, camino crítico, MS Project</td><td>Sprints y Kanban</td></tr>
+      <tr><th>Cómo se mide</th><td>EVM contra la línea base de USD 98.438</td><td>Burndown y velocity</td></tr>
+      <tr><th>Estimación</th><td>Horas × tarifa, ascendente</td><td>Story points, planning poker</td></tr>
+      <tr><th>Cómo se acorta</th><td>Crashing y fast-tracking</td><td>Sumar capacidad al equipo, subir la velocity</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="t">Lo que se usa en las dos, y cómo cambia de forma</h3>
+  <p>La tabla de arriba muestra las diferencias. Esta muestra lo contrario: las herramientas que <b>no</b> son propiedad de ningún enfoque. En varias, el concepto es el mismo y sólo cambia el envase, y ahí es donde se arman las preguntas capciosas.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:12rem">Herramienta transversal</th><th>En el plan del proyecto</th><th>En la Fase 2</th></tr></thead>
+    <tbody>
+      <tr><th>Principios y dominios del PMBOK 7</th><td colspan="2">Son los mismos. El tailoring es justamente el principio que decide gestionar en dos capas.</td></tr>
+      <tr><th>Triángulo de hierro</th><td>Se rompe cuando los sponsors adelantan dos meses</td><td>Se rompe cuando el PO mete tres historias más en el mismo sprint</td></tr>
+      <tr><th>Triángulo del talento</th><td colspan="2">Conocimiento, desempeño y liderazgo se le piden igual al Líder de Proyecto y al Scrum Master.</td></tr>
+      <tr><th>Matriz poder / interés</th><td>Mapea a sponsors, Legales, partners y cloud</td><td>Mapea al PO, al equipo y a los comercios del piloto</td></tr>
+      <tr><th>Objetivos SMART</th><td>El objetivo del proyecto y de cada fase</td><td>El <b>Objetivo del Sprint</b> también se escribe SMART</td></tr>
+      <tr><th>Gestión de riesgos completa</th><td>Se analiza al planificar y se revisa en cada informe</td><td>Se revisa sprint a sprint, en la planning y en la retro</td></tr>
+      <tr><th>Human-in-the-loop y RCTF</th><td colspan="2">Le pedís lo mismo a la IA en los dos casos, y en los dos el 20% crítico lo pone la persona.</td></tr>
+      <tr><th>DCD y CSAD</th><td>Viajan dentro del status report</td><td>Viajan en la review o en el canal del equipo</td></tr>
+      <tr><th>Kanban</th><td>Tablero para operar el día a día del equipo</td><td>Método ágil por derecho propio, con o sin sprints</td></tr>
+      <tr><th>Roadmap</th><td>Vista de fases e hitos por encima del Gantt</td><td>Vista de releases por encima de los sprints</td></tr>
+      <tr><th>Hitos</th><td>«MVP en producción», «Lanzamiento comercial»</td><td>El cierre de cada sprint y de cada release</td></tr>
+      <tr><th>Cono de incertidumbre y rolling wave</th><td>Justifican estimar la Fase 4 con trazo grueso al inicio</td><td>Es <b>la razón</b> por la que sólo se planifica en detalle el próximo sprint</td></tr>
+      <tr><th>Todo el bloque de negocio</th><td colspan="2">Canvas, PESTEL, Pareto y propuesta de valor son previos al proyecto: de ahí salió Vitrina.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trampa">
+    <span class="lbl">La confusión típica</span>
+    <p>Que una herramienta aparezca explicada en el bloque predictivo <b>no</b> la vuelve exclusiva del predictivo. <span class="mk">Kanban, roadmap, hitos y rolling wave</span> se usan en los dos. Lo que sí es exclusivo del plan es la <b>línea base con EVM</b>, y de la Fase 2, las <b>ceremonias, artefactos y roles de Scrum</b>.</p>
+  </div>
+
+  <h3 class="t">Los números de Vitrina que hay que saber de memoria</h3>
+  <p class="lab-s" style="margin-bottom:.8rem">Activá el <b>modo tapado</b> arriba y tocá cada bloque negro para revelarlo.</p>
+  <ol class="traps">
+    <li>Duración prevista: <span class="tap">10 meses</span>, del <span class="tap">05/01/2026</span> al <span class="tap">04/11/2026</span>.</li>
+    <li>Línea base de costo: <span class="tap">USD 98.438</span>, que es el <span class="tap">98%</span> del techo de USD 100.000.</li>
+    <li>Techo de financiamiento: <span class="tap">USD 10.000 por mes</span> calendario, distribuible pero no superable.</li>
+    <li>Costo por fase: F1 <span class="tap">19.320</span> · F2 <span class="tap">35.760</span> · F3 <span class="tap">15.106</span> · F4 <span class="tap">28.252</span>.</li>
+    <li>La fase más cara es la <span class="tap">Fase 2, el MVP</span>, con el 36% del presupuesto.</li>
+    <li>Avance al momento de la crisis: <span class="tap">30%</span>, con la Fase 1 completa.</li>
+    <li>Plan final: <span class="tap">USD 111.474</span>, un <span class="tap">+13,2%</span> sobre la línea base.</li>
+    <li>Tope de desvío autorizado: <span class="tap">+20%</span>, o sea <span class="tap">USD 118.126</span>.</li>
+    <li>Nueva fecha de fin: <span class="tap">04/09/2026</span>, ocho meses en vez de diez.</li>
+    <li>Perfiles del equipo: <span class="tap">nueve</span>. El más caro es el <span class="tap">asesor legal</span> a USD 40/h; el dev senior va a USD 35/h.</li>
+    <li>Riesgos identificados: <span class="tap">seis</span>, todos con inherente <span class="tap">rojo</span>. Sólo R4 baja a verde.</li>
+    <li>Los dos riesgos que <b>se materializaron</b>: <span class="tap">R1 (renuncia) y R4 (regulatorio)</span>.</li>
+    <li>Tareas de control incorporadas al cronograma: <span class="tap">seis</span> (C1 a C5 y T4.5).</li>
+    <li>El arancel se limitó a <span class="tap">un solo mes (+18%)</span> comprando el hardware en el mes 1, con la tarea C2.</li>
+    <li>Las dos técnicas de compresión usadas: <span class="tap">crashing y fast-tracking</span>.</li>
+  </ol>
+
+  <h3 class="t">Las 15 trampas de la materia</h3>
+  <ol class="traps">
+    <li>En tiempo y costo pero sin valor para el negocio: para PMBOK 7 es un <span class="tap">fracaso</span>.</li>
+    <li>PMBOK 7 se publicó en <span class="tap">2021</span>.</li>
+    <li>Los tres pilares son <span class="tap">Principios, Dominios, y Modelos y métodos</span>.</li>
+    <li>En PMBOK 7 los costos se gestionan desde el <span class="tap">Dominio de Financiamiento</span>.</li>
+    <li>La EDT es una descomposición <span class="tap">jerárquica orientada a entregables</span>, no una lista cronológica.</li>
+    <li>La regla 8/80 se mide en <span class="tap">horas</span> de trabajo.</li>
+    <li>La salida de «Secuenciar actividades» es el <span class="tap">diagrama de red del cronograma</span>.</li>
+    <li>Lead es <span class="tap">negativo</span> y comprime; lag es <span class="tap">positivo</span> y hace esperar.</li>
+    <li>«Hago el login primero porque facilita las pruebas» es una dependencia <span class="tap">discrecional</span>.</li>
+    <li>Al inicio del proyecto la estimación puede variar <span class="tap">±4x</span>.</li>
+    <li><span class="tap">CV = EV − AC</span>, y positivo significa por debajo del presupuesto. EV siempre primero.</li>
+    <li>La reserva de contingencia cubre riesgos <span class="tap">conocidos</span> y va <span class="tap">dentro</span> de la línea base.</li>
+    <li>La clasificación del riesgo usa la exposición <span class="tap">residual</span>; probabilidad alta con impacto medio es <span class="tap">inaceptable</span>.</li>
+    <li>La daily dura <span class="tap">15 minutos</span> y es entre pares; en la review <span class="tap">lo no terminado no se muestra</span>.</li>
+    <li>El modelo cascada tiene <span class="tap">cinco</span> fases: Análisis, Diseño, Implementación, Pruebas, Despliegue.</li>
+  </ol>
+</section>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<section class="act l-both" id="quiz">
+  <div class="act-head">
+    <span class="act-num">Autoevaluación</span>
+    <h2>Veinte preguntas sobre Vitrina</h2>
+    <p class="act-sub">Las trampas de la materia y los datos de tu trabajo, preguntados como en la defensa. Elegí una opción y te explica por qué.</p>
+  </div>
+  <div id="quizBox"></div>
+  <div class="quiz-foot">
+    <p class="score" id="score">Sin responder todavía</p>
+    <button class="tbtn" id="resetQuiz">Empezar de nuevo</button>
+  </div>
+</section>
+</main>
+</div>
+
+<footer class="footer">
+  <p>Machete narrativo de Gestión de Proyectos Digitales, montado sobre el trabajo final integrador «Vitrina» de Rumbo Digital. Los datos del proyecto (fechas, fases, costos, riesgos y restricciones) salen del documento entregado; los conceptos, de las clases 2 a 12. Las cifras del tablero de valor ganado son consistentes entre sí: si cambiás una, mirá cómo se mueven las demás.</p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+var cssv = function(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
+
+/* ── índice móvil + scroll spy ───────────────────────────── */
+var menuBtn = document.getElementById('menuBtn');
+var idx = document.getElementById('idx');
+menuBtn.addEventListener('click', function(){
+  var open = idx.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+idx.addEventListener('click', function(e){
+  if(e.target.closest('a') && window.innerWidth <= 1000){
+    idx.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
+  }
+});
+
+var links = Array.prototype.slice.call(idx.querySelectorAll('a'));
+var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+var ticking = false;
+function spy(){
+  var y = window.scrollY + 140, cur = 0;
+  for(var i=0;i<secs.length;i++){ if(secs[i] && secs[i].offsetTop <= y) cur = i; }
+  links.forEach(function(a,i){ a.classList.toggle('on', i === cur); });
+  ticking = false;
+}
+window.addEventListener('scroll', function(){
+  if(!ticking){ ticking = true; window.requestAnimationFrame(spy); }
+}, {passive:true});
+spy();
+
+/* ── modo tapado ─────────────────────────────────────────── */
+var tapBtn = document.getElementById('tapBtn');
+var tapHint = document.getElementById('tapHint');
+tapBtn.addEventListener('click', function(){
+  var on = document.body.classList.toggle('tapado');
+  tapBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  tapHint.textContent = on
+    ? 'Tocá cada bloque negro para revelar la respuesta'
+    : 'Tapa los datos clave y los revelás tocándolos';
+  if(!on){
+    document.querySelectorAll('.tap.shown').forEach(function(el){ el.classList.remove('shown'); });
+  }
+});
+document.addEventListener('click', function(e){
+  var t = e.target.closest('.tap');
+  if(t && document.body.classList.contains('tapado')) t.classList.toggle('shown');
+});
+
+/* ── matriz poder / interés ──────────────────────────────── */
+var pmData = {
+  hh: {t:'Gestionar de cerca', d:'Poder alto e interés alto. Máxima dedicación: informes ejecutivos, defensa del proyecto e involucramiento en las decisiones.',
+       who:'Sponsors y Comité de Inversión, que financian y son los que exigen el adelanto de dos meses. También el Product Owner dentro de la Fase 2.'},
+  ha: {t:'Mantener satisfechos', d:'Poder alto pero interés medio o bajo en el día a día. No los inundes de información, pero que nunca se lleven una sorpresa: pueden frenar el proyecto entero.',
+       who:'Legales interna, que puede bloquear el lanzamiento y a la que hay que validar en cada hito. También el proveedor de infraestructura cloud, por SLA y capacidad.'},
+  lh: {t:'Mantener informados', d:'Interés alto pero poco poder formal. Comunicación frecuente: son los que sufren o disfrutan el resultado y los que te avisan de los problemas reales.',
+       who:'Los comercios del piloto, con onboarding y canal de feedback, y el equipo de proyecto, con dailies, planning y tablero de avance.'},
+  la: {t:'Monitorear', d:'Poco poder y poco interés. Esfuerzo mínimo: los revisás de vez en cuando por si cambian de cuadrante.',
+       who:'Meta y Google como canales de ads: se revisa el rendimiento de campañas y nada más. Los partners de pago y logística están un escalón arriba, en «mantener informados».'}
+};
+var pmDetail = document.getElementById('pmDetail');
+document.querySelectorAll('.pm-cell').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.pm-cell').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    var d = pmData[btn.dataset.k];
+    pmDetail.innerHTML = '<b>' + d.t + '.</b> ' + d.d + '<br><span style="color:var(--ink-3)">Quiénes: ' + d.who + '</span>';
+  });
+});
+
+/* ── tablero de valor ganado ─────────────────────────────── */
+var PLAN = [0,8,20,30,41,50,58,63,68,82,100];
+var BAC = 98438;
+var wk = document.getElementById('wk'),
+    pc = document.getElementById('pc'),
+    acR = document.getElementById('ac');
+
+function money(n){
+  var s = Math.round(Math.abs(n)).toLocaleString('es-AR');
+  return (n < 0 ? '− USD ' : 'USD ') + s;
+}
+function num(n, d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+var W0 = 55, W1 = 600, H0 = 20, H1 = 210, YMAX = 125;
+function sx(w){ return W0 + (w/10)*(W1-W0); }
+function sy(v){ return H1 - (v/YMAX)*(H1-H0); }
+function poly(pts, stroke, dash, width){
+  return '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + stroke +
+    '" stroke-width="' + (width||2.4) + '" stroke-linejoin="round" stroke-linecap="round"' +
+    (dash ? ' stroke-dasharray="5 4"' : '') + '/>';
+}
+
+function drawEVM(){
+  var W = +wk.value, pct = +pc.value, AC = +acR.value;
+  var planPct = PLAN[W];
+  var PV = BAC * planPct / 100;
+  var EV = BAC * pct / 100;
+  var acPct = AC / BAC * 100;
+
+  document.getElementById('wkOut').textContent = W;
+  document.getElementById('pcOut').textContent = pct + '%';
+  document.getElementById('acOut').textContent = money(AC);
+
+  var CV = EV - AC, SV = EV - PV;
+  var CPI = AC > 0 ? EV/AC : 0;
+  var SPI = PV > 0 ? EV/PV : 0;
+  var EAC = CPI > 0 ? BAC/CPI : 0;
+
+  /* gráfico */
+  var g = '';
+  [0,25,50,75,100,125].forEach(function(v){
+    g += '<line x1="'+W0+'" y1="'+sy(v)+'" x2="'+W1+'" y2="'+sy(v)+'" stroke="'+cssv('--rule-2')+'" stroke-width="1"/>';
+    g += '<text x="'+(W0-8)+'" y="'+(sy(v)+4)+'" text-anchor="end" font-family="Archivo,sans-serif" font-size="10" fill="'+cssv('--ink-3')+'">'+v+'%</text>';
+  });
+  var MES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct'];
+  for(var w=1; w<=10; w++){
+    g += '<text x="'+sx(w)+'" y="'+(H1+18)+'" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10" fill="'+cssv('--ink-3')+'">'+MES[w]+'</text>';
+  }
+  g += '<text x="'+((W0+W1)/2)+'" y="'+(H1+38)+'" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10.5" fill="'+cssv('--ink-2')+'">meses del proyecto (2026)</text>';
+
+  var pvPts = [], evPts = [], acPts = [];
+  for(var i=0;i<=10;i++) pvPts.push(sx(i)+','+sy(PLAN[i]));
+  var kEV = planPct > 0 ? pct/planPct : 0;
+  var kAC = planPct > 0 ? acPct/planPct : 0;
+  for(var j=0;j<=W;j++){
+    evPts.push(sx(j)+','+sy(Math.min(PLAN[j]*kEV, YMAX)));
+    acPts.push(sx(j)+','+sy(Math.min(PLAN[j]*kAC, YMAX)));
+  }
+  g += poly(pvPts,cssv('--ink-3'),true,2);
+  g += '<line x1="'+sx(W)+'" y1="'+H0+'" x2="'+sx(W)+'" y2="'+H1+'" stroke="'+cssv('--ink')+'" stroke-width="1.2" stroke-dasharray="2 3"/>';
+  g += '<text x="'+(sx(W)+5)+'" y="'+(H0+11)+'" font-family="Archivo,sans-serif" font-size="10" fill="'+cssv('--ink')+'">hoy</text>';
+  g += poly(acPts,cssv('--bad'),false,2.6);
+  g += poly(evPts,cssv('--pred'),false,2.6);
+  g += '<circle cx="'+sx(W)+'" cy="'+sy(Math.min(acPct,YMAX))+'" r="4" fill="'+cssv('--bad')+'"/>';
+  g += '<circle cx="'+sx(W)+'" cy="'+sy(Math.min(pct,YMAX))+'" r="4" fill="'+cssv('--pred')+'"/>';
+  g += '<circle cx="'+sx(W)+'" cy="'+sy(planPct)+'" r="3.2" fill="'+cssv('--paper')+'" stroke="'+cssv('--ink-3')+'" stroke-width="2"/>';
+  document.getElementById('scurve').innerHTML = g;
+
+  /* indicadores */
+  function kpi(k, v, s, cls){
+    return '<div class="kpi '+(cls||'')+'"><span class="k">'+k+'</span><span class="v">'+v+'</span><span class="s">'+s+'</span></div>';
+  }
+  document.getElementById('kpis').innerHTML =
+    kpi('PV, planificado', money(PV), planPct+'% del BAC') +
+    kpi('EV, ganado', money(EV), pct+'% del BAC') +
+    kpi('AC, real', money(AC), num(acPct,1)+'% del BAC') +
+    kpi('BAC', money(BAC), 'línea base aprobada') +
+    kpi('CV = EV − AC', money(CV), Math.abs(CV)<1?'en presupuesto':(CV>0?'bajo presupuesto':'sobre presupuesto'), Math.abs(CV)<1?'':(CV>0?'good':'bad')) +
+    kpi('CPI = EV / AC', num(CPI,2), CPI>=1?'eficiente':'se gasta de más', CPI>=1?'good':'bad') +
+    kpi('SV = EV − PV', money(SV), Math.abs(SV)<1?'en fecha':(SV>0?'adelantado':'atrasado'), Math.abs(SV)<1?'':(SV>0?'good':'bad')) +
+    kpi('SPI = EV / PV', num(SPI,2), Math.abs(SPI-1)<.005?'en fecha':(SPI>1?'adelantado':'atrasado'), Math.abs(SPI-1)<.005?'':(SPI>1?'good':'bad'));
+
+  /* lectura */
+  var v;
+  if(AC === 0){
+    v = 'Con costo real en cero no hay nada que medir del lado del dinero: el CPI y el EAC no se pueden calcular. Subí el gasto real para ver el tablero completo.';
+  } else if(CPI >= 1 && SPI >= 1){
+    v = 'Vas bien por los dos lados: producís más trabajo del que gastás y estás por delante del plan. Proyección al cierre: ' + money(EAC) + '.';
+  } else if(CPI < 1 && SPI < 1){
+    v = 'El peor cuadrante: <b>atrasado y sobre costo</b>. Por cada dólar gastado se produjeron ' + num(CPI,2).replace('0,','') + ' centavos de trabajo, y sólo se avanzó el ' + num(SPI*100,0) + '% de lo planificado. Proyección al cierre: <b>' + money(EAC) + '</b>, es decir ' + money(EAC-BAC) + ' por encima del BAC de USD 98.438.';
+  } else if(CPI < 1){
+    v = 'Vas en fecha pero <b>gastando de más</b>: es la foto de Vitrina en el mes 3, con el aumento salarial ya impactado. Proyección al cierre: <b>' + money(EAC) + '</b>, o sea ' + money(EAC-BAC) + ' arriba del BAC. El plan final real cerró en USD 111.474.';
+  } else {
+    v = 'Gastás bien pero <b>vas atrasado</b>. El costo no es el problema; el problema es la fecha, y en Vitrina la fecha la pusieron los sponsors.';
+  }
+  document.getElementById('verdict').innerHTML = v;
+}
+[wk,pc,acR].forEach(function(el){ el.addEventListener('input', drawEVM); });
+drawEVM();
+
+/* ── matriz de riesgos ───────────────────────────────────── */
+var rmData = {
+  'a-a': {c:'Inaceptable', s:'Evitar o mitigar', d:'Máxima prioridad: no se puede convivir con esto.',
+          e:'<b>R2, retraso en el desarrollo.</b> Complejidad y dependencias del MVP. Se mitiga con QA temprano, buffers, refuerzo de equipo y compresión del cronograma.'},
+  'a-m': {c:'Inaceptable', s:'Mitigar, y evitar si escala', d:'Pasa seguido y el daño es real. Que sea «medio» no lo vuelve tolerable.',
+          e:'<b>R3, desvío presupuestario.</b> Aumentos salariales y aranceles. Se mitiga con la compra anticipada de hardware (C2) y el control contra el tope del +20%.'},
+  'a-b': {c:'Atención', s:'Mitigar', d:'Duele poco pero pasa mucho: conviene bajar la frecuencia, no el impacto.',
+          e:'Bugs menores detectados por los comercios del piloto. Se resuelven con la tarea de ajustes por feedback de la Fase 3.'},
+  'm-a': {c:'Inaceptable', s:'Mitigar y transferir parte', d:'Impacto alto con probabilidad razonable: hay que actuar.',
+          e:'<b>R1, renuncia del desarrollador senior.</b> Perfil escaso en un mercado competitivo. Se mitiga con C1 (documentación y backup) y se absorbe con C5 (onboarding del reemplazo, 20 días). Se materializó en la Parte 2.'},
+  'm-m': {c:'Atención', s:'Mitigar', d:'Vigilarlo de cerca y tener plan B listo.',
+          e:'<b>R5, baja adopción.</b> El piloto puede no validar por la baja digitalización PyME. Se mitiga con onboarding asistido, plantillas listas y soporte local.'},
+  'm-b': {c:'Aceptable', s:'Aceptar y monitorear', d:'Convivís con esto; gestionarlo cuesta más que el daño.',
+          e:'Que un sprint de la Fase 2 cierre con dos story points sin terminar y vuelvan al Product Backlog.'},
+  'b-a': {c:'Atención', s:'Transferir', d:'Poco probable pero devastador: pagás para que el golpe no sea tuyo.',
+          e:'<b>R6, falla de seguridad en pagos.</b> Se controla con C3 (auditoría de seguridad) y C4 (pruebas de carga), y parte del riesgo se transfiere a la pasarela vía SLA.'},
+  'b-m': {c:'Aceptable', s:'Aceptar con contingencia', d:'Reservás plata o días por las dudas y seguís.',
+          e:'<b>R4, problema regulatorio.</b> Con la auditoría T4.5 como predecesora obligatoria del lanzamiento, su residual baja a verde. Se materializó en la Parte 2 y estaba cubierto.'},
+  'b-b': {c:'Aceptable', s:'Aceptar con contingencia y monitorear', d:'El costo de gestionarlo supera al del daño.',
+          e:'Variaciones menores en el SLA del proveedor de cloud. Se monitorean, no se gestionan.'}
+};
+var rmDetail = document.getElementById('rmDetail');
+document.querySelectorAll('.rm-c').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.rm-c').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    var d = rmData[btn.dataset.r];
+    rmDetail.innerHTML = '<span class="rd-t">' + d.c + '</span><span class="rd-s">' + d.s +
+      '</span><br>' + d.d + '<br><b>En Vitrina:</b> ' + d.e;
+  });
+});
+
+/* ── burndown ────────────────────────────────────────────── */
+var BD = {
+  'atrasado':   [34,34,32,31,29,28,26,23,19,14,9],
+  'en-linea':   [34,32,29,26,23,20,17,13,9,4,0],
+  'adelantado': [34,31,27,23,19,15,11,7,4,1,0]
+};
+var BDV = {
+  'atrasado':'La línea real quedó <b>siempre por encima de la ideal</b>: hay retraso. El sprint cierra con 9 puntos sin terminar, que <b>no se muestran en la review</b> y vuelven al Product Backlog para que el PO decida si siguen siendo prioritarios. Dos sprints así seguidos y el hito de MVP en producción se corre.',
+  'en-linea':'La real acompaña a la ideal y toca cero el último día. El equipo cerró los 34 puntos comprometidos, así que la <b>velocity de este sprint es 34</b>, y con eso el PO planifica el siguiente.',
+  'adelantado':'La real va <b>por debajo de la ideal</b>: el equipo va adelantado. El PO puede sumar una historia chica del backlog, o el equipo aprovecha para bajar deuda técnica antes del QA del MVP. Ojo con la lectura fácil de «somos rapidísimos»: puede que la estimación haya sido conservadora.'
+};
+var B0 = 50, B1 = 600, C0 = 34, C1 = 205;
+function bx(d){ return B0 + (d/10)*(B1-B0); }
+function by(v){ return C1 - (v/34)*(C1-C0); }
+function drawBD(key){
+  var real = BD[key], g = '';
+  [0,8.5,17,25.5,34].forEach(function(v){
+    g += '<line x1="'+B0+'" y1="'+by(v)+'" x2="'+B1+'" y2="'+by(v)+'" stroke="'+cssv('--rule-2')+'"/>';
+    g += '<text x="'+(B0-8)+'" y="'+(by(v)+4)+'" text-anchor="end" font-family="Archivo,sans-serif" font-size="10" fill="'+cssv('--ink-3')+'">'+Math.round(v)+'</text>';
+  });
+  for(var d=0; d<=10; d++){
+    g += '<text x="'+bx(d)+'" y="'+(C1+18)+'" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10" fill="'+cssv('--ink-3')+'">'+d+'</text>';
+  }
+  g += '<text x="'+((B0+B1)/2)+'" y="'+(C1+38)+'" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10.5" fill="'+cssv('--ink-2')+'">días del sprint</text>';
+  g += '<text x="'+(B0-8)+'" y="'+(C0-14)+'" text-anchor="end" font-family="Archivo,sans-serif" font-size="10" fill="'+cssv('--ink-2')+'">pts</text>';
+
+  var ideal = [], realP = [];
+  for(var i=0;i<=10;i++){
+    ideal.push(bx(i)+','+by(34 - 3.4*i));
+    realP.push(bx(i)+','+by(real[i]));
+  }
+  g += poly(ideal,cssv('--ink-3'),true,2);
+  g += poly(realP,cssv('--agil'),false,2.8);
+  g += '<circle cx="'+bx(10)+'" cy="'+by(real[10])+'" r="4.5" fill="'+cssv('--agil')+'"/>';
+  g += '<text x="'+bx(8)+'" y="'+(by(34-3.4*8)+17)+'" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10.5" fill="'+cssv('--ink-3')+'">línea ideal</text>';
+  document.getElementById('burndown').innerHTML = g;
+  document.getElementById('bdVerdict').innerHTML = BDV[key];
+}
+var bdKey = 'atrasado';
+document.querySelectorAll('.sbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('.sbtn').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    bdKey = b.dataset.bd;
+    drawBD(bdKey);
+  });
+});
+drawBD(bdKey);
+
+/* ── alternar claro / oscuro ─────────────────────────────── */
+var themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', function(){
+  var esClaro = document.documentElement.getAttribute('data-theme') === 'light';
+  document.documentElement.setAttribute('data-theme', esClaro ? 'dark' : 'light');
+  themeBtn.textContent = esClaro ? 'Modo claro' : 'Modo oscuro';
+  drawEVM();
+  drawBD(bdKey);
+});
+
+/* ── autoevaluación ──────────────────────────────────────── */
+var QS = [
+ {q:'Vitrina se lanza el 04/09 dentro del tope de costo, pero ningún comercio del piloto llega a publicar su tienda. Según PMBOK 7, el proyecto fue…',
+  o:['Un éxito: cumplió alcance, tiempo y costo','Un éxito parcial, porque el triángulo de hierro se cumplió','Un fracaso, porque no entregó valor','No evaluable hasta el cierre administrativo'], a:2,
+  e:'PMBOK 7 mide el éxito por el <b>valor entregado</b>. Cumplir el triángulo de hierro no alcanza. Por eso el proyecto tiene una Fase 3 de piloto antes del lanzamiento: existe para verificar valor.'},
+ {q:'¿Cuál es la línea base de costo de Vitrina y qué porcentaje del techo representa?',
+  o:['USD 100.000, el 100% del techo','USD 98.438, el 98% del techo','USD 111.474, el 111% del techo','USD 118.126, el tope autorizado'], a:1,
+  e:'<b>USD 98.438</b>, el 98% del techo de USD 100.000. Quedaban apenas USD 1.562 de margen, y por eso la crisis obligó a pedir autorización de desvío.'},
+ {q:'El techo de financiamiento del proyecto es…',
+  o:['USD 100.000 fijos para todo el proyecto','USD 10.000 por mes calendario, distribuible pero no superable','USD 10.000 por fase','El 20% por encima de la línea base'], a:1,
+  e:'<b>USD 10.000 por mes calendario</b> de duración. Para 10 meses da USD 100.000. Es distribuible libremente entre meses, pero el total no se puede superar.'},
+ {q:'¿Cuál es la fase más cara de Vitrina?',
+  o:['Fase 1 — Discovery y Diseño','Fase 2 — Desarrollo del MVP','Fase 3 — Piloto con Comercios','Fase 4 — Lanzamiento y Escala'], a:1,
+  e:'La <b>Fase 2</b>, con USD 35.760, el 36% del presupuesto. Le sigue la Fase 4 con 29%. Es también donde vive el grueso del camino crítico.'},
+ {q:'La EDT (WBS) es…',
+  o:['Una lista cronológica de tareas con fechas','Un diagrama de dependencias entre actividades','Una descomposición jerárquica orientada a entregables','El presupuesto detallado por actividad'], a:2,
+  e:'Se organiza por <b>qué</b> hay que entregar, no por cuándo. En Vitrina lo demostró la auditoría de compliance: como no estaba en la EDT, no estaba en el cronograma, no tenía recurso y no estaba en el presupuesto.'},
+ {q:'La regla 8/80 dice que un paquete de trabajo debe tener entre 8 y 80…',
+  o:['Días de duración','Horas de trabajo','Actividades','Personas asignadas'], a:1,
+  e:'<b>Horas de trabajo.</b> No días, no personas, no cantidad de actividades.'},
+ {q:'¿Cuál es la salida del proceso "Secuenciar actividades"?',
+  o:['La lista de hitos','El diagrama de red del cronograma','Las estimaciones de duración','La línea base del cronograma'], a:1,
+  e:'El <b>diagrama de red</b>, y de ahí sale el camino crítico. Las estimaciones vienen después y la línea base sale de «Desarrollar el cronograma».'},
+ {q:'En la Parte 2 se solapó la preparación del lanzamiento con el cierre del piloto. ¿Cómo se llama esa técnica y con qué se paga?',
+  o:['Crashing, y se paga con plata','Fast-tracking, y se paga con riesgo','Rebaselining, y se paga con tiempo','Nivelación de recursos, y no tiene costo'], a:1,
+  e:'<b>Fast-tracking:</b> ejecutar en paralelo lo que estaba en secuencia. Se paga con <b>riesgo de retrabajo</b>, porque empezás algo sin tener cerrado lo anterior. El crashing (sumar el segundo dev) es el que se paga con plata.'},
+ {q:'"Construimos la tienda antes que la app móvil porque facilita las pruebas, aunque podría ir al revés." ¿Qué tipo de dependencia es?',
+  o:['Obligatoria','Externa','Discrecional','Obligatoria por contrato'], a:2,
+  e:'<b>Discrecional</b> o blanda: la elegís por conveniencia. Su riesgo típico es alargar el cronograma innecesariamente. La obligatoria en Vitrina es T4.5 antes del lanzamiento, que la exige Legales.'},
+ {q:'Al inicio de un proyecto, ¿cuánto puede variar la estimación según el cono de incertidumbre?',
+  o:['±5%','±20%','±50%','Hasta ±4x'], a:3,
+  e:'Hasta <b>±4x</b> en el arranque. El ±50% corresponde a la fase conceptual algo más avanzada y el ±5% a cuando ya hay datos reales.'},
+ {q:'En el mes 3, con EV = USD 29.531 y AC = USD 32.813, el CV es…',
+  o:['+USD 3.282, por debajo del presupuesto','−USD 3.282, por encima del presupuesto','+USD 3.282, adelantado','−USD 3.282, atrasado'], a:1,
+  e:'<b>CV = EV − AC</b> = −3.282. Negativo significa sobre presupuesto. Si hablás de adelanto o atraso estás describiendo SV, que compara contra PV.'},
+ {q:'Con CPI = 0,90 y BAC = USD 98.438, ¿cuánto proyecta el EAC?',
+  o:['USD 88.594','USD 98.438','USD 109.375','USD 118.126'], a:2,
+  e:'<b>EAC = BAC / CPI</b> = 98.438 / 0,90 = USD 109.375. El plan final real cerró en USD 111.474, así que el pronóstico quedó a menos del 2%.'},
+ {q:'Las tareas C1 a C5 y T4.5 están costeadas dentro de los USD 98.438. Eso significa que son…',
+  o:['Reserva de gestión, fuera de la línea base','Reserva de contingencia, dentro de la línea base','Costos indirectos asignados por porcentaje','Trabajo fuera del alcance'], a:1,
+  e:'Son la <b>reserva de contingencia</b> materializada en tareas: cubren riesgos <b>conocidos</b> y por eso van <b>dentro</b> de la línea base. La reserva de gestión es el margen hasta el tope del +20% que liberan los sponsors.'},
+ {q:'Un riesgo con probabilidad alta e impacto medio se clasifica como…',
+  o:['Aceptable','Atención','Inaceptable','Depende de la exposición inherente'], a:2,
+  e:'<b>Inaceptable.</b> Y la clasificación final siempre se hace con la exposición <b>residual</b>, no con la inherente. En Vitrina los seis riesgos son rojos inherentes, pero sólo se clasifican por el residual.'},
+ {q:'¿Cuáles de los seis riesgos de Vitrina se materializaron efectivamente en la Parte 2?',
+  o:['R2 y R3, retraso y desvío de costos','R1 y R4, renuncia del dev y cambio regulatorio','R5 y R6, baja adopción y falla de seguridad','Ninguno: la crisis fue toda imprevista'], a:1,
+  e:'<b>R1</b> (renuncia del desarrollador senior) y <b>R4</b> (cambio regulatorio). Los dos estaban identificados con control asignado desde la Parte 1: C1/C5 y T4.5. Ése es el argumento fuerte de la defensa.'},
+ {q:'¿Por qué se anticipó la compra de equipamiento al mes 1 (tarea C2)?',
+  o:['Porque el proveedor daba descuento por pago adelantado','Porque el hardware acumula al comienzo y así el arancel del 18% se aplica una sola vez','Porque acortaba el camino crítico dos semanas','Porque los sponsors lo exigieron'], a:1,
+  e:'El arancel subía <b>18% por mes</b> y el hardware es un recurso material con acumulación <b>al comienzo</b>. Comprando en el mes 1 el recargo se limita a un solo mes, unos USD 1.080 en vez de multiplicarse.'},
+ {q:'En la Sprint Review de la Fase 2, una historia que quedó al 80% de avance…',
+  o:['Se presenta aclarando que falta el 20%','Se presenta si el PO lo autoriza','No se presenta','Se presenta sólo si el avance es significativo'], a:2,
+  e:'<b>No se presenta.</b> Sólo se muestra el incremento terminado; lo que no está listo vuelve al Product Backlog.'},
+ {q:'¿Cuál de estas herramientas se usa tanto en la capa predictiva como en la ágil?',
+  o:['La línea base con valor ganado (EVM)','El burndown chart','La matriz de probabilidad e impacto','La jerarquía Tema → Iniciativa → Épica'], a:2,
+  e:'Toda la <b>gestión de riesgos</b> es transversal, igual que el triángulo de hierro, la matriz poder/interés, SMART, Kanban, el roadmap, los hitos y el cono de incertidumbre. El EVM es propio del predictivo; el burndown y la jerarquía JIRA, del ágil.'},
+ {q:'El modelo cascada tiene…',
+  o:['3 fases: análisis, desarrollo y entrega','4 fases, que son las de la EDT de Vitrina','5 fases: análisis, diseño, implementación, pruebas, despliegue','6 fases, incluida la retrospectiva'], a:2,
+  e:'<b>Cinco</b> fases teóricas. Las cuatro fases de tu EDT son la misma secuencia empaquetada distinto: Análisis y Diseño en la Fase 1, Implementación en la Fase 2, Pruebas repartida entre el QA y el piloto, y Despliegue en la Fase 4.'},
+ {q:'El plan final cerró en USD 111.474 sobre una línea base de USD 98.438. ¿Ese desvío estaba dentro de lo autorizado?',
+  o:['No: superó el tope del +20%','Sí: es +13,2% y el tope autorizado era +20% (USD 118.126)','Sí, porque el tope se calcula sobre el techo de USD 100.000','No aplica: al cambiar la línea base no hay desvío'], a:1,
+  e:'<b>+13,2%</b>, por debajo del tope de +20% que equivale a USD 118.126. El desvío se mide siempre contra la <b>línea base original</b>, no contra la nueva.'}
+];
+
+var quizBox = document.getElementById('quizBox');
+var answered, correct;
+function renderQuiz(){
+  answered = 0; correct = 0;
+  quizBox.innerHTML = QS.map(function(q,i){
+    return '<div class="q" data-i="'+i+'">' +
+      '<p class="q-p"><span class="q-n">'+(i+1)+'</span><span>'+q.q+'</span></p>' +
+      '<div class="q-opts">' + q.o.map(function(o,j){
+        return '<button class="q-o" data-j="'+j+'">'+o+'</button>';
+      }).join('') + '</div></div>';
+  }).join('');
+  document.getElementById('score').textContent = 'Sin responder todavía';
+}
+quizBox.addEventListener('click', function(e){
+  var btn = e.target.closest('.q-o');
+  if(!btn || btn.disabled) return;
+  var card = btn.closest('.q'), i = +card.dataset.i, j = +btn.dataset.j, q = QS[i];
+  card.querySelectorAll('.q-o').forEach(function(b){
+    b.disabled = true;
+    if(+b.dataset.j === q.a) b.classList.add('ok');
+  });
+  var good = j === q.a;
+  if(!good) btn.classList.add('no');
+  answered++; if(good) correct++;
+  var fb = document.createElement('p');
+  fb.className = 'q-fb ' + (good ? 'good' : 'bad');
+  fb.innerHTML = (good ? '<b>Bien.</b> ' : '<b>No.</b> ') + q.e;
+  card.appendChild(fb);
+  var s = document.getElementById('score');
+  s.textContent = correct + ' de ' + answered + ' correctas' +
+    (answered === QS.length ? (correct >= 17 ? ' — estás listo para la defensa' : correct >= 12 ? ' — repasá las que fallaste' : ' — volvé a los actos 3, 4 y 6') : '');
+});
+document.getElementById('resetQuiz').addEventListener('click', renderQuiz);
+renderQuiz();
+
+})();
+</script>
+</body>
+</html>

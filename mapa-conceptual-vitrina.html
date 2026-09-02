@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="es-AR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitrina — pizarrón de Gestión de Proyectos Digitales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --paper:#101519;
+  --card:#1A232B;
+  --ink:#E6EDF1;
+  --ink-2:#A6B6C0;
+  --ink-3:#7A8B95;
+  --rule:#33424D;
+  --marker:#F2ED4E;
+  --marker-ink:#17242C;
+
+  --negocio:#9FBB8C;
+  --pmbok:#BFD0D9;
+  --personas:#B197E6;
+  --cascada:#63B8DA;
+  --agil:#EE7BA6;
+  --riesgos:#F0897C;
+  --comms:#63C79A;
+  --cierre:#DCC055;
+
+  --grid-1:rgba(255,255,255,.055);
+  --grid-2:rgba(255,255,255,.026);
+  --float-bg:rgba(26,35,43,.95);
+  --bar-bg:rgba(16,21,25,.93);
+  --mini-bg:#1A232B;
+  --vp-fill:rgba(99,184,218,.18);
+  --anc-bg:rgba(255,255,255,.065);
+  --warn-bg:#2A2916;
+  --warn-ink:#DFCB63;
+  --hub-sub:rgba(16,21,25,.75);
+  --hub-anc:rgba(0,0,0,.09);
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+  --band-line:rgba(255,255,255,.16);
+  --tint:30;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --paper:#EDF0EC;
+  --card:#FCFDFB;
+  --ink:#17242C;
+  --ink-2:#44565F;
+  --ink-3:#77878E;
+  --rule:#CFD8D1;
+  --marker:#F2ED4E;
+  --marker-ink:#17242C;
+
+  --negocio:#5E6E52;
+  --pmbok:#17242C;
+  --personas:#6B4E9E;
+  --cascada:#1F6E8C;
+  --agil:#A82458;
+  --riesgos:#B3352A;
+  --comms:#2C7A57;
+  --cierre:#8A6D0B;
+
+  --grid-1:rgba(23,36,44,.055);
+  --grid-2:rgba(23,36,44,.028);
+  --float-bg:rgba(252,253,251,.95);
+  --bar-bg:rgba(237,240,236,.93);
+  --mini-bg:#E4E9E4;
+  --vp-fill:rgba(31,110,140,.16);
+  --anc-bg:rgba(23,36,44,.045);
+  --warn-bg:#FAF7CE;
+  --warn-ink:#8A6D0B;
+  --hub-sub:rgba(237,240,236,.8);
+  --hub-anc:rgba(255,255,255,.12);
+  --shadow:0 2px 10px rgba(23,36,44,.14);
+  --band-line:rgba(23,36,44,.18);
+  --tint:13;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--paper);color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--cascada);outline-offset:2px}
+
+/* ── barra superior ───────────────────────────────── */
+.bar{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;gap:.5rem;align-items:center;
+  flex-wrap:wrap;padding:.5rem .8rem;background:var(--bar-bg);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.bar h1{font-size:.95rem;font-weight:700;letter-spacing:-.02em;margin:0 .7rem 0 0;white-space:nowrap}
+.bar h1 span{font-weight:400;color:var(--ink-3)}
+.btn{font:inherit;font-size:.8rem;font-weight:500;background:var(--card);color:var(--ink);
+  border:1px solid var(--rule);padding:.32rem .62rem;border-radius:3px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--paper)}
+.btn.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grp{display:flex;gap:2px}
+.grp .btn{border-radius:0}
+.grp .btn:first-child{border-radius:3px 0 0 3px}
+.grp .btn:last-child{border-radius:0 3px 3px 0}
+#q{font:inherit;font-size:.8rem;padding:.32rem .55rem;border:1px solid var(--rule);
+  border-radius:3px;background:var(--card);width:11rem;color:var(--ink)}
+#q::placeholder{color:var(--ink-3)}
+.spacer{flex:1}
+.zoomlbl{font-size:.76rem;color:var(--ink-3);font-variant-numeric:tabular-nums;min-width:3.2rem;
+  text-align:center}
+.tip{font-size:.75rem;color:var(--ink-3)}
+@media (max-width:940px){.tip{display:none}.bar h1 span{display:none}}
+@media (max-width:640px){.bar h1{display:none}.bar{padding:.4rem .55rem;gap:.35rem}
+  #q{width:8.5rem}.btn{padding:.3rem .5rem;font-size:.76rem}}
+
+/* ── lienzo ───────────────────────────────────────── */
+#viewport{position:fixed;inset:0;overflow:hidden;cursor:grab;touch-action:none}
+#viewport.drag{cursor:grabbing}
+#board{position:absolute;top:0;left:0;transform-origin:0 0;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid-1) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-1) 1px,transparent 1px),
+    linear-gradient(var(--grid-2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-2) 1px,transparent 1px);
+  background-size:200px 200px,200px 200px,40px 40px,40px 40px}
+#bands,#edges,#labels,#nodes{position:absolute;top:0;left:0}
+#bands{z-index:1}
+#edges{z-index:2;pointer-events:none;overflow:visible}
+#labels{z-index:3}
+#nodes{z-index:4}
+
+/* ── zonas ────────────────────────────────────────── */
+.band{position:absolute;border:2px dashed var(--band-line);border-radius:14px}
+.band-t{position:absolute;top:-15px;left:22px;font-size:.85rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:.1rem .55rem;background:var(--paper);
+  white-space:nowrap}
+.band-s{position:absolute;top:14px;left:24px;font-size:.78rem;font-weight:400;
+  color:var(--ink-3);max-width:34rem}
+
+/* ── nodos ────────────────────────────────────────── */
+.node{position:absolute;background:var(--card);border:1px solid var(--rule);
+  border-left:5px solid var(--ink-3);border-radius:4px;padding:.55rem .68rem .62rem;
+  cursor:pointer;
+  transition:opacity .18s ease, box-shadow .18s ease}
+.node:hover{box-shadow:var(--shadow)}
+.node h3{margin:0 0 .18rem;font-size:.88rem;font-weight:700;line-height:1.2;letter-spacing:-.015em}
+.node .anc{font-size:.75rem;line-height:1.34;margin:.28rem 0 .35rem;padding:.32rem .42rem;
+  background:var(--anc-bg);border-radius:3px;font-weight:500}
+.node ul{margin:.25rem 0 0;padding-left:.9rem;font-size:.745rem;line-height:1.36;color:var(--ink-2)}
+.node li{margin-bottom:.15rem}
+.node li b{color:var(--ink);font-weight:600}
+.node .warn{font-size:.735rem;line-height:1.34;margin-top:.35rem;padding:.3rem .42rem .32rem 1.35rem;
+  background:var(--warn-bg);border-radius:3px;position:relative}
+.node .warn::before{content:"!";position:absolute;left:.45rem;top:.3rem;font-weight:700;
+  font-size:.72rem;color:var(--warn-ink)}
+.node .warn b{font-weight:700}
+.node .refs{margin-top:.4rem;display:flex;flex-wrap:wrap;gap:.22rem}
+.ref{font:inherit;font-size:.7rem;font-weight:500;border:1px solid var(--rule);background:var(--paper);
+  color:var(--ink-2);border-radius:99px;padding:.1rem .45rem;cursor:pointer}
+.ref:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.node .num{position:absolute;top:-.55rem;right:-.5rem;font-size:.63rem;font-weight:700;
+  background:var(--paper);border:1px solid var(--rule);border-radius:99px;padding:.05rem .35rem;
+  color:var(--ink-3)}
+
+.node.hub{border-width:1px 1px 1px 5px;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.node.hub h3{font-size:1rem}
+.node.hub ul{color:var(--hub-sub)}
+.node.hub li b{color:var(--paper)}
+.node.hub .anc{background:var(--hub-anc)}
+
+/* marca de transversalidad */
+.node.tvn{padding-right:1.1rem}
+.node.tvn::after{content:"";position:absolute;right:0;top:0;bottom:0;width:7px;
+  border-radius:0 3px 3px 0;opacity:.9;
+  background:linear-gradient(180deg,var(--cascada) 0 50%,var(--agil) 50% 100%)}
+.node .tvnote{font-size:.72rem;line-height:1.34;margin-top:.42rem;padding:.32rem .45rem;
+  background:var(--anc-bg);border-radius:3px;color:var(--ink-2)}
+.node .tvnote b{color:var(--ink);font-weight:700}
+.far .node .tvnote{display:none}
+.tvband{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:600;
+  letter-spacing:0;text-transform:none;color:var(--ink-2);background:var(--card);
+  border:1px solid var(--rule);border-radius:99px;
+  padding:.05rem .45rem .05rem .28rem;margin-left:.5rem;vertical-align:middle}
+.tvband::before{content:"";width:.36rem;height:.72rem;border-radius:2px;
+  background:linear-gradient(180deg,var(--cascada) 0 50%,var(--agil) 50% 100%)}
+.far .tvband{font-size:1.6rem;padding:.12rem .9rem .12rem .55rem;margin-left:1.1rem}
+.far .tvband::before{width:.85rem;height:1.7rem}
+.vfar .tvband{display:none}
+
+/* estados */
+.dimmed .node{opacity:.14}
+.dimmed .node.hl{opacity:1;box-shadow:var(--shadow)}
+.dimmed .band{opacity:.3}
+.node.off{opacity:.07;pointer-events:none}
+.node.hit{outline:3px solid var(--marker);outline-offset:2px}
+.node.focus{outline:3px solid var(--ink);outline-offset:2px}
+.node.flash{animation:fl 1.4s ease}
+@keyframes fl{0%,100%{outline-color:transparent}20%,60%{outline:4px solid var(--marker);outline-offset:3px}}
+@media (prefers-reduced-motion:reduce){.node.flash{animation:none}}
+
+/* ── aristas ──────────────────────────────────────── */
+#edges > path{fill:none;stroke-linecap:round}
+.dimmed #edges > path{opacity:.08}
+.dimmed #edges > path.hl{opacity:1;stroke-width:2.6}
+.elabel{position:absolute;transform:translate(-50%,-50%);font-size:.68rem;font-weight:500;
+  color:var(--ink-2);background:var(--paper);padding:.05rem .3rem;border-radius:3px;
+  white-space:nowrap;pointer-events:none;border:1px solid var(--rule)}
+.dimmed .elabel{opacity:.1}
+.dimmed .elabel.hl{opacity:1}
+
+/* ── minimapa ─────────────────────────────────────── */
+#mini{position:fixed;right:.7rem;bottom:.7rem;z-index:60;background:var(--float-bg);
+  border:1px solid var(--rule);border-radius:5px;padding:5px;box-shadow:var(--shadow);
+  cursor:crosshair}
+#mini svg{display:block}
+#miniVp{fill:var(--vp-fill);stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
+@media (max-width:820px){#mini{display:none}}
+
+/* ── leyenda ──────────────────────────────────────── */
+#legend{position:fixed;left:.7rem;bottom:.7rem;z-index:60;background:var(--float-bg);
+  border:1px solid var(--rule);border-radius:5px;padding:.5rem .65rem;font-size:.72rem;
+  box-shadow:var(--shadow);max-width:15rem}
+#legend b{display:block;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:.3rem}
+#legend .lrow{display:flex;align-items:center;gap:.35rem;margin-bottom:.12rem;color:var(--ink-2)}
+#legend .sw{width:14px;height:8px;border-radius:2px;flex:0 0 auto}
+#legend .close{position:absolute;top:.2rem;right:.35rem;border:0;background:none;cursor:pointer;
+  font-size:.9rem;color:var(--ink-3);line-height:1}
+@media (max-height:620px),(max-width:700px){#legend{display:none}}
+
+/* ── zoom lejano: sólo los títulos ── */
+.far .node{display:flex;align-items:center;overflow:hidden;padding:.9rem 1.1rem}
+.far .node .anc,.far .node ul,.far .node .warn,.far .node .refs{display:none}
+.far .node h3{font-size:2.5rem;line-height:1.03;letter-spacing:-.035em;margin:0}
+.far .node.hub h3{font-size:3rem}
+.far .elabel{display:none}
+.far .band-t{font-size:2.6rem;top:-32px;left:30px;letter-spacing:.01em}
+.far .band-s{display:none}
+.far #edges > path{stroke-width:4}
+/* ── zoom muy lejano: sólo la estructura ── */
+.vfar .node h3{display:none}
+.vfar .node{background:var(--bc);opacity:.6;border-color:transparent}
+.vfar .node.hub{opacity:.95}
+.vfar .band-t{font-size:4.2rem;top:-52px;left:34px}
+.vfar #edges > path{stroke-width:9;opacity:.35}
+
+@media print{
+  .bar,#mini,#legend{display:none!important}
+  html,body{overflow:visible;background:#fff}
+  #viewport{position:static;overflow:visible}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>Vitrina <span>— todo el programa sobre tu trabajo integrador</span></h1>
+  <input id="q" type="search" placeholder="Buscar concepto…" autocomplete="off">
+  <div class="grp">
+    <button class="btn on" data-f="all">Todo</button>
+    <button class="btn" data-f="cascada">Cascada</button>
+    <button class="btn" data-f="agil">Ágil</button>
+    <button class="btn" data-f="tv">Transversal</button>
+  </div>
+  <div class="grp">
+    <button class="btn" id="zout">−</button>
+    <span class="zoomlbl" id="zlbl">100%</span>
+    <button class="btn" id="zin">+</button>
+  </div>
+  <button class="btn" id="fit">Ver todo</button>
+  <button class="btn" id="reset">Limpiar</button>
+  <button class="btn" id="themeBtn">Modo claro</button>
+  <span class="spacer"></span>
+  <span class="tip">Arrastrá para mover · rueda para zoom · acercá para leer el detalle · la barra bicolor marca lo transversal</span>
+</div>
+
+<div id="viewport">
+  <div id="board">
+    <div id="bands"></div>
+    <svg id="edges"></svg>
+    <div id="labels"></div>
+    <div id="nodes"></div>
+  </div>
+</div>
+
+<div id="mini"><svg id="miniSvg"></svg></div>
+
+<div id="legend">
+  <button class="close" id="legClose" aria-label="Cerrar leyenda">×</button>
+  <b>Zonas</b>
+  <div class="lrow"><span class="sw" style="background:var(--negocio)"></span>El negocio</div>
+  <div class="lrow"><span class="sw" style="background:var(--pmbok)"></span>Marco PMBOK</div>
+  <div class="lrow"><span class="sw" style="background:var(--personas)"></span>El PM y los interesados</div>
+  <div class="lrow"><span class="sw" style="background:var(--cascada)"></span>Capa predictiva: el plan</div>
+  <div class="lrow"><span class="sw" style="background:var(--agil)"></span>Capa ágil: la Fase 2</div>
+  <div class="lrow"><span class="sw" style="background:var(--riesgos)"></span>Riesgos</div>
+  <div class="lrow"><span class="sw" style="background:var(--comms)"></span>Comunicación</div>
+  <div class="lrow"><span class="sw" style="background:var(--cierre)"></span>Cierre y trampas</div>
+  <b style="margin-top:.6rem">Marca</b>
+  <div class="lrow"><span class="sw" style="background:linear-gradient(180deg,var(--cascada) 0 50%,var(--agil) 50% 100%);width:8px;height:15px"></span>Barra bicolor a la derecha: se usa en los dos enfoques</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATOS DEL MAPA
+   ═══════════════════════════════════════════════════════════ */
+const W = 340, TOP1 = 300, TOP2 = 1900;
+const COL = {
+  /* fila superior: negocio → PMBOK → tailoring → ruta cascada */
+  a1:{x:90,y:TOP1,w:W},   a2:{x:490,y:TOP1,w:W},  a3:{x:890,y:TOP1,w:W},
+  a4:{x:1330,y:TOP1,w:W}, a5:{x:1730,y:TOP1,w:W}, a6:{x:2130,y:TOP1,w:W},
+  a7:{x:2530,y:TOP1,w:W},
+  a9:{x:3330,y:TOP1,w:W},  a10:{x:3730,y:TOP1,w:W}, a11:{x:4130,y:TOP1,w:W},
+  a12:{x:4530,y:TOP1,w:W}, a13:{x:4930,y:TOP1,w:W}, a14:{x:5330,y:TOP1,w:W},
+  a15:{x:5730,y:TOP1,w:W}, a16:{x:6130,y:TOP1,w:W},
+  /* fila inferior: cierre → personas → comunicación → riesgos → ruta ágil */
+  b1:{x:90,y:TOP2,w:760},  b2:{x:920,y:TOP2,w:W},  b3:{x:1320,y:TOP2,w:W},
+  b4:{x:1720,y:TOP2,w:W},  b5:{x:2120,y:TOP2,w:W}, b6:{x:2520,y:TOP2,w:W},
+  b7:{x:2920,y:TOP2,w:W},
+  c1:{x:3330,y:TOP2,w:W},  c2:{x:3730,y:TOP2,w:W}, c3:{x:4130,y:TOP2,w:W},
+  c4:{x:4530,y:TOP2,w:W},  c5:{x:4930,y:TOP2,w:W}, c6:{x:5330,y:TOP2,w:W},
+  c7:{x:5730,y:TOP2,w:W}
+};
+
+const BANDS = {
+  negocio:  {t:'El negocio', tv:1,
+             s:'Previo al proyecto: de este modelo de negocio de Rumbo Digital salió Vitrina.'},
+  pmbok:    {t:'Marco PMBOK', tv:1,
+             s:'El marco es el mismo para los dos; el tailoring es el que decide el enfoque de cada uno.'},
+  cascada:  {t:'Capa predictiva — el plan del proyecto',
+             s:'Cuatro fases, EDT, camino crítico y línea base de USD 98.438 en MS Project. Los nodos con barra bicolor a la derecha también se usan en la capa ágil.'},
+  agil:     {t:'Capa ágil — la Fase 2, desarrollo del MVP',
+             s:'Sprints de dos semanas dentro del envoltorio predictivo. Los nodos con barra bicolor a la derecha también se usan en el plan.'},
+  personas: {t:'El PM y los interesados', tv:1,
+             s:'Se aplica igual en las dos capas: lo único que cambia son los nombres de los roles.'},
+  riesgos:  {t:'Riesgos', tv:1,
+             s:'Los seis riesgos de Vitrina y sus seis tareas de control. Idénticos en las dos capas: sólo cambia cuándo los mirás.'},
+  comms:    {t:'Comunicación', tv:1,
+             s:'DCD y CSAD sirven en las dos capas; cambia el vehículo que los transporta.'},
+  cierre:   {t:'Cierre', tv:1, s:''}
+};
+
+/* zonas cuyo contenido entero se usa en los dos enfoques */
+const TVBANDS = ['negocio','pmbok','personas','riesgos','comms','cierre'];
+const isTV = n => TVBANDS.indexOf(n.band) > -1 || !!n.tv;
+
+const N = [
+/* ───────── NEGOCIO ───────── */
+{id:'origen', col:'a1', band:'negocio', hub:true, t:'VITRINA',
+ anc:'Plataforma SaaS de Rumbo Digital: tienda + pagos + envíos + marketing en un solo lugar, sin programar.',
+ li:['<b>10 meses</b> previstos, del 05/01 al 04/11 de 2026','Línea base <b>USD 98.438</b>, techo de USD 10.000 por mes',
+     'Cuatro fases, nueve perfiles, seis riesgos']},
+
+{id:'bmc', col:'a1', band:'negocio', t:'Business Model Canvas',
+ anc:'Cómo la empresa <b>crea, entrega y captura valor</b>, en una sola página. Osterwalder y Pigneur.',
+ li:['Se completa <b>del cliente hacia adentro</b>, del 1 al 9',
+     '1 Comercio chico con local · 2 Todo en un panel sin programar · 3 Web self-service',
+     '4 Autoservicio asistido · 5 Suscripción por planes',
+     '6 Plataforma y equipo · 7 Desarrollo y onboarding · 8 Mercado Pago, OCA, Meta',
+     '9 Infraestructura, salarios, CAC y comisiones']},
+
+{id:'bmcLados', col:'a1', band:'negocio', t:'Cómo se lee el Canvas',
+ li:['<b>Derecha (1-5):</b> mercado, valor e ingresos',
+     '<b>Izquierda (6-8):</b> infraestructura',
+     '<b>Abajo (5 y 9):</b> ingresos contra costos = <b>viabilidad</b>'],
+ warn:'Defensa: «¿por qué Mercado Pago en el bloque 8?» Porque la propuesta promete pagos preconfigurados, eso obliga a una actividad de integraciones, y esa actividad no la hacés solo.'},
+
+{id:'pestel', col:'a2', band:'negocio', t:'PESTEL',
+ anc:'El <b>macroentorno</b>: lo externo que la empresa <b>no controla</b> pero la afecta.',
+ li:['<b>P</b>olítico: aranceles de importación de tecnología','<b>E</b>conómico: inflación y presión salarial',
+     '<b>S</b>ocial: baja digitalización PyME, Shein y Temu','<b>T</b>ecnológico: pasarelas y logística por API',
+     '<b>E</b>cológico: packaging y última milla','<b>L</b>egal: auditoría regulatoria pre-lanzamiento'],
+ warn:'<b>Cuatro de las siete restricciones</b> de la Parte 2 son factores PESTEL que se materializaron. La crisis no fue mala suerte: fue el macroentorno.'},
+
+{id:'micro', col:'a2', band:'negocio', t:'Microentorno',
+ li:['Mercado Pago, OCA, Andreani, Meta y Google','Los comercios del piloto y el proveedor de cloud',
+     'Competidores directos: Tiendanube, Shopify','Sobre estos <b>sí</b> podés influir o negociar'],
+ warn:'Que Mercado Pago cambie una comisión es <b>micro</b>. Que suban los aranceles es <b>PESTEL</b>.'},
+
+{id:'pareto', col:'a2', band:'negocio', t:'Principio de Pareto',
+ anc:'El <b>80% de los resultados</b> sale del <b>20% de las causas</b>.',
+ li:['Por eso hay un <b>segmento foco</b> declarado y no cuatro tratados por igual',
+     'La tabla de segmentos lleva <b>% de utilidad esperada</b>, no sólo volumen',
+     'Mismo criterio adentro del proyecto: la Fase 2 es el 36% del costo y el grueso del riesgo']},
+
+{id:'vpc', col:'a3', band:'negocio', t:'Value Proposition Canvas',
+ anc:'Dos mitades que tienen que <b>encajar</b>, componente contra componente.',
+ li:['«Cree que necesita programar» ⇄ <b>se lanza en menos de un día</b>',
+     '«Herramientas sueltas» ⇄ <b>todo integrado en un panel</b>',
+     '«Cuesta atraer tráfico» ⇄ <b>marketing integrado incluido</b>',
+     '«Quiere verse profesional» ⇄ <b>plantillas profesionales</b>'],
+ warn:'El encaje <b>no es permanente</b>: en Vitrina se revalida con el feedback del piloto de la Fase 3.'},
+
+{id:'canales', col:'a3', band:'negocio', t:'Las 5 funciones del canal',
+ anc:'Un canal acompaña <b>todo el ciclo de compra</b>. Es un embudo temporal.',
+ li:['1 Dar a conocer: SEO, Ads y estudios implementadores','2 Ayudar a evaluar: prueba gratuita self-service',
+     '3 Permitir comprar: alta del plan Básico, Pro o Full','4 Entregar valor: tienda publicada en menos de un día',
+     '5 Postventa: onboarding, soporte local y Customer Success']},
+
+{id:'upcross', col:'a3', band:'negocio', t:'Upselling y cross-selling',
+ anc:'Los dos exprimen al <b>cliente que ya tenés</b>. Vertical contra horizontal.',
+ li:['<b>Upselling ⬆</b> del plan Básico al Pro, del Pro al Full',
+     '<b>Cross-selling ➡</b> add-ons premium y comisiones por servicios integrados',
+     'Son los que hacen que el modelo de suscripción cierre']},
+
+{id:'origenProy', col:'a3', band:'negocio', t:'De dónde sale el proyecto',
+ anc:'Vitrina es la <b>respuesta del negocio a su entorno</b>, no una idea suelta.',
+ li:['El modelo de negocio define qué hay que construir',
+     'El PESTEL define contra qué hay que protegerse',
+     'De ahí salen el alcance, los riesgos y el presupuesto'],
+ refs:[{t:'El plan',to:'proyA'},{t:'La Fase 2',to:'proyB'}]},
+
+/* ───────── PMBOK ───────── */
+{id:'pmi', col:'a4', band:'pmbok', t:'PMI',
+ li:['<b>Project Management Institute</b>','La organización global que publica la guía']},
+
+{id:'pmbok', col:'a4', band:'pmbok', t:'PMBOK',
+ anc:'<b>Marco de referencia flexible</b>, reconocido en más de 200 países. No es una metodología rígida.',
+ li:['Project Management Body of Knowledge'],
+ warn:'La <b>7ª edición se publicó en 2021</b>. No 2018, no 2019, no 2023.'},
+
+{id:'p6', col:'a4', band:'pmbok', t:'PMBOK 6, prescriptivo',
+ li:['<b>49 procesos, 10 áreas de conocimiento</b>','Éxito = alcance + tiempo + costo',
+     'Foco en el <b>control</b>','El PM es un controlador']},
+
+{id:'p7', col:'a4', band:'pmbok', t:'PMBOK 7, adaptable',
+ anc:'El cambio de paradigma es <b>del control al valor</b>: de «¿seguiste el proceso?» a «¿generaste valor?».',
+ li:['<b>12 principios + 8 dominios</b>','Éxito = <b>valor entregado</b>',
+     'Foco en la adaptación','El PM es líder e integrador'],
+ warn:'Si Vitrina se lanza en fecha y presupuesto pero <b>ningún comercio del piloto publica su tienda</b> → para PMBOK 7 es un <b>fracaso</b>.'},
+
+{id:'pilares', col:'a5', band:'pmbok', t:'Los 3 pilares',
+ anc:'Cómo pensar · qué gestionar · cómo hacerlo.',
+ li:['<b>Principios</b> (12) → cómo pensar y decidir','<b>Dominios</b> (8) → qué gestionar',
+     '<b>Modelos y métodos</b> → cómo hacerlo'],
+ warn:'No son «Iniciación/Ejecución/Cierre», ni «Alcance/Tiempo/Costo», ni «Predictivo/Ágil/Híbrido».'},
+
+{id:'principios', col:'a5', band:'pmbok', t:'Los 12 principios',
+ anc:'No los recites: reconocelos por <b>familia</b>.',
+ li:['<b>Personas:</b> Stewardship, Equipo, Interesados, Liderazgo',
+     '<b>Valor y contexto:</b> Valor, Pensamiento sistémico, Tailoring, Calidad',
+     '<b>Frente a lo incierto:</b> Complejidad, Riesgo, Adaptabilidad, Cambio']},
+
+{id:'dominios', col:'a5', band:'pmbok', t:'Los 8 dominios',
+ anc:'Operan <b>en paralelo y son interdependientes</b>: tocás uno y se mueven los demás. No son etapas.',
+ li:['Interesados → Equipo → Enfoque y ciclo de vida → Planificación',
+     'Trabajo → Entrega → Medición → <b>Incertidumbre</b>'],
+ warn:'Renuncia el dev senior (R1): se mueven Equipo, Planificación, Entrega, Medición e Incertidumbre. <b>Un hecho, cinco dominios.</b>'},
+
+{id:'financiamiento', col:'a6', band:'pmbok', t:'Dominio de Financiamiento',
+ li:['En PMBOK 7 los <b>costos se gestionan desde acá</b>','En Vitrina: el techo de USD 10.000 por mes y el tope de desvío del +20%'],
+ warn:'No existe un «área de costos» en PMBOK 7. Eso era PMBOK 6.'},
+
+{id:'modelos', col:'a6', band:'pmbok', t:'Modelos y métodos',
+ li:['EDT, camino crítico, MS Project y valor ganado → capa del plan',
+     'Scrum, planning poker y burndown → Fase 2'],
+ warn:'No hay una única forma correcta de gestionar: se elige según el contexto.'},
+
+{id:'tailoring', col:'a7', band:'pmbok', hub:true, t:'TAILORING',
+ anc:'<b>Adaptar el enfoque al contexto</b>. En Vitrina la respuesta es un <b>híbrido</b>: envoltorio predictivo con ejecución ágil adentro.',
+ li:['Plata y fecha acotadas → hace falta <b>línea base</b> → predictivo',
+     'Alcance de detalle que se descubre → <b>sprints</b> en la Fase 2',
+     'No es «hago lo que quiero»: es personalizar con criterio']},
+
+/* ───────── PERSONAS ───────── */
+{id:'talento', col:'b2', band:'personas', t:'Triángulo del talento',
+ anc:'Saber · hacer · guiar.',
+ li:['<b>Conocimiento:</b> saber de gestión','<b>Desempeño:</b> aplicarlo y lograr resultados',
+     '<b>Liderazgo:</b> motivar e influir','En Vitrina es el Líder de Proyecto, USD 30/h, los 10 meses'],
+ warn:'No es «planificación/ejecución/control» ni «comunicación/negociación/motivación».'},
+
+{id:'hierro', col:'b2', band:'personas', t:'Triángulo de hierro',
+ anc:'Tres restricciones <b>contrapuestas</b>: <b>Calidad · Costo · Duración</b>.',
+ li:['Los sponsors adelantan <b>2 meses</b> → se movió la Duración',
+     'Se subió el <b>Costo</b>: crashing, de USD 98.438 a 111.474 (+13,2%)',
+     'Se aceptó <b>riesgo de calidad</b>: fast-tracking solapando piloto y lanzamiento'],
+ warn:'Lo que no se puede es fingir que las tres puntas quedaron intactas. La defensa es mostrar qué punta se movió y qué se pagó.'},
+
+{id:'equipo', col:'b2', band:'personas', t:'Los 9 perfiles',
+ anc:'El equipo se dimensionó desde las <b>actividades clave del Canvas</b> y las fases del cronograma.',
+ li:['Líder de Proyecto 30 · PO/Analista 26 · UX-UI 22',
+     'Dev Senior 35 · Dev Semi-Senior 24 · QA 20',
+     'Marketing 22 · Customer Success 18 · Legal 40 (USD/h)'],
+ warn:'La <b>tarifa extraordinaria es el doble</b>. Por eso el crashing con horas extra encarece tan rápido.'},
+
+{id:'poder', col:'b3', band:'personas', t:'Matriz poder / interés',
+ anc:'El <b>poder</b> define cuánto esfuerzo. El <b>interés</b> define cuánta comunicación.',
+ li:['Alto+alto → <b>gestionar de cerca</b>: sponsors y comité',
+     'Alto+medio → <b>mantener satisfechos</b>: Legales interna, cloud',
+     'Bajo+alto → <b>mantener informados</b>: comercios del piloto, equipo',
+     'Bajo+bajo → <b>monitorear</b>: Meta y Google'],
+ warn:'<b>Legales</b> tiene interés medio pero <b>puede frenar el lanzamiento</b>. Es el que se ignora hasta que aparece con una auditoría obligatoria.'},
+
+{id:'smart', col:'b3', band:'personas', t:'Objetivos SMART',
+ anc:'El <b>antídoto contra objetivos mal definidos</b>.',
+ li:['e<b>S</b>pecífico · <b>M</b>edible · <b>A</b>lcanzable · <b>R</b>elevante · <b>T</b>emporal',
+     'Bien: «lanzar Vitrina con tienda, pagos, envíos, marketing y app, validada por un piloto, antes del 04/11/2026 y por debajo de USD 100.000»']},
+
+{id:'objmeta', col:'b3', band:'personas', t:'Objetivo y meta',
+ li:['<b>Objetivo = el QUÉ.</b> «Que el comercio chico venda online sin programar»',
+     '<b>Meta = el CÓMO.</b> Los cuatro hitos del cronograma'],
+ warn:'No los inviertas: el objetivo <b>nunca</b> es el «cómo».'},
+
+{id:'roles', col:'b4', band:'personas', t:'Roles según la capa',
+ anc:'<b>Predictivo es jerárquico</b> (hay jefe). <b>Scrum reparte el poder</b> (no hay jefe interno).',
+ li:['Sponsors ⇄ Product Owner','Líder de Proyecto ⇄ Scrum Master','Equipo asignado ⇄ Development Team autoorganizado'],
+ warn:'<b>PO y Scrum Master existen sólo en ágil.</b> En la capa predictiva, el PO/Analista funciona como analista de negocio.',
+ refs:[{t:'Roles del plan',to:'rolesC'},{t:'Roles de Scrum',to:'rolesA'}]},
+
+{id:'analistas', col:'b4', band:'personas', t:'Analista de negocio y funcional',
+ li:['<b>Analista de negocio:</b> mira la organización. En Vitrina, el Product Owner / Analista',
+     '<b>Analista funcional o UX:</b> mira el sistema. En Vitrina, el Diseñador UX-UI']},
+
+/* ───────── COMUNICACIÓN ───────── */
+{id:'dcd', col:'b5', band:'comms', t:'DCD',
+ anc:'<b>Corto</b>, para un mensaje o un update rápido.',
+ li:['<b>D</b>ato → <b>C</b>ontexto → <b>D</b>ecisión',
+     '«CPI 0,90 y EAC USD 109.377 · la línea base es 98.438 con techo de 100.000 · necesito que autoricen el desvío esta semana»']},
+
+{id:'csad', col:'b5', band:'comms', t:'CSAD',
+ anc:'<b>Largo</b>, para un informe.',
+ li:['<b>Contexto:</b> ¿dónde estábamos, qué esperábamos?',
+     '<b>Situación:</b> ¿qué pasó, hay desvíos?',
+     '<b>Análisis:</b> ¿por qué, qué impacto tiene?',
+     '<b>Decisión:</b> ¿qué hacemos, qué pedimos?'],
+ warn:'<b>Análisis</b> es el <b>por qué y con qué impacto</b>. No «qué pasó» (Situación) ni «qué hago» (Decisión).'},
+
+{id:'informes', col:'b5', band:'comms', t:'Informe según la capa',
+ li:['<b>Plan:</b> status report semanal o quincenal + resumen ejecutivo de 1 página con semáforos',
+     '<b>Fase 2:</b> la <b>demo en el Sprint Review</b>, no un documento'],
+ warn:'El equivalente al informe de avance en Scrum es <b>la demo del Sprint Review</b>.',
+ refs:[{t:'Sprint Review',to:'reviewDet'},{t:'Fórmulas EVM',to:'formulas'}]},
+
+/* ───────── RIESGOS ───────── */
+{id:'exposicion', col:'b6', band:'riesgos', t:'Exposición al riesgo',
+ anc:'<b>Exposición = Probabilidad × Impacto.</b>',
+ li:['<b>Inherente:</b> sin controles. Los seis riesgos de Vitrina arrancan en <b>rojo</b>',
+     '<b>Residual:</b> después de los controles. Cinco quedan amarillos, R4 baja a <b>verde</b>'],
+ warn:'La <b>clasificación final usa la exposición residual</b>. Nunca la inherente ni el promedio.'},
+
+{id:'registro', col:'b6', band:'riesgos', t:'Los 6 riesgos de Vitrina',
+ li:['<b>R1</b> Renuncia de dev clave (RR.HH.)','<b>R2</b> Retraso en el desarrollo (Cronograma)',
+     '<b>R3</b> Desvío presupuestario (Costos)','<b>R4</b> Problema regulatorio (Legal)',
+     '<b>R5</b> Baja adopción, el piloto no valida (Mercado)','<b>R6</b> Falla de seguridad en pagos (Técnico)'],
+ warn:'<b>R1 y R4 se materializaron</b> en la Parte 2, y los dos tenían control asignado desde la Parte 1. Ése es el argumento fuerte de la defensa.'},
+
+{id:'controles', col:'b6', band:'riesgos', t:'Los controles son tareas',
+ anc:'Los controles no quedan en el papel: se incorporaron al cronograma con días y costo.',
+ li:['<b>C1</b> Documentación y backup del perfil clave · 5 días · R1',
+     '<b>C2</b> Compra anticipada de equipamiento · 2 días · R3',
+     '<b>C3</b> Auditoría de seguridad de pagos · 6 días · R6',
+     '<b>C4</b> Pruebas de carga y performance · 6 días · R2 y R6',
+     '<b>C5</b> Onboarding del reemplazo · 20 días · R1',
+     '<b>T4.5</b> Auditoría de compliance · 8 días · R4'],
+ refs:[{t:'Reservas',to:'reservas'}]},
+
+{id:'matriz33', col:'b7', band:'riesgos', t:'Matriz probabilidad × impacto',
+ anc:'Clasifica la <b>gravedad</b>. Cuanto más arriba y a la derecha, peor.',
+ li:['Prob. alta: <b>atención</b> / inaceptable / inaceptable',
+     'Prob. media: aceptable / atención / <b>inaceptable</b>',
+     'Prob. baja: aceptable / aceptable / <b>atención</b>'],
+ warn:'<b>Probabilidad alta + impacto medio = INACEPTABLE.</b> No «atención».'},
+
+{id:'decision', col:'b7', band:'riesgos', t:'Matriz de decisión',
+ anc:'Recién <b>después</b> de clasificar se elige la estrategia.',
+ li:['Alta + alto → <b>evitar o mitigar</b>','Alta + bajo → <b>mitigar</b>',
+     'Baja + alto → <b>transferir</b> (seguros, SLA, terceros)',
+     'Baja + bajo → <b>aceptar</b> con contingencia y monitorear']},
+
+{id:'hitl', col:'b7', band:'riesgos', t:'Human-in-the-loop',
+ anc:'<b>IA 80% · PM 20%.</b>',
+ li:['La IA arma los seis riesgos y la matriz en dos minutos',
+     'El PM aporta el 20% crítico: <b>contexto político y restricciones no documentadas</b>',
+     'La IA no sabe que Legales viene demorado con otro producto']},
+
+{id:'rctf', col:'b7', band:'riesgos', t:'Framework RCTF',
+ anc:'<b>R</b>ol → <b>C</b>ontexto → <b>T</b>area → <b>F</b>ormato.',
+ li:['Quién es la IA → cuál es la situación → qué produce → cómo lo entrega']},
+
+/* ───────── CAPA PREDICTIVA: EL PLAN ───────── */
+{id:'proyA', col:'a9', band:'cascada', hub:true, t:'EL PLAN',
+ anc:'Envoltorio predictivo: cuatro fases, EDT, camino crítico y línea base en MS Project.',
+ li:['10 meses · 05/01/2026 → 04/11/2026','BAC USD 98.438 · techo USD 10.000 por mes','9 perfiles · 4 hitos · 6 riesgos']},
+
+{id:'cascada5', col:'a9', band:'cascada', t:'Modelo cascada',
+ anc:'<b>Lineal y secuencial</b>: cada etapa depende de que la anterior termine y <b>no se solapan</b>.',
+ li:['1 <b>Análisis</b> → 2 <b>Diseño</b> → 3 <b>Implementación</b> → 4 <b>Pruebas</b> → 5 <b>Despliegue</b>',
+     'Tu EDT las agrupó en <b>4 fases de negocio</b>: Análisis+Diseño = F1, Implementación = F2, Pruebas = QA+piloto, Despliegue = F4'],
+ warn:'Son <b>5 fases</b> teóricas, no 3, 4 ni 6. Que tu EDT tenga cuatro no es un error: es la misma secuencia empaquetada distinto.'},
+
+{id:'rolesC', col:'a9', band:'cascada', t:'Roles en el plan',
+ li:['<b>Sponsors y Comité:</b> financian y autorizan. Exigen el adelanto de 2 meses',
+     '<b>Líder de Proyecto:</b> autoridad central, <b>asigna</b> tareas',
+     '<b>Equipo:</b> ejecuta lo asignado según el cronograma']},
+
+{id:'edt', col:'a10', band:'cascada', t:'EDT / WBS',
+ anc:'«<b>Lo que no está en la EDT, no está en el proyecto.</b>» Descomposición <b>jerárquica y orientada a entregables</b>.',
+ li:['F1 Discovery y Diseño · F2 Desarrollo del MVP','F3 Piloto con Comercios · F4 Lanzamiento y Escala',
+     'Cada fase con entregables, paquetes, tareas y un hito de cierre'],
+ warn:'La <b>auditoría de compliance no estaba</b> en la EDT original: por eso no tenía recurso, no estaba en el cronograma y no estaba en los USD 98.438. Apareció en la Parte 2 como T4.5, 8 días sobre la ruta crítica.'},
+
+{id:'paquete', col:'a10', band:'cascada', t:'Paquete de trabajo',
+ li:['El <b>nivel más bajo</b> de la EDT','Es un <b>componente o entregable</b>',
+     '<b>No tiene duración propia</b>. Ej: «Pagos y envíos»']},
+
+{id:'regla880', col:'a10', band:'cascada', t:'Regla 8/80',
+ anc:'Un paquete bien dimensionado tiene entre <b>8 y 80 horas</b> de trabajo.',
+ li:['Menos de 8 = microgestión. Más de 80 = no lo podés estimar ni controlar',
+     'Por eso «Desarrollo del MVP» se abre en tienda, pagos, envíos, marketing, app y QA'],
+ warn:'Son <b>horas</b>. No días, no personas, no cantidad de actividades.'},
+
+{id:'actividad', col:'a10', band:'cascada', t:'Actividad',
+ anc:'Entregable contra <b>acción</b>.',
+ li:['Vive en el <b>cronograma</b>','Es una <b>acción con duración</b>',
+     'Sale de descomponer el paquete. Ej: «C3, auditoría de seguridad, 6 días»']},
+
+{id:'cadena', col:'a11', band:'cascada', t:'Cadena de procesos del cronograma',
+ anc:'Cada proceso contesta una pregunta y alimenta al siguiente. Es <b>iterativo</b>.',
+ li:['<b>Definir</b> ¿qué hay que hacer?','<b>Secuenciar</b> ¿en qué orden?',
+     '<b>Estimar recursos</b> ¿con qué y quiénes?','<b>Estimar duración</b> ¿cuánto tarda?',
+     '<b>Desarrollar cronograma</b> ¿cuándo empieza y termina?']},
+
+{id:'red', col:'a11', band:'cascada', t:'Diagrama de red',
+ li:['Es la <b>salida de «Secuenciar actividades»</b>','De ahí sale el camino crítico'],
+ warn:'No son las estimaciones ni la lista de hitos. Es el <b>diagrama de red del cronograma</b>.'},
+
+{id:'relaciones', col:'a11', band:'cascada', t:'Relaciones lógicas',
+ anc:'Leelas literal. <b>La primera letra es la del predecesor.</b>',
+ li:['<b>FS</b>: no se recluta comercios hasta que el MVP esté en producción (~90% de los casos)',
+     '<b>SS</b>: el fast-tracking, preparación de lanzamiento con cierre de piloto',
+     '<b>FF</b>: los ajustes por feedback no cierran hasta que cierra el monitoreo',
+     '<b>SF</b>: el soporte del piloto no se da de baja hasta que arranca el del lanzamiento']},
+
+{id:'critico', col:'a11', band:'cascada', t:'Camino crítico',
+ anc:'La <b>cadena más larga</b> de actividades dependientes. Si se atrasa una, <b>se mueve la fecha de fin</b>.',
+ li:['En Vitrina atraviesa el <b>desarrollo del MVP (tienda → QA)</b>, el <b>monitoreo del piloto</b> y la <b>optimización de la Fase 4</b>',
+     'Lo que no está en él tiene <b>holgura</b>'],
+ warn:'Sólo sirve comprimir tareas <b>del camino crítico</b>. Reforzar una tarea con holgura gasta plata y <b>no adelanta un solo día</b>.'},
+
+{id:'leadlag', col:'a12', band:'cascada', t:'Lead y lag',
+ anc:'<b>Negativo aprieta, positivo espera.</b>',
+ li:['<b>Lead (adelanto) = negativo.</b> Solapa y <b>comprime</b>. Es el mecanismo del fast-tracking',
+     '<b>Lag (retraso) = positivo.</b> Introduce <b>espera</b>. Ej: los días de homologación de la pasarela']},
+
+{id:'deps', col:'a12', band:'cascada', t:'Origen de las dependencias',
+ li:['<b>Obligatoria (dura):</b> T4.5 antes del lanzamiento. Lo exige Legales, no es modificable',
+     '<b>Discrecional (blanda):</b> la tienda antes que la app móvil. Podría ser al revés',
+     '<b>Externa:</b> tiempos de la pasarela de pagos y los operadores logísticos. Se cubre con <b>buffers</b>'],
+ warn:'«Hago el login primero porque facilita las pruebas, aunque podría ir en otro orden» = <b>discrecional</b>. Riesgo: alargar el cronograma.'},
+
+{id:'cono', col:'a12', band:'cascada', t:'Cono de incertidumbre',
+ anc:'Al inicio sabés poco → error máximo. Avanzás → el error se cierra.',
+ li:['Al inicio la estimación puede variar <b>±4x</b>',
+     'Conceptual ±50% → planificación ±20-30% → en marcha ±10% → con datos reales ±5%',
+     'Explica por qué la Fase 4 se estimó con trazo grueso y después necesitó 20 días más'],
+ tv:'El principio vale en las dos capas. Es exactamente la razón por la que en la Fase 2 se planifica en detalle sólo el próximo sprint.'},
+
+{id:'hito', col:'a12', band:'cascada', t:'Hitos (milestones)',
+ anc:'<b>Evento sin duración</b> que marca un momento clave. Punto de control, no trabajo.',
+ li:['Diseño aprobado · 25/02','MVP en producción · 17/06 → adelantado a 20/05',
+     'Piloto validado · 14/09 → adelantado a 22/07','Lanzamiento comercial · 04/11 → adelantado a 04/09'],
+ tv:'También se usan en ágil: un roadmap de releases se marca con hitos igual que un Gantt.'},
+
+{id:'herramientas', col:'a13', band:'cascada', t:'Herramientas de cronograma',
+ li:['<b>Gantt:</b> barras temporales, plazos y solapamientos','<b>Roadmap:</b> visión estratégica de largo plazo',
+     '<b>Sprints:</b> ágil, incremental','<b>Kanban:</b> flujo continuo, WIP y cuellos de botella',
+     '<b>MS Project:</b> la herramienta del trabajo. Camino crítico, nivelación y línea base'],
+ warn:'MS Project guarda hasta <b>11 líneas base</b> (Baseline 0 a 10). En tu archivo conviven la línea base prevista y la programación vigente.',
+ tv:'<b>Kanban</b> y <b>roadmap</b> se usan en las dos capas. Gantt, camino crítico y MS Project sí son propios del predictivo.'},
+
+{id:'recursos', col:'a13', band:'cascada', t:'Los 3 tipos de recurso',
+ anc:'<b>Trabajo</b> consume horas. <b>Material</b> se consume por unidad. <b>Costo</b> es una suma fija.',
+ li:['<b>Trabajo:</b> los 9 perfiles. Acumulación <b>prorrateada</b>',
+     '<b>Material:</b> cloud (prorrateado), licencias, hardware importado (<b>al comienzo</b>)',
+     '<b>Costo:</b> campañas de Ads, setup de pasarela, servicios legales. <b>Costo fijo</b> en la tarea'],
+ warn:'El hardware acumula <b>al comienzo</b>: de ahí sale C2. Si acumulara prorrateado, adelantar la compra no serviría de nada.'},
+
+{id:'compresion', col:'a13', band:'cascada', t:'Crashing y fast-tracking',
+ anc:'Las dos <b>acortan la fecha de fin</b>, pero pagan con monedas distintas.',
+ li:['<b>Crashing:</b> sumar recursos al camino crítico. Un 2º dev en Tienda y App móvil. <b>Cuesta plata</b>',
+     '<b>Fast-tracking:</b> paralelizar lo que estaba en secuencia. Lanzamiento con cierre de piloto. <b>Cuesta riesgo</b>'],
+ warn:'Se usaron las dos porque cada una tiene techo: el crashing solo hacía explotar el presupuesto, el fast-tracking solo no alcanzaba para dos meses.'},
+
+{id:'techo', col:'a14', band:'cascada', t:'Techo de financiamiento',
+ anc:'<b>USD 10.000 por mes calendario</b>, distribuible libremente pero <b>no superable</b>.',
+ li:['10 meses → techo de <b>USD 100.000</b>','Línea base <b>USD 98.438</b> = 98% del techo',
+     'F1 19.320 (20%) · F2 35.760 (36%) · F3 15.106 (15%) · F4 28.252 (29%)'],
+ warn:'Quedaban <b>USD 1.562 de margen</b>. Por eso la crisis obligó a pedir autorización de desvío a los sponsors.'},
+
+{id:'lineabase', col:'a14', band:'cascada', t:'Línea base',
+ anc:'El plan aprobado y congelado al 0% de avance. <b>El desempeño se mide contra la línea base, no contra el BAC.</b>',
+ li:['Congela fechas, duraciones y costos previstos','Es una <b>guía, no un contrato inamovible</b>',
+     'En MS Project conviven la línea base y la programación vigente']},
+
+{id:'curvaS', col:'a14', band:'cascada', t:'Curva S',
+ anc:'Foto del <b>costo acumulado en el tiempo</b>: de $0 el día cero al 100% en el cierre.',
+ li:['<b>Inicio lento</b> durante el discovery','<b>Tramo empinado</b> en el MVP, 36% del presupuesto',
+     '<b>Se vuelve a empinar</b> en la Fase 4 por campañas y escalado']},
+
+{id:'visiones', col:'a14', band:'cascada', t:'Las 3 visiones temporales',
+ anc:'Plan · realidad · pronóstico. Todo el EVM cuelga de estas tres.',
+ li:['<b>PREVISTO</b> (línea base) → <b>PV</b>','<b>ACTUAL</b> (lo que pasó) → <b>AC</b>',
+     '<b>FINAL</b> (proyección) → <b>EAC</b>'],
+ warn:'Mes 3: gastaste USD 32.813 de 98.438 y «parece» que vas bien. Pero produjiste 29.531. <b>Gastás más de lo que producís.</b>'},
+
+{id:'evm', col:'a15', band:'cascada', t:'EVM, glosario mínimo',
+ li:['<b>BAC:</b> presupuesto total aprobado. En Vitrina, <b>USD 98.438</b>',
+     '<b>EV:</b> trabajo <b>realmente completado</b> = % avance × BAC. Es el protagonista',
+     '<b>PV:</b> valor planificado a hoy','<b>AC:</b> costo real a hoy']},
+
+{id:'formulas', col:'a15', band:'cascada', t:'Fórmulas EVM',
+ anc:'<b>EV va siempre primero.</b> Resta = variación en USD. División = índice, mayor a 1 es bueno.',
+ li:['<b>CV = EV − AC</b> → positivo = bajo presupuesto','<b>CPI = EV / AC</b> → <b>EAC = BAC / CPI</b>',
+     '<b>SV = EV − PV</b> → positivo = adelantado','<b>SPI = EV / PV</b>',
+     'Mes 3 de Vitrina: CPI 0,90 · SPI 1,00 · EAC USD 109.377'],
+ warn:'Es <b>CV = EV − AC</b>, nunca AC − EV. Si lo invertís, el signo se da vuelta.'},
+
+{id:'estimacion', col:'a15', band:'cascada', t:'Estimación de costos',
+ li:['<b>Análoga:</b> «un SaaS de este porte se hace en un año». Rápida pero imprecisa',
+     '<b>Ascendente:</b> horas × tarifa por perfil, y se suma. Es la que dio los USD 98.438',
+     '<b>Rolling wave:</b> detalle para lo próximo, trazo grueso para lo lejano'],
+ tv:'<b>Rolling wave</b> es la misma lógica que aplica ágil: detalle sólo para lo próximo. La análoga y la ascendente son del predictivo.'},
+
+{id:'costos', col:'a15', band:'cascada', t:'Costos directos e indirectos',
+ li:['<b>Directos:</b> horas de los 9 perfiles, licencias, hardware, campañas. Van en la línea base',
+     '<b>Indirectos:</b> administración de Rumbo Digital, seguros, impuestos. Se asignan como % sobre los directos'],
+ warn:'El PM controla principalmente los <b>directos</b>. Con el aumento salarial del 15% no podía negociar: sólo trasladarlo y controlarlo contra el tope.'},
+
+{id:'reservas', col:'a16', band:'cascada', t:'Reservas',
+ anc:'<b>Conocido adentro, desconocido afuera.</b>',
+ li:['<b>Contingencia</b> → riesgos <b>conocidos</b> → <b>dentro</b> de la línea base. En Vitrina son C1 a C5 y T4.5',
+     '<b>Gestión</b> → riesgos <b>desconocidos</b> → <b>fuera</b>. Es el margen hasta el tope del +20%',
+     'Actividades + contingencia = <b>USD 98.438</b> · + gestión = tope <b>USD 118.126</b>'],
+ refs:[{t:'Los controles',to:'controles'}]},
+
+{id:'crisis', col:'a16', band:'cascada', t:'Las 7 restricciones de la Parte 2',
+ anc:'Al 30% de avance llegaron todas juntas. No fue mala suerte: cuatro ya estaban en el PESTEL.',
+ li:['Adelantar la entrega <b>2 meses</b>, no negociable','Renuncia del dev senior (<b>+20 días</b>, tarea C5)',
+     'Fase 4 <b>+20 días</b> de complejidad','Aumento salarial <b>15%</b> retroactivo a devs',
+     'Arancel de importación <b>+18% por mes</b>','Nueva auditoría de compliance (T4.5, 8 días)',
+     'Presupuesto final <b>≤ línea base +20%</b>']},
+
+{id:'rebase', col:'a16', band:'cascada', t:'Rebaselining',
+ anc:'Actualizar <b>formalmente</b> la línea base cuando cambian las circunstancias.',
+ li:['Fin: 04/11 → <b>04/09</b> (−2 meses) · Duración: 10 → 8 meses',
+     'Costo: 98.438 → <b>USD 111.474 (+13,2%)</b>','Tope autorizado: USD 118.126 → <b>dentro del tope</b>'],
+ warn:'Requiere <b>aprobación de los interesados</b>. No la cambia el PM porque le quedó fea la curva. Y el desvío se mide contra la línea base <b>original</b>.'},
+
+/* ───────── CAPA ÁGIL: LA FASE 2 ───────── */
+{id:'proyB', col:'c1', band:'agil', hub:true, t:'LA FASE 2',
+ anc:'Desarrollo del MVP. Qué funciones entran realmente se descubre construyendo y mirando el piloto.',
+ li:['26/02 → 17/06 · USD 35.760 · 36% del presupuesto','Sprints de 2 semanas: entran unos 8',
+     'Tienda, pagos, envíos, marketing y app móvil']},
+
+{id:'manifiesto', col:'c1', band:'agil', t:'Manifiesto ágil',
+ anc:'Se valora <b>la izquierda por sobre la derecha</b>, pero las dos cosas valen.',
+ li:['<b>Individuos e interacciones</b> > procesos y herramientas',
+     '<b>Software funcionando</b> > documentación extensiva',
+     '<b>Colaboración con el cliente</b> > negociación contractual',
+     '<b>Respuesta al cambio</b> > seguir un plan'],
+ warn:'<b>Prioriza, no prohíbe.</b> La tarea C1 obliga a documentar el conocimiento del perfil clave, y eso fue lo que salvó al proyecto cuando renunció el senior.'},
+
+{id:'scrum', col:'c1', band:'agil', t:'Scrum',
+ anc:'Marco ágil con <b>3 roles, 3 artefactos y 4 ceremonias</b>.',
+ li:['El equipo <b>se autoorganiza</b>','El poder está repartido: no hay jefe interno']},
+
+{id:'sprint', col:'c2', band:'agil', t:'Sprint',
+ anc:'Ciclo de <b>2 a 4 semanas</b> que produce un <b>incremento potencialmente entregable</b>.',
+ li:['En Vitrina dura <b>2 semanas</b>','Al sprint 4 la plataforma ya publica una tienda y cobra, sin marketing ni app',
+     'Iterativo e incremental']},
+
+{id:'kanban', col:'c2', band:'agil', t:'Kanban',
+ li:['Flujo continuo, sin sprints fijos','Visualiza el <b>WIP</b> y los cuellos de botella'],
+ tv:'Nació en el mundo ágil, pero también se usa para operar el día a día de un proyecto predictivo.'},
+
+{id:'rolesA', col:'c3', band:'agil', t:'Los 3 roles de Scrum',
+ li:['<b>Product Owner:</b> el PO/Analista. Prioriza el backlog y decide <b>QUÉ</b> entra en el MVP',
+     '<b>Scrum Master:</b> facilita y quita impedimentos. <b>No es jefe.</b> Es el <b>único que puede cancelar un sprint</b>',
+     '<b>Development Team:</b> dev senior, semi-senior, QA y UX. Autoorganizado, <b>5 a 9 personas</b>'],
+ warn:'Scrum define <b>3 roles</b>. Los cambios de integrantes son <b>sólo entre sprints</b>: por eso el reemplazo del senior fue C5, 20 días, y no un enchufe a mitad de sprint.'},
+
+{id:'artefactos', col:'c3', band:'agil', t:'Los 3 artefactos',
+ anc:'Todo · este sprint · lo hecho.',
+ li:['<b>Product Backlog:</b> <b>TODOS</b> los requisitos de Vitrina. Lo gestiona el PO',
+     '<b>Sprint Backlog:</b> sólo las tareas <b>del sprint actual</b>',
+     '<b>Incremento:</b> producto funcionando acumulado'],
+ warn:'<b>Product = todo el producto. Sprint = sólo lo comprometido ahora.</b> Confundirlos es el error típico.'},
+
+{id:'jira', col:'c4', band:'agil', t:'Jerarquía JIRA',
+ anc:'De lo estratégico grande a la tarea chica.',
+ li:['<b>Tema → Iniciativa → Épica → Historia → Tarea</b>',
+     'Vender online sin programar → MVP de Vitrina → Pagos y envíos → «cobrar con Mercado Pago» → integrar el SDK']},
+
+{id:'historia', col:'c4', band:'agil', t:'Historia de usuario',
+ anc:'«Como <i>[usuario]</i>, quiero <i>[funcionalidad]</i>, para <i>[beneficio]</i>.»',
+ li:['«Como dueña de un local quiero cobrar con Mercado Pago <b>para no perder la venta</b>»',
+     'El «para» sale del <b>perfil del cliente</b>: es el dolor, no un invento','<b>Exclusiva de ágil</b>']},
+
+{id:'poker', col:'c4', band:'agil', t:'Planning poker',
+ anc:'Técnica <b>del equipo</b> para estimar el <b>esfuerzo</b> en <b>story points</b>, escala tipo Fibonacci.',
+ li:['5, 5, 13, 8, 5 → el que puso 13 sabe de la certificación de pagos → se vota de nuevo y sale 8',
+     'El valor no es el número: es la conversación. De ahí nació la tarea <b>C3</b>']},
+
+{id:'ceremonias', col:'c5', band:'agil', t:'Las 4 ceremonias',
+ anc:'Planeo → sincronizo a diario → muestro → mejoro.',
+ li:['<b>Sprint Planning</b> (2 partes, 4 h c/u)','<b>Daily Scrum</b> (15 min)',
+     '<b>Sprint Review</b> (hasta 4 h)','<b>Sprint Retrospective</b> (30 a 90 min)']},
+
+{id:'planningDet', col:'c5', band:'agil', t:'Sprint Planning',
+ li:['<b>1ª parte, con el PO:</b> el <b>Objetivo del Sprint</b>',
+     '<b>2ª parte, el equipo solo:</b> el <b>Sprint Backlog</b>',
+     '<b>5 inputs:</b> capacidad del equipo, Product Backlog, condiciones del negocio, producto actual, tecnología',
+     'Tareas del Sprint Backlog: <b>4 a 16 horas</b>'],
+ warn:'La distribución del trabajo la decide <b>el equipo</b>, no el SM ni el PO.'},
+
+{id:'dailyDet', col:'c6', band:'agil', t:'Daily Scrum',
+ li:['<b>15 minutos</b>, todos los días','¿Qué hice? ¿Qué haré? ¿Qué me bloquea?'],
+ warn:'Es un compromiso <b>entre pares</b>. No se resuelven problemas ahí y <b>no es un reporte al Scrum Master</b>.'},
+
+{id:'reviewDet', col:'c6', band:'agil', t:'Sprint Review',
+ li:['<b>Demo</b> del incremento al PO y a los comercios del piloto','El PO <b>acepta o rechaza</b>','El cliente reprioriza el backlog'],
+ warn:'<b>Lo no terminado NO se presenta.</b> Nunca, aunque el avance sea «significativo». Vuelve al Product Backlog.'},
+
+{id:'retroDet', col:'c6', band:'agil', t:'Sprint Retrospective',
+ li:['¿Qué hicimos bien? ¿Qué mejorar?','Produce una <b>lista concreta de mejoras</b>','Mira el <b>proceso</b>, no el producto']},
+
+{id:'burndown', col:'c7', band:'agil', t:'Burndown chart',
+ anc:'Trabajo <b>restante</b> contra el tiempo del sprint. Línea ideal contra línea real.',
+ li:['Dos sprints por encima de la ideal y el hito de MVP en producción se corre'],
+ warn:'Si la <b>real queda por ENCIMA de la ideal → hay retraso</b>: falta más trabajo del que debería.'},
+
+{id:'velocity', col:'c7', band:'agil', t:'Velocity',
+ li:['Story points completados por sprint, promedio histórico','28, 31, 26 → promedio <b>28,3</b>',
+     'Con eso el PO sabe cuánto entra en el próximo sprint'],
+ warn:'Es <b>comparación interna del propio equipo</b>. <b>No compara equipos distintos</b>.'},
+
+{id:'puente', col:'c7', band:'agil', t:'Cómo se conectan las dos capas',
+ anc:'Ninguna capa manda sola.',
+ li:['La <b>velocity</b> alimenta la estimación de duración de la Fase 2 en el cronograma',
+     'El <b>hito de MVP en producción</b> le pone techo al backlog',
+     'Adelantar 2 meses = menos sprints → sumar un dev para subir la velocity'],
+ warn:'Eso último es <b>crashing visto desde la capa ágil</b>: el mismo backlog en menos tiempo se paga con más capacidad.'},
+
+/* ───────── CIERRE ───────── */
+{id:'comparativa', col:'b1', band:'cierre', t:'Las dos capas, lado a lado',
+ anc:'Si te acordás de la primera fila, deducís todas las demás.',
+ li:['<b>Requisitos:</b> módulos y fases acordados ⇄ el detalle del MVP se descubre',
+     '<b>Entrega:</b> por hitos, cuatro ⇄ incremental, cada 2 semanas',
+     '<b>Feedback:</b> en cada hito ⇄ continuo, una demo por sprint',
+     '<b>Estructura:</b> el Líder de Proyecto manda ⇄ autoorganizada',
+     '<b>Avance:</b> status report con semáforos ⇄ demo en el Sprint Review',
+     '<b>Cronograma:</b> Gantt y camino crítico ⇄ sprints y Kanban',
+     '<b>Medición:</b> EVM contra USD 98.438 ⇄ burndown y velocity',
+     '<b>Estimación:</b> horas × tarifa ⇄ story points',
+     '<b>Cómo se acorta:</b> crashing y fast-tracking ⇄ subir la velocity']},
+
+{id:'numeros', col:'b1', band:'cierre', t:'Los números de Vitrina, de memoria',
+ li:['Duración prevista <b>10 meses</b>: 05/01/2026 → 04/11/2026',
+     'Línea base <b>USD 98.438</b> = <b>98%</b> del techo de USD 100.000',
+     'Techo: <b>USD 10.000 por mes</b> calendario, no superable',
+     'Fases: F1 <b>19.320</b> · F2 <b>35.760</b> · F3 <b>15.106</b> · F4 <b>28.252</b>',
+     'Avance al llegar la crisis: <b>30%</b>',
+     'Plan final <b>USD 111.474</b> = <b>+13,2%</b>, tope +20% = <b>118.126</b>',
+     'Nueva fecha de fin: <b>04/09/2026</b>, 8 meses',
+     '<b>9</b> perfiles · <b>6</b> riesgos · <b>6</b> tareas de control · <b>4</b> hitos',
+     'Riesgos que se materializaron: <b>R1 y R4</b>']},
+
+{id:'trampas', col:'b1', band:'cierre', t:'Las 15 trampas de la materia',
+ li:['1 · En tiempo y costo pero sin valor = <b>fracaso</b> (PMBOK 7)',
+     '2 · PMBOK 7 salió en <b>2021</b>',
+     '3 · Pilares = <b>principios, dominios, y modelos y métodos</b>',
+     '4 · Costos = <b>dominio de Financiamiento</b>',
+     '5 · EDT = descomposición <b>jerárquica orientada a entregables</b>',
+     '6 · Regla 8/80 = <b>horas</b> de trabajo',
+     '7 · Salida de «Secuenciar» = <b>diagrama de red</b>',
+     '8 · Lead = <b>negativo</b> (comprime); lag = <b>positivo</b> (espera)',
+     '9 · El ejemplo del login = dependencia <b>discrecional</b>',
+     '10 · Cono de incertidumbre = <b>±4x</b> al inicio',
+     '11 · <b>CV = EV − AC</b>, positivo = bajo presupuesto',
+     '12 · Contingencia = riesgos conocidos, <b>dentro</b> de la línea base',
+     '13 · Clasificación = exposición <b>residual</b>. Alta + medio = <b>inaceptable</b>',
+     '14 · Daily 15 min entre pares. Lo no terminado no se muestra en la review',
+     '15 · Cascada = <b>5 fases</b>: análisis, diseño, implementación, pruebas, despliegue']}
+];
+
+
+/* ═══════════════════════════════════════════════════════════
+   ARISTAS
+   ═══════════════════════════════════════════════════════════ */const E = [
+/* negocio */
+['origen','bmc','se modela con','negocio'],
+['origen','pestel','está expuesta a','negocio'],
+['bmc','bmcLados','se lee por lados','negocio'],
+['bmc','pareto','prioriza segmentos con','negocio'],
+['bmc','vpc','amplía los bloques 1 y 2','negocio'],
+['bmc','canales','amplía el bloque 3','negocio'],
+['bmc','upcross','amplía el bloque 5','negocio'],
+['pestel','micro','no confundir con','negocio'],
+['pestel','origenProy','el entorno aprieta','negocio'],
+['bmc','origenProy','el negocio define el alcance','negocio'],
+/* pmbok */
+['pmi','pmbok','publica','pmbok'],
+['pmbok','p6','','pmbok'],
+['pmbok','p7','7ª edición, 2021','pmbok'],
+['p6','p7','del control al valor','pmbok'],
+['p7','pilares','se estructura en','pmbok'],
+['pilares','principios','','pmbok'],
+['pilares','dominios','','pmbok'],
+['pilares','modelos','','pmbok'],
+['dominios','financiamiento','acá viven los costos','pmbok'],
+['principios','tailoring','uno de los 12','pmbok'],
+['modelos','tailoring','se eligen según','pmbok'],
+['origenProy','tailoring','¿con qué enfoque lo gestiono?','negocio'],
+['tailoring','proyA','plata y fecha acotadas','cascada'],
+['tailoring','proyB','alcance que se descubre','agil'],
+['tailoring','roles','los roles cambian según la capa','personas'],
+/* personas */
+['p7','talento','competencias del PM','personas'],
+['talento','hierro','y las restricciones que administra','personas'],
+['talento','equipo','dimensiona el','personas'],
+['talento','poder','mapea a los interesados con','personas'],
+['smart','objmeta','no confundir con','personas'],
+['poder','smart','','personas'],
+['roles','analistas','otros dos que se confunden','personas'],
+['poder','dcd','el interés define cuánta comunicación','comms'],
+/* comunicación */
+['dcd','csad','versión larga, para informes','comms'],
+['csad','informes','se entrega como','comms'],
+/* riesgos */
+['dominios','exposicion','dominio de Incertidumbre','riesgos'],
+['exposicion','registro','se aplica a los','riesgos'],
+['registro','controles','cada uno con su','riesgos'],
+['exposicion','matriz33','se clasifica en','riesgos'],
+['matriz33','decision','y recién ahí se decide','riesgos'],
+['decision','hitl','el 20% lo aporta el PM','riesgos'],
+['hitl','rctf','le pide a la IA con','riesgos'],
+/* capa predictiva */
+['proyA','cascada5','se ejecuta como','cascada'],
+['cascada5','rolesC','con estos roles','cascada'],
+['cascada5','edt','la Fase 1 define el alcance','cascada'],
+['edt','paquete','su nivel más bajo','cascada'],
+['paquete','regla880','se dimensiona con','cascada'],
+['paquete','actividad','se descompone en','cascada'],
+['actividad','cadena','alimenta','cascada'],
+['cadena','red','la salida de «Secuenciar»','cascada'],
+['red','relaciones','se arma con','cascada'],
+['red','critico','y de ahí sale el','cascada'],
+['relaciones','leadlag','se ajustan con','cascada'],
+['relaciones','deps','y por su origen son','cascada'],
+['cadena','cono','sus duraciones caen en','cascada'],
+['cadena','hito','marca sus','cascada'],
+['cadena','herramientas','se dibuja en','cascada'],
+['cadena','recursos','y se le asignan','cascada'],
+['critico','compresion','sólo se comprime lo que está en él','cascada'],
+['cadena','lineabase','aprobado se congela como','cascada'],
+['techo','lineabase','pone el límite a la','cascada'],
+['lineabase','visiones','es el PREVISTO de','cascada'],
+['lineabase','curvaS','dibujada es','cascada'],
+['visiones','evm','se miden con','cascada'],
+['evm','formulas','','cascada'],
+['lineabase','reservas','actividades + contingencia =','cascada'],
+['controles','reservas','son la contingencia','riesgos'],
+['estimacion','lineabase','la alimenta','cascada'],
+['costos','lineabase','los directos van en','cascada'],
+['cono','estimacion','misma lógica','cascada'],
+['crisis','compresion','obliga a comprimir','cascada'],
+['crisis','rebase','y a rehacer la línea base','cascada'],
+['formulas','rebase','el EAC anticipa el desvío','cascada'],
+/* capa ágil */
+['proyB','scrum','se ejecuta con','agil'],
+['manifiesto','scrum','sus 4 valores se aplican en','agil'],
+['scrum','sprint','','agil'],
+['scrum','kanban','otro método ágil','agil'],
+['scrum','rolesA','','agil'],
+['scrum','artefactos','','agil'],
+['rolesA','artefactos','el PO gestiona el backlog','agil'],
+['artefactos','jira','el Product Backlog se ordena así','agil'],
+['jira','historia','el nivel de historia se escribe','agil'],
+['historia','poker','se estima con','agil'],
+['scrum','ceremonias','','agil'],
+['ceremonias','planningDet','','agil'],
+['ceremonias','dailyDet','','agil'],
+['ceremonias','reviewDet','','agil'],
+['ceremonias','retroDet','','agil'],
+['poker','planningDet','en la 2ª parte','agil'],
+['sprint','burndown','se monitorea con','agil'],
+['burndown','velocity','','agil'],
+['velocity','puente','alimenta el cronograma','agil']
+];
+
+/* ═══════════════════════════════════════════════════════════
+   MOTOR: layout, aristas, paneo, zoom, filtros
+   ═══════════════════════════════════════════════════════════ */
+const $ = s => document.querySelector(s);
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+/* el color de cada zona vive en una variable CSS con el mismo nombre */
+const BC = k => cssv('--' + k);
+const elNodes = $('#nodes'), elEdges = $('#edges'), elBands = $('#bands'), elLabels = $('#labels');
+const board = $('#board'), viewport = $('#viewport');
+const byId = {};
+let CW = 0, CH = 0;
+
+function esc(x){ return x; }
+
+/* ── construir nodos ── */
+N.forEach(n => {
+  byId[n.id] = n;
+  const c = COL[n.col];
+  const d = document.createElement('div');
+  d.className = 'node' + (n.hub ? ' hub' : '') + (isTV(n) ? ' tvn' : '');
+  d.id = 'n_' + n.id;
+  d.dataset.id = n.id;
+  d.dataset.band = n.band;
+  d.style.width = c.w + 'px';
+  let h = '<h3>' + n.t + '</h3>';
+  if (n.anc) h += '<div class="anc">' + n.anc + '</div>';
+  if (n.li && n.li.length) h += '<ul>' + n.li.map(x => '<li>' + x + '</li>').join('') + '</ul>';
+  if (n.warn) h += '<div class="warn">' + n.warn + '</div>';
+  if (n.tv) h += '<div class="tvnote"><b>Transversal.</b> ' + n.tv + '</div>';
+  if (n.refs) h += '<div class="refs">' + n.refs.map(r => '<button class="ref" data-to="' + r.to + '">' + r.t + '</button>').join('') + '</div>';
+  d.innerHTML = h;
+  elNodes.appendChild(d);
+  n.el = d;
+});
+
+/* ── pintar según el tema activo ── */
+function paint(){
+  N.forEach(n => {
+    const c = BC(n.band);
+    n.el.style.borderLeftColor = c;
+    n.el.style.setProperty('--bc', c);
+    const h = n.el.querySelector('h3');
+    if (h) h.style.color = n.hub ? '' : c;
+  });
+}
+
+/* ── apilar por columna ── */
+function layout(){
+  const GAP = 26;
+  CW = 0; CH = 0;
+  const tops = {};
+  const place = n => {
+    const c = COL[n.col], y = tops[n.col];
+    n.el.style.left = c.x + 'px';
+    n.el.style.top = y + 'px';
+    const h = n.el.offsetHeight;
+    n.el.style.height = h + 'px';
+    n.rect = { x: c.x, y: y, w: c.w, h: h };
+    tops[n.col] = y + h + GAP;
+  };
+  /* pasada 1: fila superior */
+  Object.keys(COL).forEach(k => tops[k] = COL[k].y);
+  N.filter(n => COL[n.col].y === TOP1).forEach(place);
+  /* la fila inferior arranca justo debajo de la superior */
+  let maxB = 0;
+  N.forEach(n => { if (COL[n.col].y === TOP1 && n.rect) maxB = Math.max(maxB, n.rect.y + n.rect.h); });
+  const row2 = maxB + 185;
+  Object.keys(COL).forEach(k => { if (COL[k].y === TOP2) tops[k] = row2; });
+  N.filter(n => COL[n.col].y === TOP2).forEach(place);
+
+  /* ── zonas ── */
+  elBands.innerHTML = '';
+  const box = {};
+  N.forEach(n => {
+    const r = n.rect, b = box[n.band];
+    if (!b) box[n.band] = { x1: r.x, y1: r.y, x2: r.x + r.w, y2: r.y + r.h };
+    else { b.x1 = Math.min(b.x1, r.x); b.y1 = Math.min(b.y1, r.y);
+           b.x2 = Math.max(b.x2, r.x + r.w); b.y2 = Math.max(b.y2, r.y + r.h); }
+  });
+  const TINT = cssv('--tint') || '13';
+  Object.keys(box).forEach(k => {
+    const b = box[k], m = BANDS[k], mc = BC(k);
+    const el = document.createElement('div');
+    el.className = 'band';
+    el.dataset.band = k;
+    el.style.left = (b.x1 - 30) + 'px';
+    el.style.top = (b.y1 - 62) + 'px';
+    el.style.width = (b.x2 - b.x1 + 60) + 'px';
+    el.style.height = (b.y2 - b.y1 + 92) + 'px';
+    el.style.borderColor = mc + '55';
+    el.style.background = mc + TINT;
+    el.innerHTML = '<span class="band-t" style="color:' + mc + '">' + m.t +
+                   (m.tv ? '<span class="tvband">transversal</span>' : '') + '</span>' +
+                   (m.s ? '<span class="band-s">' + m.s + '</span>' : '');
+    elBands.appendChild(el);
+    CW = Math.max(CW, b.x2 + 130);
+    CH = Math.max(CH, b.y2 + 130);
+  });
+  board.style.width = CW + 'px';
+  board.style.height = CH + 'px';
+  elEdges.setAttribute('width', CW);
+  elEdges.setAttribute('height', CH);
+  elEdges.setAttribute('viewBox', '0 0 ' + CW + ' ' + CH);
+}
+
+/* ── aristas ── */
+const adj = {};
+function anchors(A, B){
+  const acx = A.x + A.w/2, acy = A.y + A.h/2, bcx = B.x + B.w/2, bcy = B.y + B.h/2;
+  const dx = bcx - acx, dy = bcy - acy;
+  if (Math.abs(dx) > Math.abs(dy) * 0.85){
+    return dx > 0
+      ? [{x:A.x+A.w, y:acy, d:'r'}, {x:B.x, y:bcy, d:'l'}]
+      : [{x:A.x, y:acy, d:'l'}, {x:B.x+B.w, y:bcy, d:'r'}];
+  }
+  return dy > 0
+    ? [{x:acx, y:A.y+A.h, d:'b'}, {x:bcx, y:B.y, d:'t'}]
+    : [{x:acx, y:A.y, d:'t'}, {x:bcx, y:B.y+B.h, d:'b'}];
+}
+function cp(p, k){
+  if (p.d === 'r') return {x: p.x + k, y: p.y};
+  if (p.d === 'l') return {x: p.x - k, y: p.y};
+  if (p.d === 'b') return {x: p.x, y: p.y + k};
+  return {x: p.x, y: p.y - k};
+}
+function drawEdges(){
+  const cols = {};
+  Object.keys(BANDS).forEach(k => cols[k] = BC(k));
+  let defs = '<defs>';
+  Object.keys(cols).forEach(k => {
+    defs += '<marker id="ar_' + k + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+            '<path d="M0 1 L9 5 L0 9 z" fill="' + cols[k] + '" opacity=".75"/></marker>';
+  });
+  defs += '</defs>';
+  let paths = '', labels = '';
+  E.forEach((e, i) => {
+    const A = byId[e[0]], B = byId[e[1]];
+    if (!A || !B) { console.warn('arista sin nodo', e); return; }
+    (adj[e[0]] = adj[e[0]] || []).push(e[1]);
+    (adj[e[1]] = adj[e[1]] || []).push(e[0]);
+    const [p0, p3] = anchors(A.rect, B.rect);
+    const dist = Math.hypot(p3.x - p0.x, p3.y - p0.y);
+    const k = Math.max(55, Math.min(dist * 0.38, 240));
+    const c1 = cp(p0, k), c2 = cp(p3, k);
+    const col = cols[e[3]] || '#77878E';
+    paths += '<path d="M' + p0.x + ' ' + p0.y + ' C' + c1.x + ' ' + c1.y + ' ' + c2.x + ' ' + c2.y +
+             ' ' + p3.x + ' ' + p3.y + '" stroke="' + col + '" stroke-width="1.9" opacity=".55"' +
+             ' marker-end="url(#ar_' + (cols[e[3]] ? e[3] : 'pmbok') + ')" data-a="' + e[0] + '" data-b="' + e[1] + '"/>';
+    if (e[2]){
+      const mx = (p0.x + 3*c1.x + 3*c2.x + p3.x) / 8;
+      const my = (p0.y + 3*c1.y + 3*c2.y + p3.y) / 8;
+      labels += '<div class="elabel" style="left:' + mx + 'px;top:' + my + 'px" data-a="' + e[0] + '" data-b="' + e[1] + '">' + e[2] + '</div>';
+    }
+  });
+  elEdges.innerHTML = defs + paths;
+  elLabels.innerHTML = labels;
+}
+
+/* ── paneo y zoom ── */
+let s = 1, tx = 0, ty = 0;
+function apply(){
+  board.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+  board.classList.toggle('far', s < 0.42);
+  board.classList.toggle('vfar', s < 0.15);
+  $('#zlbl').textContent = Math.round(s * 100) + '%';
+  drawMiniVp();
+}
+function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+function barH(){ return document.querySelector('.bar').offsetHeight + 14; }
+function fit(){
+  const vw = viewport.clientWidth, vh = viewport.clientHeight, top = barH();
+  s = clamp(Math.min((vw - 40) / CW, (vh - top - 60) / CH), 0.04, 2.5);
+  tx = (vw - CW * s) / 2;
+  ty = top + (vh - top - CH * s) / 2;
+  apply();
+}
+function fitTo(x1, y1, x2, y2){
+  const vw = viewport.clientWidth, vh = viewport.clientHeight, top = barH();
+  const w = x2 - x1, h = y2 - y1;
+  s = clamp(Math.min((vw - 70) / w, (vh - top - 70) / h), vw < 900 ? 0.26 : 0.05, 1.15);
+  tx = (vw - w * s) / 2 - x1 * s;
+  ty = top + (vh - top - h * s) / 2 - y1 * s;
+  apply();
+}
+function zoomAt(px, py, ns){
+  ns = clamp(ns, 0.05, 2.6);
+  tx = px - (px - tx) * (ns / s);
+  ty = py - (py - ty) * (ns / s);
+  s = ns; apply();
+}
+viewport.addEventListener('wheel', e => {
+  e.preventDefault();
+  const r = viewport.getBoundingClientRect();
+  zoomAt(e.clientX - r.left, e.clientY - r.top, s * (e.deltaY < 0 ? 1.14 : 1/1.14));
+}, {passive:false});
+
+let ptrs = new Map(), last = null, moved = 0, pinch = 0;
+viewport.addEventListener('pointerdown', e => {
+  ptrs.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if (ptrs.size === 1){ last = {x:e.clientX, y:e.clientY}; moved = 0; viewport.classList.add('drag'); }
+  if (ptrs.size === 2){ const a = [...ptrs.values()]; pinch = Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y); }
+});
+addEventListener('pointermove', e => {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if (ptrs.size === 2 && pinch){
+    const a = [...ptrs.values()];
+    const d = Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y);
+    const r = viewport.getBoundingClientRect();
+    zoomAt((a[0].x+a[1].x)/2 - r.left, (a[0].y+a[1].y)/2 - r.top, s * (d / pinch));
+    pinch = d; moved = 99; return;
+  }
+  if (ptrs.size === 1 && last){
+    const dx = e.clientX - last.x, dy = e.clientY - last.y;
+    moved += Math.abs(dx) + Math.abs(dy);
+    tx += dx; ty += dy; last = {x:e.clientX, y:e.clientY}; apply();
+  }
+});
+function endPtr(e){
+  ptrs.delete(e.pointerId);
+  if (ptrs.size < 2) pinch = 0;
+  if (ptrs.size === 0){ last = null; viewport.classList.remove('drag'); }
+}
+addEventListener('pointerup', endPtr);
+addEventListener('pointercancel', endPtr);
+
+$('#zin').onclick = () => zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, s * 1.25);
+$('#zout').onclick = () => zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, s / 1.25);
+$('#fit').onclick = fit;
+
+/* ── minimapa ── */
+const MW = 210;
+function drawMini(){
+  const sc = MW / CW, mh = Math.round(CH * sc);
+  const svg = $('#miniSvg');
+  svg.setAttribute('width', MW); svg.setAttribute('height', mh);
+  svg.setAttribute('viewBox', '0 0 ' + CW + ' ' + CH);
+  let g = '<rect x="0" y="0" width="' + CW + '" height="' + CH + '" fill="' + cssv('--mini-bg') + '"/>';
+  N.forEach(n => {
+    g += '<rect x="' + n.rect.x + '" y="' + n.rect.y + '" width="' + n.rect.w + '" height="' + n.rect.h +
+         '" fill="' + BC(n.band) + '" opacity=".55" rx="6"/>';
+  });
+  g += '<rect id="miniVp" x="0" y="0" width="10" height="10"/>';
+  svg.innerHTML = g;
+}
+function drawMiniVp(){
+  const r = document.getElementById('miniVp'); if (!r) return;
+  r.setAttribute('x', -tx / s); r.setAttribute('y', -ty / s);
+  r.setAttribute('width', viewport.clientWidth / s);
+  r.setAttribute('height', viewport.clientHeight / s);
+}
+$('#mini').addEventListener('click', e => {
+  const r = $('#miniSvg').getBoundingClientRect();
+  const bx = (e.clientX - r.left) / r.width * CW;
+  const by = (e.clientY - r.top) / r.height * CH;
+  tx = viewport.clientWidth/2 - bx * s;
+  ty = viewport.clientHeight/2 - by * s;
+  apply();
+});
+
+/* ── foco: aislar un nodo y sus conexiones ── */
+let focused = null;
+function clearFocus(){
+  focused = null;
+  board.classList.remove('dimmed');
+  document.querySelectorAll('.hl,.focus').forEach(el => el.classList.remove('hl','focus'));
+}
+function focusNode(id){
+  clearFocus();
+  focused = id;
+  board.classList.add('dimmed');
+  const set = new Set([id].concat(adj[id] || []));
+  set.forEach(k => { const n = byId[k]; if (n) n.el.classList.add('hl'); });
+  byId[id].el.classList.add('focus');
+  document.querySelectorAll('#edges > path, .elabel').forEach(el => {
+    if (el.dataset.a === id || el.dataset.b === id) el.classList.add('hl');
+  });
+}
+function panTo(id, minScale){
+  const n = byId[id]; if (!n) return;
+  if (minScale && s < minScale) s = minScale;
+  tx = viewport.clientWidth/2 - (n.rect.x + n.rect.w/2) * s;
+  ty = viewport.clientHeight/2 - (n.rect.y + n.rect.h/2) * s;
+  apply();
+  n.el.classList.remove('flash'); void n.el.offsetWidth; n.el.classList.add('flash');
+}
+elNodes.addEventListener('click', e => {
+  if (moved > 6) return;
+  const ref = e.target.closest('.ref');
+  if (ref){ e.stopPropagation(); focusNode(ref.dataset.to); panTo(ref.dataset.to, .7); return; }
+  const nd = e.target.closest('.node'); if (!nd) return;
+  if (focused === nd.dataset.id) clearFocus(); else focusNode(nd.dataset.id);
+});
+viewport.addEventListener('click', e => {
+  if (moved > 6) return;
+  if (!e.target.closest('.node')) clearFocus();
+});
+$('#reset').onclick = () => { clearFocus(); $('#q').value = ''; runSearch(); };
+
+/* ── búsqueda ── */
+const plain = h => h.replace(/<[^>]+>/g, ' ').toLowerCase();
+N.forEach(n => {
+  n.txt = plain([n.t, n.anc || '', (n.li || []).join(' '), n.warn || ''].join(' '));
+});
+function runSearch(){
+  const q = $('#q').value.trim().toLowerCase();
+  document.querySelectorAll('.node').forEach(el => el.classList.remove('hit'));
+  if (q.length < 2) return;
+  N.forEach(n => { if (n.txt.indexOf(q) > -1) n.el.classList.add('hit'); });
+}
+$('#q').addEventListener('input', runSearch);
+$('#q').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const q = $('#q').value.trim().toLowerCase();
+  const hit = N.find(n => q.length > 1 && n.txt.indexOf(q) > -1);
+  if (hit) panTo(hit.id, .75);
+});
+
+/* ── filtros ── */
+const SETS = {
+  all: null,
+  cascada: n => n.band === 'cascada',
+  agil: n => n.band === 'agil',
+  tv: isTV
+};
+document.querySelectorAll('[data-f]').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('[data-f]').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    const keep = SETS[b.dataset.f];
+    const ok = n => !keep || keep(n);
+    N.forEach(n => n.el.classList.toggle('off', !ok(n)));
+    const live = {};
+    N.forEach(n => { if (ok(n)) live[n.band] = 1; });
+    document.querySelectorAll('.band').forEach(el =>
+      el.style.opacity = (!keep || live[el.dataset.band]) ? '' : '.18');
+    document.querySelectorAll('#edges > path, .elabel').forEach(el => {
+      const A = byId[el.dataset.a], B = byId[el.dataset.b];
+      if (!A || !B) return;
+      el.style.opacity = (!keep || (ok(A) && ok(B))) ? '' : '.05';
+    });
+    clearFocus();
+    if (!keep) { fit(); return; }
+    let x1 = 1e9, y1 = 1e9, x2 = -1e9, y2 = -1e9;
+    N.forEach(n => { if (keep(n)){
+      x1 = Math.min(x1, n.rect.x); y1 = Math.min(y1, n.rect.y);
+      x2 = Math.max(x2, n.rect.x + n.rect.w); y2 = Math.max(y2, n.rect.y + n.rect.h); } });
+    fitTo(x1 - 50, y1 - 90, x2 + 50, y2 + 50);
+  };
+});
+
+/* ── teclado ── */
+addEventListener('keydown', e => {
+  if (document.activeElement === $('#q')) { if (e.key === 'Escape') $('#q').blur(); return; }
+  if (e.key === '0') fit();
+  else if (e.key === '+' || e.key === '=') zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, s*1.25);
+  else if (e.key === '-') zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, s/1.25);
+  else if (e.key === 'Escape') clearFocus();
+  else if (e.key.indexOf('Arrow') === 0){ e.preventDefault();
+    const d = 120;
+    if (e.key === 'ArrowLeft') tx += d; if (e.key === 'ArrowRight') tx -= d;
+    if (e.key === 'ArrowUp') ty += d; if (e.key === 'ArrowDown') ty -= d;
+    apply(); }
+});
+$('#legClose').onclick = () => $('#legend').style.display = 'none';
+
+/* ── alternar claro / oscuro ── */
+$('#themeBtn').onclick = () => {
+  const esClaro = document.documentElement.getAttribute('data-theme') === 'light';
+  document.documentElement.setAttribute('data-theme', esClaro ? 'dark' : 'light');
+  $('#themeBtn').textContent = esClaro ? 'Modo claro' : 'Modo oscuro';
+  paint(); layout(); drawEdges(); drawMini(); apply();
+};
+addEventListener('resize', () => { drawMiniVp(); });
+
+/* ── arranque ── */
+let booted = false;
+function boot(){
+  if (booted) return; booted = true;
+  paint(); layout(); drawEdges(); drawMini();
+  if (viewport.clientWidth < 900){ s = .55; panTo('origen'); } else fit();
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot).catch(boot);
+else boot();
+setTimeout(boot, 1800);
+</script>
+</body>
+</html>
