@@ -11,12 +11,6 @@
 - 8 Socios clave — ¿con quién nos apoyamos?
 - 9 Estructura de costos — ¿cuánto nos cuesta?
 
-### Cómo se lee el Canvas
-- Derecha (1-5): mercado, valor e ingresos
-- Izquierda (6-8): infraestructura
-- Abajo (5 y 9): ingresos contra costos = viabilidad
-- Regla para reconstruir: cliente → qué le doy → cómo se lo hago llegar → cómo cobro → qué necesito → cuánto me cuesta
-
 ### PESTEL
 - Político — gobierno, regulación sectorial, comercio exterior, estabilidad
 - Económico — inflación, tipo de cambio, tasas, poder adquisitivo, salarios
@@ -32,9 +26,11 @@
 - Intermediarios — quiénes están en el medio
 
 ### Principio de Pareto
-- En el Canvas sirve para priorizar segmentos: no todos pesan igual
-- Por eso la tabla de segmentos lleva la columna % de utilidad esperada, no sólo el volumen
-- Un segmento chico que genera la mayor parte de la utilidad merece atención desproporcionada
+
+El principio de Pareto establece que, en muchas situaciones, una pequeña parte de los elementos genera una gran parte de los resultados. Se suele expresar como una relación aproximada de **80/20**: alrededor del 20% de las causas puede generar el 80% de los efectos.
+
+En un proyecto o negocio, sirve para **priorizar esfuerzos**. Por ejemplo, no todos los segmentos de clientes aportan la misma utilidad: un segmento que representa una pequeña parte de los clientes puede generar la mayor parte de las ganancias. Por eso, conviene identificar cuáles son los elementos que tienen mayor impacto y concentrar en ellos los recursos y la atención.
+
 
 ### Value Proposition Canvas (VPC — Lienzo de Propuesta de Valor)
 - Perfil del cliente ⇄ Mapa de valor
@@ -54,19 +50,6 @@
 - Cross-selling ➡ — productos complementarios, sumás al costado
 - Los dos viven en el bloque 5 del Canvas: hacen crecer el ingreso sin sumar clientes nuevos
 
-### De dónde nace un proyecto
-- El modelo de negocio define qué hay que construir
-- El PESTEL define contra qué hay que protegerse
-- De ahí salen el alcance, los riesgos y el presupuesto
-
-## B · Marco PMBOK (vale para predictivo y agil)
-
-### PMI — Project Management Institute (Instituto de Gestión de Proyectos)
-- No confundir la organización (PMI) con la guía (PMBOK)
-
-### PMBOK — Project Management Body of Knowledge (Conjunto de Conocimientos de la Gestión de Proyectos)
-- No es una metodología rígida ni un manual de pasos
-
 ### PMBOK 6, prescriptivo
 - Estructura: 49 procesos, 10 áreas de conocimiento
 - Éxito = alcance + tiempo + costo
@@ -82,10 +65,11 @@
 ### Los 3 pilares del PMBOK 7
 - Principios (12) → cómo pensar y decidir
 - Dominios (8) → qué gestionar, áreas de resultado
-- Modelos y métodos → cómo hacerlo: Scrum, Kanban, ruta crítica, EDT, EVM
+- Modelos y métodos → cómo hacerlo
+
 
 ### Los 12 principios
-- Personas: Stewardship (ética), Equipo, Interesados, Liderazgo
+- Personas: ética, Equipo, Interesados, Liderazgo
 - Valor y contexto: Valor, Pensamiento sistémico, Tailoring, Calidad
 - Frente a lo incierto: Complejidad, Riesgo, Adaptabilidad, Cambio
 
@@ -98,13 +82,29 @@
 
 ### Modelos y métodos
 - Predictivas: EDT, ruta crítica, Gantt, línea base, valor ganado
+
+Ruta crítica: Secuencia de actividades que determina la duración mínima del proyecto, por lo que un atraso en ellas puede retrasar todo el proyecto.
+
+EDT (Estructura de Desglose del Trabajo): Herramienta que descompone el proyecto jerárquicamente en entregables y paquetes de trabajo para organizar su alcance.
+
+Gantt: Gráfico que representa las actividades del proyecto sobre una línea de tiempo, mostrando sus fechas de inicio, finalización y duración.
+
+Línea base: Plan aprobado que establece las fechas, duraciones y costos previstos y sirve como referencia para medir los desvíos del proyecto.
+
+EVM (Gestión del Valor Ganado): Método que compara el trabajo realizado, el trabajo planificado y el costo real para medir el desempeño del proyecto.
+
 - Ágiles: Scrum, Kanban, planning poker, burndown
 
-### Tailoring
-- No es «hago lo que quiero»: es personalizar con criterio y poder justificarlo
-- Requisitos estables + fecha dura → predictivo
-- Requisitos que se descubren + feedback continuo → ágil
-- Si conviven las dos cosas → híbrido
+Kanban: Método de gestión visual que permite controlar el flujo de trabajo, limitar el trabajo en curso (WIP) y detectar cuellos de botella.
+
+Planning Poker: Técnica de estimación colaborativa en la que el equipo asigna Story Points a las tareas mediante una votación individual y luego discute las diferencias.
+
+Burndown: Gráfico que muestra cuánto trabajo queda pendiente a medida que avanzan los días de un sprint, permitiendo visualizar si el equipo está avanzando según lo esperado.
+
+
+### Tailoring = adaptar con criterio
+
+No significa elegir arbitrariamente cualquier metodología. Significa analizar el contexto del proyecto, elegir el enfoque más conveniente y poder justificar por qué se eligió.
 
 ## C · El PM y los interesados (vale para predictivo y agil )
 
@@ -114,13 +114,9 @@
 - Liderazgo — motivar, influir y alinear personas
 
 ### Triángulo de hierro
+- Alcance, tiempo y costo
 - No hay decisión gratis: siempre es un trade-off consciente
 - La gestión consiste en elegir qué punta se sacrifica y comunicarlo
-
-### Análisis de recursos humanos
-- Cada perfil se justifica por qué valor aporta y en qué momento es crítico
-- Cada uno carga una tarifa estándar y una tarifa extraordinaria (el doble) para horas extra
-- Los perfiles escasos son, además, una fuente de riesgo
 
 ### Matriz poder / interés
 - Poder alto + interés alto → gestionar de cerca
@@ -140,16 +136,11 @@
 - Objetivo = el QUÉ. Fin último, abstracto, largo plazo
 - Meta = el CÓMO. Pasos intermedios, concretos y medibles
 
-### Analista de negocio y funcional
-- Analista de negocio: mira la organización, levanta requisitos de alto nivel
-- Analista funcional o UX: mira el sistema, el aplicativo concreto y cómo se usa
-
 ### Roles en el enfoque predictivo  *(propio del predictivo)*
 - Sponsor — financia y autoriza el proyecto
 - Project Manager (PM — Líder de Proyecto) — autoridad central, asigna tareas, responde por el plan
 - Equipo — ejecuta lo asignado
 - Estructura jerárquica: hay jefe que asigna
-- Product Owner y Scrum Master NO existen acá, y eso no es un error de armado
 
 
 ### Los 3 roles de Scrum  *(propio del ágil)*
@@ -157,7 +148,6 @@
 - Scrum Master: facilita y quita impedimentos. NO es jefe, no asigna tareas. Es el único que puede cancelar un sprint
 - Development Team: construye. Autoorganizado, típicamente 5 a 9 personas, full-time y multidisciplinar
 - Estructura sin jefe interno: el poder está repartido
-- Scrum define 3 roles, no 2 ni 4. Los cambios de integrantes son sólo entre sprints
 
 ## D · Comunicación (vale para predictivo y agil)
 
@@ -172,14 +162,12 @@
 - Análisis — ¿por qué? ¿qué impacto tiene?
 - Decisión — ¿qué hacemos? ¿qué pedimos?
 
+
 ### Informe de avance en predictivo  *(propio del predictivo)*
 - Status report semanal o quincenal + resumen ejecutivo de 1 página con semáforos (verde, amarillo, rojo)
-- La estructura del mensaje (DCD / CSAD) es la misma; sólo cambia el vehículo
 
 ### Informe de avance en ágil  *(propio del ágil)*
 - Es la demo al cliente en el Sprint Review, no un documento formal
-- La estructura del mensaje (DCD / CSAD) es la misma; sólo cambia el vehículo
-
 
 
 ## E · Riesgos (vale para predictivo y agil)
@@ -189,27 +177,41 @@
 - Residual: la que queda después de aplicar la contingencia
 
 ### Registro de riesgos
-- Identificador y categoría — RR.HH., cronograma, costos, legal, mercado, técnico
-- Causa — por qué podría pasar, no sólo qué pasaría
-- Valoración inherente → controles → valoración residual
-- Responsable — alguien tiene que ser dueño del riesgo
+-Identificador y categoría: identifica el riesgo y lo clasifica, por ejemplo: RR.HH.
+- Causa: explica por qué podría ocurrir el riesgo, no solamente qué podría suceder.
+- Valoración: primero se evalúa el riesgo inherente, luego se aplican controles y finalmente se calcula el riesgo residual.
+- Responsable: cada riesgo debe tener una persona asignada que sea responsable de gestionarlo y hacerle seguimiento.
 
 ### Planes de respuesta
 - Cada control se carga en el cronograma como tarea real
 - Consume días, consume recursos y entra en el presupuesto
 - Por eso los controles forman la reserva de contingencia
 
-### Matriz probabilidad × impacto
-- Prob. alta: atención · inaceptable · inaceptable
-- Prob. media: aceptable · atención · inaceptable
-- Prob. baja: aceptable · aceptable · atención
-- Verde = aceptable · amarillo = atención · rojo = inaceptable
+### Matriz de probabilidad × impacto
+
+| Probabilidad \ Impacto | Bajo | Medio | Alto |
+|---|---|---|---|
+| **Alta** | Atención | Inaceptable | Inaceptable |
+| **Media** | Aceptable | Atención | Inaceptable |
+| **Baja** | Aceptable | Aceptable | Atención |
+
+- 🟢 **Aceptable:** se puede aceptar y monitorear.
+- 🟡 **Atención:** requiere seguimiento y evaluación.
+- 🔴 **Inaceptable:** requiere una respuesta prioritaria.
 
 ### Matriz de decisión
-- Prob. alta + impacto alto → evitar o mitigar (máxima prioridad)
-- Prob. alta + impacto bajo → mitigar (bajar la frecuencia)
-- Prob. baja + impacto alto → transferir (seguros, SLA [Service Level Agreement — acuerdo de nivel de servicio], terceros)
-- Prob. baja + impacto bajo → aceptar con contingencia y monitorear
+
+| Probabilidad | Impacto | Respuesta |
+|---|---|---|
+| **Alta** | Alto | Evitar o mitigar |
+| **Alta** | Medio | Mitigar |
+| **Alta** | Bajo | Mitigar |
+| **Media** | Alto | Evitar o mitigar |
+| **Media** | Medio | Mitigar |
+| **Media** | Bajo | Aceptar y monitorear |
+| **Baja** | Alto | Transferir |
+| **Baja** | Medio | Aceptar y monitorear |
+| **Baja** | Bajo | Aceptar y monitorear |
 
 ### Human-in-the-loop
 - Ese 20% es: contexto político, relaciones interpersonales y restricciones no documentadas
@@ -223,10 +225,7 @@
 
 *Nota: en ágil los riesgos se miran de forma continua (cada sprint), pero los conceptos —exposición, registro, matrices y respuestas— son idénticos a los del predictivo.*
 
-
-## F · Propio del predictivo — el plan
-
-### Capa predictiva (idea general)
+## Capa predictiva (idea general)
 - Se planifica alcance → cronograma → costo, en ese orden
 - Se congela una línea base y todo desvío se mide contra ella
 
@@ -264,97 +263,264 @@
 - Estimar duración — ¿cuánto tarda?
 - Desarrollar cronograma — ¿cuándo empieza y termina? → se vuelve línea base
 
-### Diagrama de red
-- De él se calcula el camino crítico
 
 ### Relaciones lógicas
-- FS Fin→Inicio (Finish–Start) — B no empieza hasta que A termina. El más común (~90%)
-- FF Fin→Fin (Finish–Finish) — B no termina hasta que A termina. Fin sincronizado
-- SS Inicio→Inicio (Start–Start) — B no empieza hasta que A empieza. Arranque en paralelo
-- SF Inicio→Fin (Start–Finish) — B no termina hasta que A empieza. El más raro
+- FS Fin→Inicio (Finish–Start): B no empieza hasta que A termina; es la relación más común (~90%).
+Ejemplo: primero terminar el diseño de la base de datos y después comenzar el desarrollo de la API.
+
+- FF Fin→Fin (Finish–Finish): B no puede terminar hasta que A termina; ambas actividades deben finalizar coordinadamente.
+Ejemplo: terminar las pruebas de integración y terminar la corrección de los bugs detectados antes de cerrar la etapa de testing.
+
+- SS Inicio→Inicio (Start–Start): B no empieza hasta que A empieza, permitiendo que ambas actividades se desarrollen en paralelo.
+Ejemplo: cuando comienza el desarrollo del frontend, también puede comenzar el desarrollo del backend.
+
+- SF Inicio→Fin (Start–Finish): B no puede terminar hasta que A comienza; es la relación menos común.
+Ejemplo: un sistema viejo sigue funcionando hasta que comienza el despliegue del nuevo sistema, momento en que se puede finalizar el sistema anterior.
+
+### Diagrama de red
+
+Es una representación de las actividades y sus relaciones de dependencia, mostrando qué tareas deben realizarse antes o después de otras.
+
+Por ejemplo:
+
+Diseñar BD → Desarrollar API → Integrar → Probar
+
+A partir del diagrama de red se pueden analizar los diferentes caminos y determinar cuál es el **camino crítico**.
 
 ### Camino crítico
-- Las tareas que no están en él tienen holgura
-- Se calcula a partir del diagrama de red
-- Ante un atraso, lo primero que se mira es si la tarea es crítica o no
+
+El **camino crítico** es la secuencia de actividades que determina la **duración mínima total del proyecto**.
+
+Por ejemplo:
+
+Diseñar BD (3 días)  
+↓  
+Desarrollar API (5 días)  
+↓  
+Integrar (2 días)  
+↓  
+Probar (3 días)
+
+**Duración total = 13 días**
+
+Si estas actividades forman el camino crítico, un atraso en cualquiera de ellas puede atrasar la fecha final del proyecto.
+
+En cambio, las actividades que **no están en el camino crítico pueden tener holgura**, es decir, pueden retrasarse cierta cantidad de tiempo sin afectar la fecha final del proyecto.
+
+### ¿Qué hago si una tarea se atrasa?
+
+Lo primero es preguntarse:
+
+> **¿Esta tarea está en el camino crítico?**
+
+- **Sí →** el atraso puede retrasar todo el proyecto y requiere atención inmediata.
+- **No →** puede tener holgura y el atraso quizás pueda absorberse sin afectar la fecha final.
+
+**Para memorizarlo:**
+
+**Diagrama de red → muestra las dependencias → permite calcular el camino crítico → el camino crítico determina la duración del proyecto.**
+
+### Ejemplo de diagrama de red
+
+```text
+                  ┌─────────────────┐
+                  │ Diseñar BD      │
+                  │     3 días      │
+                  └────────┬────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Desarrollar API │
+                  │     5 días      │
+                  └────────┬────────┘
+                           │
+              ┌────────────┴────────────┐
+              ▼                         ▼
+     ┌─────────────────┐       ┌─────────────────┐
+     │ Desarrollar     │       │ Diseñar         │
+     │ Frontend        │       │ documentación   │
+     │     4 días      │       │     2 días      │
+     └────────┬────────┘       └────────┬────────┘
+              │                         │
+              └────────────┬────────────┘
+                           ▼
+                  ┌─────────────────┐
+                  │ Integración     │
+                  │     2 días      │
+                  └────────┬────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Pruebas         │
+                  │     3 días      │
+                  └─────────────────┘
+```
 
 ### Lead y lag
 - Lead (adelanto) = valor NEGATIVO — solapa actividades y comprime el cronograma. Ej: FS − 3 días
 - Lag (retraso) = valor POSITIVO — introduce una espera obligatoria. Ej: SS + 15 días
 - El lead es el mecanismo del fast-tracking
+- Crashing = agregar recursos para terminar más rápido.
 
 ### Origen de las dependencias
 - Obligatoria (dura): la exige la naturaleza del trabajo, el contrato o la ley. No modificable
+    Ejemplo: primero compilar el código y después ejecutar el programa.
 - Discrecional (blanda): la elegís por conveniencia o experiencia. Modificable
+    Ejemplo: decidir hacer primero el login y después el perfil de usuario, aunque técnicamente podrían desarrollarse en otro orden.
 - Externa: depende de terceros. Se cubre con buffers
+    Ejemplo: para integrar una API de pagos necesitamos que el proveedor externo nos entregue las credenciales.
 
 ### Cono de incertidumbre
-- Al inicio la estimación puede variar ±4x
-- Conceptual ±50% → planificación ±20-30% → en marcha ±10% → con datos reales ±5%
-- También en ágil: es la razón por la que se planifica en detalle sólo el próximo sprint
+- Al inicio del proyecto ±4 veces respecto del valor real
+- Conceptual: ±50%
+- Planificación: ±20–30%
+- Proyecto en marcha: ±10%
+- Con datos reales: ±5%
 
-### Hito (milestone)
+### Hito 
 - No consume horas ni recursos
 - Sirve para poder decir «llegamos» o «no llegamos» sin discutir
 - Típicos: fin de fase, aprobación, go-live, release
-- También en ágil: un roadmap de releases se marca con hitos igual que un Gantt
 
 ### Herramientas de cronograma
-- Gantt: barras temporales; alcance definido; muestra plazos y solapamientos
-- Roadmap: visión estratégica de largo plazo, sin detalle de tareas
-- Sprints: ágil, entrega incremental
-- Kanban: flujo continuo, visualiza el WIP y los cuellos de botella
-- MS Project: proyectos complejos; calcula ruta crítica, nivela recursos y fija la línea base
-- También en ágil: Kanban y roadmap se usan en los dos enfoques (Gantt, ruta crítica y MS Project sí son propios del predictivo)
+
+- **Gantt:** representa las actividades mediante barras sobre una línea de tiempo. Permite visualizar cuándo comienza y termina cada actividad, su duración y los posibles solapamientos entre tareas. Es especialmente útil en proyectos predictivos donde el alcance y el plan están definidos.
+
+```text
+              LUN   MAR   MIÉ   JUE   VIE   SÁB
+Diseño        █████████████
+Backend                   █████████████████
+Frontend                         █████████████████
+Pruebas                                      █████████
+
+```
+
+- **Roadmap:** muestra una visión general y estratégica de la evolución del proyecto a mediano o largo plazo. Permite visualizar grandes objetivos, funcionalidades, versiones o hitos, pero sin entrar en el detalle de las tareas diarias.
+
+```text
+           MES 1              MES 2              MES 3              MES 4
+         │                  │                  │                  │
+         ▼                  ▼                  ▼                  ▼
+┌──────────────┐     ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│     MVP      │ ──► │   Compras    │ ─► │   Marketing  │ ─► │  Expansión   │
+├──────────────┤     ├──────────────┤    ├──────────────┤    ├──────────────┤
+│ Productos    │     │ Carrito      │    │ Cupones      │    │ App móvil    │
+│ Catálogo     │     │ Checkout     │    │ Promociones  │    │ Programa     │
+│ Usuarios     │     │ Pagos        │    │ Emails       │    │ fidelización │
+│ Login        │     │ Envíos       │    │ Analytics    │    │ Marketplace  │
+└──────────────┘     └──────────────┘    └──────────────┘    └──────────────┘
+```
+
+- **Kanban:** representa visualmente el flujo de trabajo mediante columnas, por ejemplo: *Pendiente → En proceso → Terminado*. Permite conocer qué tareas están en curso (**WIP**), detectar acumulaciones y encontrar cuellos de botella. Puede utilizarse tanto en enfoques ágiles como en la gestión diaria de proyectos predictivos.
+
+```text
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│   PENDIENTE  │   │  EN PROCESO  │   │  TERMINADO   │
+├──────────────┤   ├──────────────┤   ├──────────────┤
+│ Login        │   │ API usuarios │   │ Base de datos│
+│ Dashboard    │   │              │   │ Login        │
+│ Reportes     │   │              │   │              │
+└──────────────┘   └──────────────┘   └──────────────┘
+                         ▲
+                         │
+                        WIP
+                  (trabajo en curso)
+```
+- **MS Project:** herramienta para planificar y controlar proyectos complejos. Permite definir actividades, duraciones, dependencias y recursos; calcular la **ruta crítica**, detectar posibles retrasos, nivelar recursos y establecer una **línea base** para comparar el avance real con el planificado.
 
 ### Los 3 tipos de recurso
-- Trabajo: personas. Acumulación prorrateada, se devenga a medida que se trabaja
-- Material: consumo continuo (prorrateado) o compra puntual (al comienzo)
+- Trabajo: personas, se devenga a medida que se trabaja
+- Material: consumo continuo o compra puntual (al comienzo)
 - Costo: importe fijo imputado a la tarea, dure lo que dure
 
-### Crashing y fast-tracking
-- Crashing: agregar recursos a tareas del camino crítico. Cuesta plata, y no escala infinito
-- Fast-tracking: ejecutar en paralelo lo que estaba en secuencia. Cuesta riesgo de retrabajo
-- Sólo tiene sentido sobre el camino crítico
-
 ### Restricción de financiamiento
-- Puede expresarse como total o por período (por mes, por trimestre)
-- La línea base tiene que caber adentro del techo
-- La diferencia entre el techo y la línea base es el margen real para absorber desvíos
+Es el **límite de plata**: lo máximo que podés gastar (puede ser un total, o un tope por mes).
+- Lo que planeás gastar tiene que **entrar** dentro de ese límite.
+- Lo que sobra entre el límite y tu plan es tu **colchón** para imprevistos.
+
+Fácil: **Límite ≥ Plan**. Si tu plan usa todo el límite, no te queda colchón.
 
 ### Línea base
-- Congela fechas, duraciones y costos previstos
-- Es una guía, no un contrato inamovible
-- Sin ella no se puede contestar «¿cómo venimos?»: sólo «cuánto gastamos», que no dice nada
+Es la **foto de tu plan** cuando lo aprobaron: las fechas y los costos que dijiste que ibas a tener.
+- Te sirve para comparar: «¿voy como planeé o me desvié?».
+- Sin ella solo sabés cuánto gastaste, pero no si eso está bien o mal.
 
 ### Curva S
-- Inicio lento — planificación
-- Tramo intermedio empinado — ejecución, máximo gasto
-- Final que desacelera — cierre
+Es un gráfico de cómo se **va sumando el gasto** con el tiempo. Tiene forma de S porque:
+- **Arranca lento** → todavía estás planificando.
+- **Se acelera en el medio** → estás produciendo a full, gastás lo más.
+- **Frena al final** → ya casi terminás.
 
-### Las 3 visiones temporales
-- PREVISTO (línea base) — lo planificado y aprobado → métrica PV (Planned Value — valor planificado)
-- ACTUAL — lo que realmente pasó hasta hoy → métrica AC (Actual Cost — costo real)
-- FINAL — lo que se estima al terminar → métrica EAC (Estimate At Completion — estimación a la conclusión)
+### ¿De dónde sale cada valor? Ejemplo: desarrollo de un e-commerce
 
-### EVM, glosario mínimo — Earned Value Management (Gestión del Valor Ganado)
-- BAC (Budget At Completion — presupuesto hasta la conclusión) — presupuesto total aprobado. Número fijo, el destino
-- EV (Earned Value — valor ganado) — valor del trabajo realmente completado = % avance × BAC. Es el protagonista
-- PV (Planned Value — valor planificado) — valor planificado a hoy
-- AC (Actual Cost — costo real) — costo real a hoy
+Imaginá que armás un e-commerce. Presupuesto total = **$100.000**, dura **10 semanas**.
 
-### Fórmulas EVM
-- CV = EV − AC — variación de costo (Cost Variance). Positivo = bajo presupuesto
-- CPI = EV / AC — índice de costo (Cost Performance Index). De acá sale EAC (Estimate At Completion — estimación a la conclusión) = BAC / CPI
-- SV = EV − PV — variación de cronograma (Schedule Variance). Positivo = adelantado
-- SPI = EV / PV — índice de cronograma (Schedule Performance Index)
-- Truco: Costo va con AC; cronoMa va con PV
+**Paso 1 — Armás el plan (una tabla con cada tarea, su costo y cuándo va)**
+
+| Tarea                  | Costo planeado | Semanas |
+|------------------------|---------------|---------|
+| Diseño / UX            | $10.000       | 1 y 2   |
+| Catálogo de productos  | $20.000       | 2 a 4   |
+| Carrito y checkout     | $25.000       | 4 a 6   |
+| Pasarela de pagos      | $20.000       | 6 a 8   |
+| Testing y despliegue   | $25.000       | 8 a 10  |
+
+- Si sumás todos los costos → **$100.000**. Ese total es el **BAC** (el presupuesto completo).
+
+**Paso 2 — Elegís un momento para medir. Digamos: fin de la semana 6.**
+
+Ahora respondés 3 preguntas, y cada respuesta es una métrica:
+
+---
+
+**PV — ¿cuánto DEBERÍA llevar hecho según el plan?**
+Mirás la tabla: para fin de semana 6, deberían estar listas Diseño, Catálogo y Carrito.
+- 10.000 + 20.000 + 25.000 = **PV = $55.000**
+- 👉 PV sale de **sumar el costo planeado de todo lo que ya tendría que estar terminado**.
+
+**EV — ¿cuánto REALMENTE terminé?**
+Vas tarea por tarea y ves qué % está hecho de verdad:
+- Diseño: 100% terminado → 100% × 10.000 = 10.000
+- Catálogo: 100% terminado → 100% × 20.000 = 20.000
+- Carrito: solo llegué al 60% → 60% × 25.000 = 15.000
+- Pasarela y Testing: ni empezaron → 0
+- Total: **EV = $45.000**
+- 👉 EV sale de **(% que terminé de cada tarea) × (su costo planeado)**.
+
+**AC — ¿cuánto GASTÉ de verdad?**
+Esto NO se calcula: lo sacás de la contabilidad (sueldos pagados, facturas, servidores).
+- Digamos que pagaste **AC = $50.000**.
+- 👉 AC sale de **la plata que realmente salió de la caja**.
+
+---
+
+**Paso 3 — Con esos 3 números hacés todas las cuentas:**
+
+- CV  (Variación de Costo) = EV − AC = 45.000 − 50.000 = **−5.000** → negativo = **vas caro** 🔴
+- SV (Variación de Cronograma) = EV − PV = 45.000 − 55.000 = **−10.000** → negativo = **vas atrasado** 🔴
+- CPI (Índice de Desempeño del Costo) = EV ÷ AC = 45.000 ÷ 50.000 = **0,90** → menos de 1 = ineficiente
+- SPI (Índice de Desempeño del Cronograma) = EV ÷ PV = 45.000 ÷ 55.000 = **0,82** → menos de 1 = atrasado
+
+**EAC — ¿en cuánto voy a terminar?**
+- EAC = BAC ÷ CPI = 100.000 ÷ 0,90 = **≈ $111.000**
+- 👉 Dice: «si sigo gastando con esta misma (in)eficiencia, el proyecto que iba a costar 100.000 me va a terminar costando 111.000».
+
+**Traducción final:** hiciste menos de lo planeado (atrasado) y gastando de más (caro), y si no corregís, vas a terminar $11.000 por encima del presupuesto.
 
 ### Enfoques de estimación
-- Análoga: por comparación con proyectos similares pasados. Rápida pero imprecisa
-- Ascendente (bottom-up): actividad por actividad y se suman. La más precisa, pero lenta y cara. Requiere alcance detallado
-- Rolling wave: detalle para lo próximo, general para lo lejano. Se refina a medida que se conoce el alcance
-- También en ágil: «rolling wave» es exactamente lo que hace ágil al planificar sólo el próximo sprint
+Formas de calcular cuánto va a costar o durar un proyecto.
+
+- **Análoga** — te guiás por un proyecto parecido de antes. Rápida y barata, pero imprecisa.
+- **Ascendente (bottom-up)** — estimás cada tarea y las sumás. La más precisa, pero lenta. Necesitás el alcance detallado.
+- **Rolling wave** — detallás lo cercano y dejás lo lejano en general; lo vas afinando con el tiempo.
+
+**Conexión con ágil:** rolling wave = lo que hace Scrum al planificar en detalle solo el próximo sprint.
+
+| Enfoque      | Cómo estima          | Precisión | Velocidad |
+|--------------|----------------------|-----------|-----------|
+| Análoga      | Comparando con otro  | Baja      | Rápida    |
+| Ascendente   | Sumando cada tarea   | Alta      | Lenta     |
+| Rolling wave | Solo detalla lo cercano | Media  | Media     |
 
 ### Costos directos e indirectos
 - Directos: atribuibles a un solo proyecto. Van en la línea base
@@ -378,117 +544,111 @@
 - Requiere aprobación de los interesados
 - La línea base original se conserva para poder medir el desvío contra ella
 
+## Capa ágil (idea general)
+En vez de cerrar todo el alcance al inicio, armás una **lista de tareas priorizada (backlog)** y vas entregando **algo usable cada pocas semanas**. Si el cliente cambia de idea, reordenás la lista.
 
-## F · Propio del ágil
-
-### Capa ágil (idea general)
-- Se prioriza un backlog en vez de cerrar un alcance
-- Se entrega valor usable cada pocas semanas
-
-### Manifiesto ágil, los 4 valores
-- Individuos e interacciones > procesos y herramientas
-- Software funcionando > documentación extensiva
-- Colaboración con el cliente > negociación contractual
-- Respuesta al cambio > seguir un plan
-- Prioriza, no prohíbe: dice qué gana cuando hay que elegir
+### Manifiesto ágil — los 4 valores
+Dice qué **gana** cuando hay que elegir (no prohíbe lo otro, lo pone en segundo lugar):
+- Las **personas** > los procesos y herramientas
+- El **software funcionando** > la documentación extensa
+- **Colaborar con el cliente** > pelear el contrato
+- **Adaptarse al cambio** > seguir el plan a rajatabla
 
 ### Scrum
-- El equipo se autoorganiza
-- El poder está repartido: no hay jefe interno
+Forma de trabajar ágil por ciclos cortos.
+- El equipo **se autoorganiza**: decide cómo hacer el trabajo.
+- **No hay jefe interno**: el poder está repartido entre los roles.
 
 ### Sprint
-- Es iterativo e incremental
-- El equipo se autoorganiza dentro del sprint
-- El alcance del sprint no se cambia una vez comprometido
+Es cada **ciclo corto** de trabajo (1 a 4 semanas).
+- Es **iterativo e incremental**: en cada sprint sumás una parte funcionando.
+- Una vez arrancado, **no se le cambia el alcance** (lo comprometido se respeta).
 
 ### Kanban
-- Visualiza el WIP (Work In Progress — trabajo en curso) y los cuellos de botella
-- Se limita el WIP para que el flujo no se tape
-- También en predictivo: se usa para operar el día a día de un proyecto
+Tablero para ver el flujo de trabajo (Pendiente → En proceso → Terminado).
+- Muestra el **WIP** (Work In Progress — trabajo en curso) y los cuellos de botella.
+- Se **limita el WIP** para que el flujo no se tape (no arrancar mil cosas juntas).
+- También sirve en predictivo, para el día a día.
 
 ### Los 3 artefactos
-- Product Backlog: lista priorizada de TODOS los requisitos. Lo gestiona el PO. Fuente única de requisitos
-- Sprint Backlog: sólo las tareas del sprint actual
-- Incremento: producto funcionando acumulado
+- **Product Backlog** — lista priorizada de **TODOS** los requisitos. La maneja el PO. Es la única fuente de requisitos.
+- **Sprint Backlog** — solo las tareas del **sprint actual**.
+- **Incremento** — el producto funcionando que se va **acumulando** sprint a sprint.
 
-### Jerarquía JIRA
-- Tema → Iniciativa → Épica → Historia → Tarea
+### Jerarquía en JIRA
+De lo más grande a lo más chico:
+**Tema → Iniciativa → Épica → Historia → Tarea**
 
 ### Historia de usuario
-- El «para» es lo que más se olvida y lo único que dice por qué vale la pena
-- El beneficio sale del perfil del cliente: es un dolor real, no un invento
+Formato: «Como [usuario], quiero [algo], **para** [beneficio]».
+- El **«para»** es lo que más se olvida, y es lo único que explica **por qué vale la pena**.
+- Ese beneficio tiene que ser un **dolor real** del cliente, no un invento.
 
 ### Planning poker
-- No estima horas y no la usa el PM para presionar
-- Se vota a ciegas, se discuten los extremos y se vuelve a votar
-- El valor no es el número: es la conversación que obliga a tener
+Técnica para estimar el tamaño de las tareas en equipo.
+- **No** estima horas, y **no** la usa el PM para apurar a nadie.
+- Cada uno **vota a ciegas**, se discuten los votos más extremos y se vuelve a votar.
+- Lo valioso **no es el número**, sino la **conversación** que obliga a tener.
 
-### Las 4 ceremonias
-- Sprint Planning — 2 partes, 4 h cada una
-- Daily Scrum — 15 min
-- Sprint Review — hasta 4 h
-- Sprint Retrospective — 30 a 90 min
+### Las 4 ceremonias (reuniones fijas)
+- **Sprint Planning** — planificar el sprint · 2 partes, hasta 4 h c/u
+- **Daily Scrum** — sincronizar el día · 15 min
+- **Sprint Review** — mostrar lo hecho · hasta 4 h
+- **Sprint Retrospective** — mejorar el equipo · 30 a 90 min
 
-### Sprint Planning
-- 1ª parte, con el PO: se define el Objetivo del Sprint
-- 2ª parte, el equipo solo: se arma el Sprint Backlog
-- 5 inputs: capacidad del equipo, Product Backlog, condiciones del negocio, producto actual, tecnología disponible
-- Las tareas del Sprint Backlog se dimensionan entre 4 y 16 horas
+### Sprint Planning (arranque del sprint)
+- **1ª parte (con el PO):** se define el **Objetivo del Sprint** (el qué).
+- **2ª parte (el equipo solo):** se arma el **Sprint Backlog** (el cómo).
+- Se apoya en 5 inputs: capacidad del equipo, Product Backlog, condiciones del negocio, producto actual y tecnología disponible.
+- Cada tarea del Sprint Backlog se dimensiona entre **4 y 16 horas**.
 
-### Daily Scrum
-- Tres preguntas: ¿qué hice? ¿qué haré? ¿qué me bloquea?
+### Daily Scrum (reunión diaria de 15 min)
+Cada uno responde 3 preguntas:
+- ¿Qué hice? · ¿Qué haré? · ¿Qué me bloquea?
 
-### Sprint Review
-- Demo del incremento al cliente
-- El PO acepta o rechaza
-- El cliente reprioriza el backlog
-- Es el equivalente ágil del informe de avance
+### Sprint Review (cierre visible del sprint)
+- Se hace la **demo** del incremento al cliente.
+- El **PO acepta o rechaza** lo hecho.
+- El cliente **reprioriza** el backlog según lo que ve.
+- Es el equivalente ágil del **informe de avance**.
 
-### Sprint Retrospective
-- ¿Qué hicimos bien? ¿Qué mejorar?
-- Produce una lista concreta de mejoras para el próximo sprint
-- Mira el proceso, no el producto
+### Sprint Retrospective (mejora del equipo)
+- ¿Qué hicimos bien? · ¿Qué podemos mejorar?
+- Sale una **lista concreta de mejoras** para el próximo sprint.
+- Mira el **proceso**, no el producto.
 
 ### Burndown chart
-- La ideal baja parejo de todo el trabajo comprometido a cero
+Gráfico que muestra el **trabajo que falta** (eje Y) a lo largo de los **días del sprint** (eje X). Si la línea baja parejo, el equipo va bien.
 
-### Velocity
-- Sirve para estimar cuánta capacidad tiene el equipo en el próximo sprint
-
-### Cómo se conectan las dos capas (en un híbrido)
-- La velocity del equipo alimenta la estimación de duración del cronograma
-- El hito del plan le pone techo a lo que entra en el backlog
-- Comprimir el plan se traduce en más capacidad del equipo ágil
+### Velocity (velocidad del equipo)
+- Es el **promedio de trabajo** (en Story Points) que el equipo termina y entrega ("Done") por sprint.
+- Se mira **hacia atrás**: es un dato real de los últimos 3 a 5 sprints, no un deseo.
+- Sirve para saber **cuánto aceptar** en el próximo sprint sin sobrecargarse.
+- Y para **proyectar fechas**: si el backlog tiene 100 puntos y la velocity es 20 → faltan unos **5 sprints**.
 
 ---
 ---
 
-# ▓▓▓ COMPARACIÓN Y REPASO (los dos juntos) ▓▓▓
+#  COMPARACIÓN Y REPASO (los dos juntos)
 
-### Predictivo y ágil, lado a lado
-- Requisitos: estables, definidos al inicio ⇄ cambiantes, se descubren
-- Entrega: al final o por hitos ⇄ incremental, cada sprint
-- Feedback del cliente: al final o en los hitos ⇄ continuo, una demo por sprint
-- Estructura: jerárquica, el PM manda ⇄ autoorganizada
-- Avance: status report con semáforos ⇄ demo en el Sprint Review
-- Cronograma: Gantt y ruta crítica ⇄ sprints y Kanban
-- Medición: EVM contra la línea base ⇄ burndown y velocity
-- Estimación: horas, ascendente o análoga ⇄ story points, planning poker
-- Cómo se acorta: crashing y fast-tracking ⇄ más capacidad, más velocity
+### Predictivo vs Ágil, lado a lado
+
+| Tema                  | Predictivo                      | Ágil                          |
+|-----------------------|---------------------------------|-------------------------------|
+| **Requisitos**        | Estables, definidos al inicio   | Cambiantes, se descubren      |
+| **Entrega**           | Al final o por hitos            | Incremental, cada sprint      |
+| **Feedback del cliente** | Al final o en los hitos      | Continuo, una demo por sprint |
+| **Estructura**        | Jerárquica, el PM manda         | Autoorganizada, sin jefe      |
+| **Avance**            | Status report con semáforos     | Demo en el Sprint Review      |
+| **Cronograma**        | Gantt y ruta crítica            | Sprints y Kanban              |
+| **Medición**          | EVM contra la línea base        | Burndown y velocity           |
+| **Estimación**        | Horas (ascendente o análoga)    | Story points (planning poker) |
+| **Cómo se acorta**    | Crashing y fast-tracking        | Más capacidad, más velocity   |
+
 
 ### Las 15 trampas de la materia
-- 1 · En tiempo y costo pero sin valor = fracaso (PMBOK 7)
-- 2 · PMBOK 7 salió en 2021
-- 3 · Pilares = principios, dominios, y modelos y métodos
-- 4 · Costos = dominio de Financiamiento
-- 5 · EDT = descomposición jerárquica orientada a entregables
-- 6 · Regla 8/80 = horas de trabajo
-- 7 · Salida de «Secuenciar» = diagrama de red
-- 8 · Lead = negativo (comprime); lag = positivo (espera)
-- 9 · El ejemplo del login = dependencia discrecional
-- 10 · Cono de incertidumbre = ±4x al inicio
-- 11 · CV = EV − AC, positivo = bajo presupuesto
-- 12 · Contingencia = riesgos conocidos, dentro de la línea base
-- 13 · Clasificación = exposición residual. Alta + medio = inaceptable
-- 14 · Daily 15 min entre pares. Lo no terminado no se muestra en la review
-- 15 · Cascada = 5 fases: análisis, diseño, implementación, pruebas, despliegue
+Los puntos donde más se cae la gente en el examen:
+
+- **7 · Secuenciar** → su salida es el **diagrama de red**.
+- **11 · CV** → CV = EV − AC; **positivo = bajo presupuesto** (vas barato).
+- **13 · Riesgo residual** → es la exposición que queda tras los controles. **Alta + medio = inaceptable**.
