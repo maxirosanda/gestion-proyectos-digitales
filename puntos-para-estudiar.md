@@ -6,85 +6,69 @@
 - Value Proposition Canvas (VPC — Lienzo de Propuesta de Valor)
 - Las 5 funciones del canal
 - Upselling y cross-selling
-
-- PMI — Project Management Institute (Instituto de Gestión de Proyectos)
-- PMBOK — Project Management Body of Knowledge (Conjunto de Conocimientos de la Gestión de Proyectos)
-- PMBOK 6, prescriptivo
-- PMBOK 7, adaptable
-- Los 3 pilares del PMBOK 7
-- Los 12 principios
-- Los 8 dominios
+- PMBOK 6
+- PMBOK 7
+- Los 4 pilares del PMBOK 7
 - Dominio de Financiamiento
-- Modelos y métodos
-- Tailoring
-
+- Tailoring = adaptar con criterio
 - Triángulo del talento
 - Triángulo de hierro
-- Análisis de recursos humanos
-- Matriz poder / interés
+-  Matriz poder / interés (4)
 - Objetivos SMART
 - Objetivo y meta
-- Analista de negocio y funcional
-- Roles en el enfoque predictivo  *(propio del predictivo)*
-- Los 3 roles de Scrum  *(propio del ágil)*
-
+- Comunicación (vale para predictivo y agil)
 - DCD
 - CSAD
-- Informe de avance en predictivo  *(propio del predictivo)*
-- Informe de avance en ágil  *(propio del ágil)*
-
-- Exposición al riesgo
-- Registro de riesgos
-- Planes de respuesta
-- Matriz probabilidad × impacto
-- Matriz de decisión
+- Exposición al riesgo (2)
+- Registro de riesgos (4)
+- Matriz de decisión (9) (x)
 - Human-in-the-loop
 - Framework RCTF
 
-- Modelo cascada
-- EDT / WBS — Estructura de Desglose del Trabajo (Work Breakdown Structure)
-- Paquete de trabajo
+
+- Roles en el enfoque predictivo (3)
+- Informe de avance en predictivo
+- Modelo cascada (5)
+- EDT / WBS — Estructura de Desglose del Trabajo (Work Breakdown Structure) (4)
 - Regla 8/80
 - Actividad
-- Cadena de procesos del cronograma
+- Cadena de procesos del cronograma (5)
+- Relaciones lógicas (4)
 - Diagrama de red
-- Relaciones lógicas
 - Camino crítico
-- Lead y lag
+- Lead y lag (2)
+- fast-tracking y Crashing (2)
 - Origen de las dependencias
-- Cono de incertidumbre
-- Hito (milestone)
-- Herramientas de cronograma
+- Cono de incertidumbre (4)
+- Hito 
+- Herramientas de cronograma (3)
 - Los 3 tipos de recurso
-- Crashing y fast-tracking
-- Restricción de financiamiento
-- Línea base
+- Restricción de financiamiento 
+- Línea base (2)
+- BAC
 - Curva S
-- Las 3 visiones temporales
-- EVM, glosario mínimo — Earned Value Management (Gestión del Valor Ganado)
-- Fórmulas EVM
-- Enfoques de estimación
+- PV, EV, AC
+- CV  (Variación de Costo)
+- SV (Variación de Cronograma) 
+- CPI (Índice de Desempeño del Costo)
+- SPI (Índice de Desempeño del Cronograma)
+- EAC (cuanto voy a terminar)
+- Enfoques de estimación (3)
 - Costos directos e indirectos
-- Reservas
-- Gestión de cambios
+- Reservas (2)
+- Gestión de cambios (5)
 - Rebaselining
 
-- Manifiesto ágil, los 4 valores
-- Scrum
+
+- Los 3 roles de Scrum 
+- Informe de avance en ágil  
+- Manifiesto ágil — los 4 valores
+- Scrum (2)
 - Sprint
 - Kanban
 - Los 3 artefactos
-- Jerarquía JIRA
-- Historia de usuario
+- Historia de usuario (3)
 - Planning poker
-- Las 4 ceremonias
-- Sprint Planning
-- Daily Scrum
-- Sprint Review
-- Sprint Retrospective
+- Las 4 ceremonias (reuniones fijas)
 - Burndown chart
-- Velocity
-
-
-- Predictivo y ágil, lado a lado
-- Las 15 trampas de la materia
+- Velocity (velocidad del equipo)

@@ -384,45 +384,6 @@ Ejemplo: un sistema viejo sigue funcionando hasta que comienza el despliegue del
 
 Es una representación de las actividades y sus relaciones de dependencia, mostrando qué tareas deben realizarse antes o después de otras.
 
-Por ejemplo:
-
-Diseñar BD → Desarrollar API → Integrar → Probar
-
-A partir del diagrama de red se pueden analizar los diferentes caminos y determinar cuál es el **camino crítico**.
-
-### Camino crítico
-
-El **camino crítico** es la secuencia de actividades que determina la **duración mínima total del proyecto**.
-
-Por ejemplo:
-
-Diseñar BD (3 días)  
-↓  
-Desarrollar API (5 días)  
-↓  
-Integrar (2 días)  
-↓  
-Probar (3 días)
-
-**Duración total = 13 días**
-
-Si estas actividades forman el camino crítico, un atraso en cualquiera de ellas puede atrasar la fecha final del proyecto.
-
-En cambio, las actividades que **no están en el camino crítico pueden tener holgura**, es decir, pueden retrasarse cierta cantidad de tiempo sin afectar la fecha final del proyecto.
-
-### ¿Qué hago si una tarea se atrasa?
-
-Lo primero es preguntarse:
-
-> **¿Esta tarea está en el camino crítico?**
-
-- **Sí →** el atraso puede retrasar todo el proyecto y requiere atención inmediata.
-- **No →** puede tener holgura y el atraso quizás pueda absorberse sin afectar la fecha final.
-
-**Para memorizarlo:**
-
-**Diagrama de red → muestra las dependencias → permite calcular el camino crítico → el camino crítico determina la duración del proyecto.**
-
 ### Ejemplo de diagrama de red
 
 ```text
@@ -459,13 +420,46 @@ Lo primero es preguntarse:
                   └─────────────────┘
 ```
 
+
+A partir del diagrama de red se pueden analizar los diferentes caminos y determinar cuál es el **camino crítico**.
+
+### Camino crítico
+
+El **camino crítico** es la secuencia de actividades que determina la **duración mínima total del proyecto**.
+
+Por ejemplo:
+
+Diseñar BD (3 días)  
+↓  
+Desarrollar API (5 días)  
+↓  
+Integrar (2 días)  
+↓  
+Probar (3 días)
+
+**Duración total = 13 días**
+
+Si estas actividades forman el camino crítico, un atraso en cualquiera de ellas puede atrasar la fecha final del proyecto.
+
+En cambio, las actividades que **no están en el camino crítico pueden tener holgura**, es decir, pueden retrasarse cierta cantidad de tiempo sin afectar la fecha final del proyecto.
+
+### ¿Qué hago si una tarea se atrasa?
+
+Lo primero es preguntarse:
+
+> **¿Esta tarea está en el camino crítico?**
+
+- **Sí →** el atraso puede retrasar todo el proyecto y requiere atención inmediata.
+- **No →** puede tener holgura y el atraso quizás pueda absorberse sin afectar la fecha final.
+
+
 ### Lead y lag
 - Lead (adelanto) = valor NEGATIVO — solapa actividades y comprime el cronograma. Ej: FS − 3 días
 - Lag (retraso) = valor POSITIVO — introduce una espera obligatoria. Ej: SS + 15 días
 - El lead es el mecanismo del fast-tracking
 - Crashing = agregar recursos para terminar más rápido.
 
-### Origen de las dependencias
+### dependencias
 - Obligatoria (dura): la exige la naturaleza del trabajo, el contrato o la ley. No modificable
     Ejemplo: primero compilar el código y después ejecutar el programa.
 - Discrecional (blanda): la elegís por conveniencia o experiencia. Modificable
@@ -548,11 +542,44 @@ Es la **foto de tu plan** cuando lo aprobaron: las fechas y los costos que dijis
 - Te sirve para comparar: «¿voy como planeé o me desvié?».
 - Sin ella solo sabés cuánto gastaste, pero no si eso está bien o mal.
 
+``` text
+
+             📸 LÍNEA BASE DEL PROYECTO
+              "La foto del plan aprobado"
+                              │
+                              ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│                 PLAN APROBADO (BASELINE)                   │
+├──────────────────────┬──────────────┬───────────────────────┤
+│ Actividad            │ Fechas       │ Costo planificado     │
+├──────────────────────┼──────────────┼───────────────────────┤
+│ Diseño / UX          │ Sem. 1–2     │ $10.000               │
+│ Catálogo             │ Sem. 2–4     │ $20.000               │
+│ Carrito + Checkout   │ Sem. 4–6     │ $25.000               │
+│ Pasarela de pagos    │ Sem. 6–8     │ $20.000               │
+│ Testing + Deploy     │ Sem. 8–10    │ $25.000               │
+├──────────────────────┴──────────────┼───────────────────────┤
+│ TOTAL                               │ $100.000              │
+└─────────────────────────────────────┴───────────────────────┘
+
+Costos planificados       $100.000
++ Contingencia             $10.000
+──────────────────────────────────
+Línea base de costo       $110.000
+
++ Reserva de gestión        $5.000
+──────────────────────────────────
+BAC                       $115.000
+
+```
+
 ### Curva S
 Es un gráfico de cómo se **va sumando el gasto** con el tiempo. Tiene forma de S porque:
 - **Arranca lento** → todavía estás planificando.
 - **Se acelera en el medio** → estás produciendo a full, gastás lo más.
 - **Frena al final** → ya casi terminás.
+
 
 ```text
 
@@ -597,7 +624,7 @@ Imaginá que armás un e-commerce. Presupuesto total = **$100.000**, dura **10 s
 | Pasarela de pagos      | $20.000       | 6 a 8   |
 | Testing y despliegue   | $25.000       | 8 a 10  |
 
-- Si sumás todos los costos → **$100.000**. Ese total es el **BAC** (el presupuesto completo).
+- Si sumás todos los costos → **$100.000**.
 
 **Paso 2 — Elegís un momento para medir. Digamos: fin de la semana 6.**
 
@@ -661,8 +688,6 @@ Formas de calcular cuánto va a costar o durar un proyecto.
 ### Reservas
 - Reserva de contingencia → riesgos CONOCIDOS → DENTRO de la línea base
 - Reserva de gestión → riesgos DESCONOCIDOS → FUERA de la línea base
-- Actividades + contingencia = línea base de costo
-- Línea base + reserva de gestión = BAC
 
 ### Gestión de cambios
 - 1 Registrar el cambio y su origen
@@ -711,20 +736,18 @@ Tablero para ver el flujo de trabajo (Pendiente → En proceso → Terminado).
 - Se **limita el WIP** para que el flujo no se tape (no arrancar mil cosas juntas).
 - También sirve en predictivo, para el día a día.
 
-``` text
-┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│   BACKLOG    │ → │   TO DO      │ → │ IN PROGRESS  │ → │     DONE     │
-├──────────────┤   ├──────────────┤   ├──────────────┤   ├──────────────┤
-│ Login        │   │ Carrito      │   │ Checkout     │   │ Registro     │
-│ Perfil       │   │ Productos    │   │              │   │ API          │
-│ Reportes     │   │              │   │    WIP: 1    │   │              │
-└──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘
-                         │                  │
-                         └────── FLUJO ─────┘
-
-              WIP = Work In Progress
-              Limita el trabajo en curso
-              y permite detectar cuellos de botella.
+```text
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│   PENDIENTE  │   │  EN PROCESO  │   │  TERMINADO   │
+├──────────────┤   ├──────────────┤   ├──────────────┤
+│ Login        │   │ API usuarios │   │ Base de datos│
+│ Dashboard    │   │              │   │ Login        │
+│ Reportes     │   │              │   │              │
+└──────────────┘   └──────────────┘   └──────────────┘
+                         ▲
+                         │
+                        WIP
+                  (trabajo en curso)
 ```
 
 ### Los 3 artefactos
