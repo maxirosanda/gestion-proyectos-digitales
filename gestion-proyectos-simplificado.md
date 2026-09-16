@@ -1,15 +1,28 @@
 ## A · El negocio — previo al proyecto (vale tanto para predictivo como para agil)
 
 ### Business Model Canvas (BMC — Lienzo de Modelo de Negocio)
-- 1 Segmentos de clientes — ¿a quién le servimos?
-- 2 Propuesta de valor — ¿qué problema le resolvemos?
-- 3 Canales — ¿cómo se lo hacemos llegar?
-- 4 Relación con clientes — ¿qué vínculo tenemos?
-- 5 Fuentes de ingreso — ¿cómo cobramos?
-- 6 Recursos clave — ¿qué tenemos que tener?
-- 7 Actividades clave — ¿qué tenemos que hacer?
-- 8 Socios clave — ¿con quién nos apoyamos?
-- 9 Estructura de costos — ¿cuánto nos cuesta?
+
+``` text
+┌───────────────────┬───────────────────┬───────────────────┬───────────────────┬───────────────────┐
+│ 8. SOCIOS CLAVE   │ 7. ACTIVIDADES    │                   │ 4. RELACIÓN CON   │ 1. SEGMENTOS DE   │
+│                   │ CLAVE             │                   │ CLIENTES          │ CLIENTES          │
+│ ¿Con quién nos    │ ¿Qué tenemos que  │  2. PROPUESTA DE  │                   │                   │
+│ apoyamos?         │ hacer?            │      VALOR        │ ¿Qué vínculo      │ ¿A quién le       │
+│                   │                   │                   │ tenemos?          │ servimos?         │
+│                   ├───────────────────┤                   ├───────────────────┤                   │
+│                   │ 6. RECURSOS CLAVE │                   │ 3. CANALES        │                   │
+│                   │                   │                   │                   │                   │
+│                   │ ¿Qué tenemos que  │ ¿Qué problema le  │ ¿Cómo se lo       │                   │
+│                   │ tener?            │ resolvemos?       │ hacemos llegar?   │                   │
+│                   │                   │                   │                   │                   │
+└───────────────────┴───────────────────┴───────────────────┴───────────────────┴───────────────────┘
+┌──────────────────────────────────────────────────┬────────────────────────────────────────────────┐
+│ 9. ESTRUCTURA DE COSTOS                          │ 5. FUENTES DE INGRESO                          │
+│                                                  │                                                │
+│ ¿Cuánto nos cuesta?                              │ ¿Cómo cobramos?                                │
+│                                                  │                                                │
+└──────────────────────────────────────────────────┴────────────────────────────────────────────────┘
+```
 
 ### PESTEL
 - Político — gobierno, regulación sectorial, comercio exterior, estabilidad
@@ -33,10 +46,38 @@ En un proyecto o negocio, sirve para **priorizar esfuerzos**. Por ejemplo, no to
 
 
 ### Value Proposition Canvas (VPC — Lienzo de Propuesta de Valor)
-- Perfil del cliente ⇄ Mapa de valor
-- Actividades o trabajos (jobs) ⇄ Productos y servicios
-- Frustraciones (pains) ⇄ Aliviadores de frustraciones
-- Alegrías o beneficios (gains) ⇄ Creadores de alegrías
+``` text
+
+┌───────────────────────────────────────┐     ┌───────────────────────────────────────┐
+│                                       │     │                                       │
+│          PERFIL DEL CLIENTE           │ ⇄   │             MAPA DE VALOR             │
+│                                       │     │                                       │
+│  👤 ¿Qué necesita, quiere o espera?  │     │  💎 ¿Qué ofrecemos para resolverlo?  │
+│                                       │     │                                       │
+│  ┌─────────────────────────────────┐  │     │  ┌─────────────────────────────────┐  │
+│  │  ACTIVIDADES / JOBS             │  │     │  │  PRODUCTOS Y SERVICIOS         │  │
+│  │                                 │  │     │  │                                 │  │
+│  │  ¿Qué intenta hacer el cliente? │  │     │  │  ¿Qué ofrecemos al cliente?    │  │
+│  │                                 │  │     │  │                                 │  │
+│  └─────────────────────────────────┘  │     │  └─────────────────────────────────┘  │
+│                                       │     │                                       │
+│  ┌─────────────────────────────────┐  │     │  ┌─────────────────────────────────┐  │
+│  │  😣 FRUSTRACIONES (PAINS)       │  │     │  │  🛠️ ALIVIADORES DE FRUSTRACIONES│ │
+│  │                                 │  │     │  │                                 │  │
+│  │  ¿Qué problemas o dificultades  │  │ ⇄   │  │  ¿Cómo eliminamos o reducimos   │  │
+│  │  tiene?                         │  │     │  │  esos problemas?                │  │
+│  └─────────────────────────────────┘  │     │  └─────────────────────────────────┘  │
+│                                       │     │                                       │
+│  ┌─────────────────────────────────┐  │     │  ┌─────────────────────────────────┐  │
+│  │  😄 ALEGRÍAS / BENEFICIOS       │  │     │  │  ✨ CREADORES DE ALEGRÍAS      │  │
+│  │                                 │  │     │  │                                 │  │
+│  │  ¿Qué resultados o beneficios   │  │ ⇄  │  │  ¿Cómo generamos esos beneficios│  │
+│  │  espera conseguir?              │  │     │  │  o superamos sus expectativas?  │  │
+│  └─────────────────────────────────┘  │     │  └─────────────────────────────────┘  │
+│                                       │     │                                       │
+└───────────────────────────────────────┘     └───────────────────────────────────────┘
+
+```
 
 ### Las 5 funciones del canal
 - 1 Dar a conocer — que sepan que existís (awareness)
@@ -65,42 +106,113 @@ En un proyecto o negocio, sirve para **priorizar esfuerzos**. Por ejemplo, no to
 ### Los 3 pilares del PMBOK 7
 - Principios (12) → cómo pensar y decidir
 - Dominios (8) → qué gestionar, áreas de resultado
-- Modelos y métodos → cómo hacerlo
+- Modelos: formas de comprender/representar situaciones. → Iterativo / Incremental
+- Métodos: técnicas o formas de realizar el trabajo. → Scrum
 
 
 ### Los 12 principios
-- Personas: ética, Equipo, Interesados, Liderazgo
-- Valor y contexto: Valor, Pensamiento sistémico, Tailoring, Calidad
-- Frente a lo incierto: Complejidad, Riesgo, Adaptabilidad, Cambio
+
+``` text
+
+╔══════════════════════════════════════════════════════════════╗
+║                    📚 LOS 12 PRINCIPIOS                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+        👥 PERSONAS             🎯 VALOR Y CONTEXTO
+        ───────────             ───────────────────
+
+        1. Ética               5. Valor
+        2. Equipo              6. Pensamiento sistémico
+        3. Interesados         7. Tailoring
+        4. Liderazgo           8. Calidad
+
+
+                    🌪️ FRENTE A LO INCIERTO
+                    ───────────────────────
+
+                    9.  Complejidad
+                    10. Riesgo
+                    11. Adaptabilidad
+                    12. Cambio
+```
 
 ### Los 8 dominios
-- Interesados → Equipo → Enfoque y ciclo de vida → Planificación
-- Trabajo del proyecto → Entrega → Medición → Incertidumbre
+``` text
+
+╔══════════════════════════════════════════════════════════════╗
+║                     🧩 LOS 8 DOMINIOS                      ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+        👥 PERSONAS                         📋 PROYECTO
+             │                                  │
+             ▼                                  ▼
+
+ ┌─────────────────────┐             ┌─────────────────────┐
+ │     INTERESADOS     │             │    PLANIFICACIÓN    │
+ │                     │             │                     │
+ │ Identificar y       │             │ Definir cómo se     │
+ │ gestionar a quienes │             │ organizará y        │
+ │ afectan o son       │             │ ejecutará el        │
+ │ afectados por el    │             │ proyecto.          │
+ │ proyecto.           │             │                     │
+ └──────────┬──────────┘             └──────────┬──────────┘
+            │                                    │
+            ▼                                    ▼
+
+ ┌─────────────────────┐             ┌─────────────────────┐
+ │       EQUIPO        │             │ TRABAJO DEL PROYECTO│
+ │                     │             │                     │
+ │ Organizar, liderar  │             │ Ejecutar y coordinar│
+ │ y desarrollar al    │             │ las actividades y   │
+ │ equipo que realiza  │             │ recursos necesarios │
+ │ el trabajo.         │             │ para avanzar.      │
+ └──────────┬──────────┘             └──────────┬──────────┘
+            │                                    │
+            ▼                                    ▼
+
+ ┌─────────────────────┐             ┌─────────────────────┐
+ │ ENFOQUE Y CICLO DE  │             │       ENTREGA       │
+ │       VIDA          │             │                     │
+ │                     │             │ Crear y entregar    │
+ │ Determinar cómo se  │             │ los productos,      │
+ │ desarrollará el     │             │ servicios o         │
+ │ proyecto: predictivo│             │ resultados que      │
+ │ , ágil o híbrido.   │             │ generan valor.     │
+ └─────────────────────┘             └──────────┬──────────┘
+                                                 │
+                                                 ▼
+
+                                      ┌─────────────────────┐
+                                      │      MEDICIÓN       │
+                                      │                     │
+                                      │ Evaluar el progreso │
+                                      │ y desempeño para    │
+                                      │ saber si el proyecto│
+                                      │ está alcanzando sus │
+                                      │ objetivos.          │
+                                      └──────────┬──────────┘
+                                                 │
+                                                 ▼
+
+                                      ┌─────────────────────┐
+                                      │    INCERTIDUMBRE    │
+                                      │                     │
+                                      │ Identificar y        │
+                                      │ gestionar riesgos,  │
+                                      │ problemas, cambios  │
+                                      │ y situaciones        │
+                                      │ desconocidas.       │
+                                      └─────────────────────┘
+
+```
 
 ### Dominio de Financiamiento
 - Cubre presupuesto, financiamiento y control económico del proyecto
 
 ### Modelos y métodos
 - Predictivas: EDT, ruta crítica, Gantt, línea base, valor ganado
-
-Ruta crítica: Secuencia de actividades que determina la duración mínima del proyecto, por lo que un atraso en ellas puede retrasar todo el proyecto.
-
-EDT (Estructura de Desglose del Trabajo): Herramienta que descompone el proyecto jerárquicamente en entregables y paquetes de trabajo para organizar su alcance.
-
-Gantt: Gráfico que representa las actividades del proyecto sobre una línea de tiempo, mostrando sus fechas de inicio, finalización y duración.
-
-Línea base: Plan aprobado que establece las fechas, duraciones y costos previstos y sirve como referencia para medir los desvíos del proyecto.
-
-EVM (Gestión del Valor Ganado): Método que compara el trabajo realizado, el trabajo planificado y el costo real para medir el desempeño del proyecto.
-
 - Ágiles: Scrum, Kanban, planning poker, burndown
-
-Kanban: Método de gestión visual que permite controlar el flujo de trabajo, limitar el trabajo en curso (WIP) y detectar cuellos de botella.
-
-Planning Poker: Técnica de estimación colaborativa en la que el equipo asigna Story Points a las tareas mediante una votación individual y luego discute las diferencias.
-
-Burndown: Gráfico que muestra cuánto trabajo queda pendiente a medida que avanzan los días de un sprint, permitiendo visualizar si el equipo está avanzando según lo esperado.
-
 
 ### Tailoring = adaptar con criterio
 
@@ -136,18 +248,6 @@ No significa elegir arbitrariamente cualquier metodología. Significa analizar e
 - Objetivo = el QUÉ. Fin último, abstracto, largo plazo
 - Meta = el CÓMO. Pasos intermedios, concretos y medibles
 
-### Roles en el enfoque predictivo  *(propio del predictivo)*
-- Sponsor — financia y autoriza el proyecto
-- Project Manager (PM — Líder de Proyecto) — autoridad central, asigna tareas, responde por el plan
-- Equipo — ejecuta lo asignado
-- Estructura jerárquica: hay jefe que asigna
-
-
-### Los 3 roles de Scrum  *(propio del ágil)*
-- Product Owner (PO — Dueño de Producto): prioriza el Product Backlog y decide QUÉ se construye. Acepta o rechaza en la review
-- Scrum Master: facilita y quita impedimentos. NO es jefe, no asigna tareas. Es el único que puede cancelar un sprint
-- Development Team: construye. Autoorganizado, típicamente 5 a 9 personas, full-time y multidisciplinar
-- Estructura sin jefe interno: el poder está repartido
 
 ## D · Comunicación (vale para predictivo y agil)
 
@@ -161,13 +261,6 @@ No significa elegir arbitrariamente cualquier metodología. Significa analizar e
 - Situación — ¿qué pasó? ¿hay desvíos?
 - Análisis — ¿por qué? ¿qué impacto tiene?
 - Decisión — ¿qué hacemos? ¿qué pedimos?
-
-
-### Informe de avance en predictivo  *(propio del predictivo)*
-- Status report semanal o quincenal + resumen ejecutivo de 1 página con semáforos (verde, amarillo, rojo)
-
-### Informe de avance en ágil  *(propio del ágil)*
-- Es la demo al cliente en el Sprint Review, no un documento formal
 
 
 ## E · Riesgos (vale para predictivo y agil)
@@ -228,6 +321,16 @@ No significa elegir arbitrariamente cualquier metodología. Significa analizar e
 ## Capa predictiva (idea general)
 - Se planifica alcance → cronograma → costo, en ese orden
 - Se congela una línea base y todo desvío se mide contra ella
+
+### Roles en el enfoque predictivo  *(propio del predictivo)*
+- Sponsor — financia y autoriza el proyecto
+- Project Manager (PM — Líder de Proyecto) — autoridad central, asigna tareas, responde por el plan
+- Equipo — ejecuta lo asignado
+- Estructura jerárquica: hay jefe que asigna
+
+### Informe de avance en predictivo  *(propio del predictivo)*
+- Status report semanal o quincenal + resumen ejecutivo de 1 página con semáforos (verde, amarillo, rojo)
+
 
 ### Modelo cascada
 - 1 Análisis — entender QUÉ
@@ -451,6 +554,35 @@ Es un gráfico de cómo se **va sumando el gasto** con el tiempo. Tiene forma de
 - **Se acelera en el medio** → estás produciendo a full, gastás lo más.
 - **Frena al final** → ya casi terminás.
 
+```text
+
+Gasto
+acumulado
+   ↑
+   │
+   │                                      ●
+   │                                  ●
+   │                              ●
+   │                          ●
+   │                     ●
+   │                 ●
+   │              ●
+   │           ●
+   │        ●
+   │      ●
+   │    ●
+   │   ●
+   │  ●
+   │ ●
+   │●
+   └────────────────────────────────────────→ Tiempo
+     ↑              ↑                    ↑
+     │              │                    │
+   INICIO         MEDIO                 FINAL
+   🐢 Lento        🚀 Rápido             🐢 Frena
+   Planificación   Producción            Cierre
+```
+
 ### ¿De dónde sale cada valor? Ejemplo: desarrollo de un e-commerce
 
 Imaginá que armás un e-commerce. Presupuesto total = **$100.000**, dura **10 semanas**.
@@ -547,6 +679,15 @@ Formas de calcular cuánto va a costar o durar un proyecto.
 ## Capa ágil (idea general)
 En vez de cerrar todo el alcance al inicio, armás una **lista de tareas priorizada (backlog)** y vas entregando **algo usable cada pocas semanas**. Si el cliente cambia de idea, reordenás la lista.
 
+### Los 3 roles de Scrum  *(propio del ágil)*
+- Product Owner (PO — Dueño de Producto): prioriza el Product Backlog y decide QUÉ se construye. Acepta o rechaza en la review
+- Scrum Master: facilita y quita impedimentos. NO es jefe, no asigna tareas. Es el único que puede cancelar un sprint
+- Development Team: construye. Autoorganizado, típicamente 5 a 9 personas, full-time y multidisciplinar
+- Estructura sin jefe interno: el poder está repartido
+
+### Informe de avance en ágil  *(propio del ágil)*
+- Es la demo al cliente en el Sprint Review, no un documento formal
+
 ### Manifiesto ágil — los 4 valores
 Dice qué **gana** cuando hay que elegir (no prohíbe lo otro, lo pone en segundo lugar):
 - Las **personas** > los procesos y herramientas
@@ -570,6 +711,22 @@ Tablero para ver el flujo de trabajo (Pendiente → En proceso → Terminado).
 - Se **limita el WIP** para que el flujo no se tape (no arrancar mil cosas juntas).
 - También sirve en predictivo, para el día a día.
 
+``` text
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│   BACKLOG    │ → │   TO DO      │ → │ IN PROGRESS  │ → │     DONE     │
+├──────────────┤   ├──────────────┤   ├──────────────┤   ├──────────────┤
+│ Login        │   │ Carrito      │   │ Checkout     │   │ Registro     │
+│ Perfil       │   │ Productos    │   │              │   │ API          │
+│ Reportes     │   │              │   │    WIP: 1    │   │              │
+└──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘
+                         │                  │
+                         └────── FLUJO ─────┘
+
+              WIP = Work In Progress
+              Limita el trabajo en curso
+              y permite detectar cuellos de botella.
+```
+
 ### Los 3 artefactos
 - **Product Backlog** — lista priorizada de **TODOS** los requisitos. La maneja el PO. Es la única fuente de requisitos.
 - **Sprint Backlog** — solo las tareas del **sprint actual**.
@@ -589,6 +746,53 @@ Técnica para estimar el tamaño de las tareas en equipo.
 - **No** estima horas, y **no** la usa el PM para apurar a nadie.
 - Cada uno **vota a ciegas**, se discuten los votos más extremos y se vuelve a votar.
 - Lo valioso **no es el número**, sino la **conversación** que obliga a tener.
+
+``` text 
+
+                         🃏 PLANNING POKER
+                         │
+                         ▼
+              ┌─────────────────────┐
+              │  Tarea a estimar    │
+              │                     │
+              │ "Crear pantalla     │
+              │  de login"          │
+              └──────────┬──────────┘
+                         │
+                         ▼
+              CADA INTEGRANTE ELIGE
+                 UNA CARTA EN SECRETO
+                         │
+             ┌───────────┼───────────┐
+             ▼           ▼           ▼
+          👤 Dev 1    👤 Dev 2    👤 Dev 3
+             🃏           🃏           🃏
+             3            5            8
+             │            │            │
+             └────────────┼────────────┘
+                          ▼
+                   🔓 REVELAR
+                       LAS CARTAS
+                          │
+                          ▼
+              ┌─────────────────────┐
+              │  3   ≠   5   ≠   8  │
+              └──────────┬──────────┘
+                         │
+                         ▼
+                    💬 DISCUTIR
+              ¿Por qué algunos estiman
+                   3, otros 5 u 8?
+                         │
+                         ▼
+                  🔄 VOLVER A VOTAR
+                         │
+                         ▼
+              ┌─────────────────────┐
+              │   STORY POINTS: 5   │
+              └─────────────────────┘
+
+```
 
 ### Las 4 ceremonias (reuniones fijas)
 - **Sprint Planning** — planificar el sprint · 2 partes, hasta 4 h c/u
@@ -620,6 +824,32 @@ Cada uno responde 3 preguntas:
 ### Burndown chart
 Gráfico que muestra el **trabajo que falta** (eje Y) a lo largo de los **días del sprint** (eje X). Si la línea baja parejo, el equipo va bien.
 
+``` text
+
+Trabajo
+  ↑
+10│●
+  │ ╲
+  │  ╲   Línea ideal
+ 8│   ╲  - - - - - - - - - -
+  │    ╲
+ 6│     ●
+  │      ╲
+ 4│       ●
+  │        ╲
+ 2│         ●
+  │          ╲
+ 0│───────────●────────────────→ Días
+     D1   D2   D3   D4   D5
+
+        ↓ Trabajo pendiente
+
+      Si la línea real está por encima
+      de la ideal → queda más trabajo
+      pendiente del esperado.
+
+```
+
 ### Velocity (velocidad del equipo)
 - Es el **promedio de trabajo** (en Story Points) que el equipo termina y entrega ("Done") por sprint.
 - Se mira **hacia atrás**: es un dato real de los últimos 3 a 5 sprints, no un deseo.
@@ -637,18 +867,10 @@ Gráfico que muestra el **trabajo que falta** (eje Y) a lo largo de los **días 
 |-----------------------|---------------------------------|-------------------------------|
 | **Requisitos**        | Estables, definidos al inicio   | Cambiantes, se descubren      |
 | **Entrega**           | Al final o por hitos            | Incremental, cada sprint      |
-| **Feedback del cliente** | Al final o en los hitos      | Continuo, una demo por sprint |
+| **Feedback cliente**  | Al final o en los hitos         | Continuo, una demo por sprint |
 | **Estructura**        | Jerárquica, el PM manda         | Autoorganizada, sin jefe      |
 | **Avance**            | Status report con semáforos     | Demo en el Sprint Review      |
 | **Cronograma**        | Gantt y ruta crítica            | Sprints y Kanban              |
 | **Medición**          | EVM contra la línea base        | Burndown y velocity           |
 | **Estimación**        | Horas (ascendente o análoga)    | Story points (planning poker) |
 | **Cómo se acorta**    | Crashing y fast-tracking        | Más capacidad, más velocity   |
-
-
-### Las 15 trampas de la materia
-Los puntos donde más se cae la gente en el examen:
-
-- **7 · Secuenciar** → su salida es el **diagrama de red**.
-- **11 · CV** → CV = EV − AC; **positivo = bajo presupuesto** (vas barato).
-- **13 · Riesgo residual** → es la exposición que queda tras los controles. **Alta + medio = inaceptable**.
